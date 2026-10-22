@@ -1,0 +1,9 @@
+name: ElytrasOfFire
+version: 0.1.0
+main: org.woftnw.eof.ElytrasOfFire
+description: Introduce the world of Wings of Fire to Minecraft!
+author: "Wings of Fire: The New World"
+contributors: [BogTheMudWing]
+website: https://woftnw.org
+api-version: '26.3'
+load: POSTWORLD
