@@ -12,6 +12,7 @@ import java.util.List;
 public class ActiveAbility extends CooldownAbility {
 	private final ItemStack ACTIVATION_ITEM;
 	private final Activation ACTIVATION_METHOD;
+	private final Archetype ARCHETYPE;
 
 	/**
 	 * Create a new ActiveAbility
@@ -21,10 +22,11 @@ public class ActiveAbility extends CooldownAbility {
 	 * @param activationItem The item used for activation.
 	 * @param activationMethod The activation method.
 	 */
-	public ActiveAbility(TextComponent name, List<PotionEffect> selfEffects, ItemStack activationItem, Activation activationMethod) {
+	public ActiveAbility(TextComponent name, List<PotionEffect> selfEffects, ItemStack activationItem, Activation activationMethod, Archetype archetype) {
 		super(name, selfEffects);
 		ACTIVATION_ITEM = activationItem;
 		ACTIVATION_METHOD = activationMethod;
+		ARCHETYPE = archetype;
 	}
 
 	/**
@@ -43,5 +45,14 @@ public class ActiveAbility extends CooldownAbility {
 	 */
 	public Activation getActivationMethod() {
 		return ACTIVATION_METHOD;
+	}
+
+	/**
+	 * Get the archetype.
+	 *
+	 * @return The archetype for this ability.
+	 */
+	public Archetype getArchetype() {
+		return ARCHETYPE;
 	}
 }
