@@ -10,7 +10,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.util.Vector;
 import org.jspecify.annotations.NonNull;
 import org.woftnw.eof.exception.AbilityActivationException;
-import org.woftnw.eof.exception.AbilityCooldownException;
 
 import java.util.ArrayList;
 import java.util.List;
