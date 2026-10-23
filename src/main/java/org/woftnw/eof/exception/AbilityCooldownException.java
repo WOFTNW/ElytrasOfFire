@@ -3,7 +3,7 @@ package org.woftnw.eof.exception;
 /**
  * This exception is thrown when an ability is attempted to be activated while on cooldown.
  */
-public class AbilityCooldownException extends Exception {
+public class AbilityCooldownException extends AbilityActivationException {
 	private final long COOLDOWN_TIME_END;
 
 	/**
