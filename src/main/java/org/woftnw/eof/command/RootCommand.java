@@ -15,6 +15,8 @@ public class RootCommand extends PluginCommand {
 	public LiteralArgumentBuilder<CommandSourceStack> getCommandData() {
 		LiteralArgumentBuilder<CommandSourceStack> root = Commands.literal("eof");
 		root.then(new TribeCommand(PLUGIN).getCommandData());
+		root.then(new AttributesCommand(PLUGIN).getCommandData());
+		root.then(new AbilitiesCommand(PLUGIN).getCommandData());
 		return root;
 	}
 }
