@@ -44,7 +44,7 @@ public enum Tribe {
 			NamedTextColor.RED,
 			List.of(
 					new Attribute(new PotionEffect(PotionEffectType.STRENGTH, 60, 1)),
-					new Attribute(new PotionEffect(PotionEffectType.SPEED, 60, 0), Entity::isInWater),
+					new Attribute(new PotionEffect(PotionEffectType.SPEED, 60, 0), Entity::isUnderWater),
 					new Attribute(new PotionEffect(PotionEffectType.WATER_BREATHING, 20 * 150, 0), Entity::isInWater, true)
 			)
 	),
