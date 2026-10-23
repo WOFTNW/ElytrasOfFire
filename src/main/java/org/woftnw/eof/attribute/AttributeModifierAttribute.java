@@ -61,6 +61,23 @@ public class AttributeModifierAttribute extends Attribute {
 		this(attributeType, plugin, amount, operation, predicate, false);
 	}
 
+	/**
+	 * Create a tribe attribute using an attribute modifier.
+	 *
+	 * @param attributeType The attribute modifier type to apply.
+	 * @param plugin The plugin instance.
+	 * @param amount The amount to use for the attribute modifier.
+	 * @param operation The operation to use to apply the attribute modifier.
+	 */
+	public AttributeModifierAttribute(
+			org.bukkit.attribute.@NonNull Attribute attributeType,
+			ElytrasOfFire plugin,
+			double amount,
+			AttributeModifier.Operation operation
+	) {
+		this(attributeType, plugin, amount, operation, null, false);
+	}
+
 	@Override
 	public void tick(Player player) {
 		if (PREDICATE == null) return;
