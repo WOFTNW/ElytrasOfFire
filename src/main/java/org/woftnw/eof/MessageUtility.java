@@ -16,7 +16,7 @@ public class MessageUtility {
 			.append(text("E").color(NamedTextColor.RED))
 			.append(text("o").color(NamedTextColor.GOLD))
 			.append(text("F").color(NamedTextColor.RED))
-			.append(text("]").color(NamedTextColor.GRAY))
+			.append(text("] ").color(NamedTextColor.GRAY))
 			.build();
 
 	/**
