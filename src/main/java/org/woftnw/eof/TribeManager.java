@@ -1,6 +1,7 @@
 package org.woftnw.eof;
 
 import org.jspecify.annotations.Nullable;
+import org.woftnw.eof.ability.Ability;
 import org.woftnw.eof.attribute.Attribute;
 
 import java.util.ArrayList;
@@ -10,10 +11,12 @@ import java.util.Objects;
 public class TribeManager {
 	private final ArrayList<Tribe> TRIBES;
 	private final AttributeScheduler ATTRIBUTE_SCHEDULER;
+	private final AbilityManager ABILITY_MANAGER;
 
 	public TribeManager(ElytrasOfFire plugin) {
 		TRIBES = new ArrayList<>();
 		ATTRIBUTE_SCHEDULER = new AttributeScheduler(plugin);
+		ABILITY_MANAGER = new AbilityManager(plugin);
 	}
 
 	public void disable() {
@@ -29,6 +32,9 @@ public class TribeManager {
 		TRIBES.add(tribe);
 		for (Attribute attribute : tribe.getAttributes()) {
 			ATTRIBUTE_SCHEDULER.registerAttribute(tribe, attribute);
+		}
+		for (Ability ability : tribe.getAbilities()) {
+			ABILITY_MANAGER.registerAbility(ability);
 		}
 	}
 
