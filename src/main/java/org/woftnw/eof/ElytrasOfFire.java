@@ -14,7 +14,6 @@ public class ElytrasOfFire extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		getLogger().info("Elytras of Fire is being enabled.");
 		playerUtility = new PlayerUtility(this);
 		attributeScheduler = new AttributeScheduler(this);
 
