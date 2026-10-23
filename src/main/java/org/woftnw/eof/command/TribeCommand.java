@@ -34,7 +34,7 @@ public class TribeCommand extends PluginCommand {
 		LiteralArgumentBuilder<CommandSourceStack> joinSubcommand = Commands.literal("join");
 		joinSubcommand.requires(source -> source.getSender().hasPermission("eof.tribe.set"));
 		joinSubcommand.then(
-				Commands.argument("tribe", new TribeArgument())
+				Commands.argument("tribe", new TribeArgument(PLUGIN))
 						.executes(this::executeJoin)
 						.then(
 								Commands.argument("targets", ArgumentTypes.players())

@@ -4,23 +4,17 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.woftnw.eof.attribute.Attribute;
 import org.woftnw.eof.command.RootCommand;
 
 public class ElytrasOfFire extends JavaPlugin {
 
 	private PlayerUtility playerUtility;
-	private AttributeScheduler attributeScheduler;
+	private TribeManager tribeManager;
 
 	@Override
 	public void onEnable() {
 		playerUtility = new PlayerUtility(this);
-		attributeScheduler = new AttributeScheduler(this);
-
-		for (Tribe tribe : Tribe.values()) {
-			for (Attribute attribute : tribe.getAttributes()) {
-				attributeScheduler.registerAttribute(tribe, attribute);
-			}
-		}
 
 		// Register commands
 		this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, event -> {
@@ -29,9 +23,13 @@ public class ElytrasOfFire extends JavaPlugin {
 		});
 	}
 
+	public TribeManager getTribeManager() {
+		return tribeManager;
+	}
+
 	@Override
 	public void onDisable() {
-		attributeScheduler.stop();
+		tribeManager.disable();
 	}
 
 	/**

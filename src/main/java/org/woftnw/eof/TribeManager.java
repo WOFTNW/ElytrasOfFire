@@ -1,0 +1,68 @@
+package org.woftnw.eof;
+
+import org.jspecify.annotations.Nullable;
+import org.woftnw.eof.attribute.Attribute;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+public class TribeManager {
+	private final ArrayList<Tribe> TRIBES;
+	private final AttributeScheduler ATTRIBUTE_SCHEDULER;
+
+	public TribeManager(ElytrasOfFire plugin) {
+		TRIBES = new ArrayList<>();
+		ATTRIBUTE_SCHEDULER = new AttributeScheduler(plugin);
+	}
+
+	public void disable() {
+		ATTRIBUTE_SCHEDULER.disable();
+	}
+
+	/**
+	 * Register a tribe to make it known to Elytras of Fire.
+	 *
+	 * @param tribe The tribe to register.
+	 */
+	public void register(Tribe tribe) {
+		TRIBES.add(tribe);
+		for (Attribute attribute : tribe.getAttributes()) {
+			ATTRIBUTE_SCHEDULER.registerAttribute(tribe, attribute);
+		}
+	}
+
+	/**
+	 * Add an attribute to a tribe.
+	 *
+	 * @param tribe The tribe to add this attribute to.
+	 * @param attribute The attribute to add.
+	 */
+	public void registerAttribute(Tribe tribe, Attribute attribute) {
+		ATTRIBUTE_SCHEDULER.registerAttribute(tribe, attribute);
+	}
+
+	/**
+	 * Get a list of all the tribes.
+	 *
+	 * @return A list of all registered tribes.
+	 */
+	public List<Tribe> getTribes() {
+		return List.copyOf(TRIBES);
+	}
+
+	/**
+	 * Get a Tribe from a PCD value.
+	 *
+	 * @param value The value as stored in the PCD.
+	 * @return The corresponding Tribe or null of no match.
+	 */
+	public @Nullable Tribe getTribeFromPDCValue(String value) {
+		for (final Tribe TRIBE : TRIBES) {
+			if (Objects.equals(TRIBE.getPDCValue(), value)) {
+				return TRIBE;
+			}
+		}
+		return null;
+	}
+}

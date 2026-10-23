@@ -3,6 +3,7 @@ package org.woftnw.eof;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 import org.jspecify.annotations.NonNull;
+import org.woftnw.eof.attribute.Attribute;
 
 import java.util.*;
 
@@ -32,7 +33,7 @@ public class AttributeScheduler {
 	/**
 	 * Stop ticking all attributes.
 	 */
-	public void stop() {
+	public void disable() {
 		task.cancel();
 	}
 

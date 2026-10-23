@@ -19,6 +19,7 @@ public class PlayerUtility {
 	private static final boolean ATTRIBUTES_ENABLED_DEFAULT = false;
 	private static final boolean ABILITIES_ENABLED_DEFAULT = false;
 
+	private final ElytrasOfFire PLUGIN;
 	private final NamespacedKey TRIBE_KEY;
 	private final NamespacedKey ATTRIBUTES_ENABLED_KEY;
 	private final NamespacedKey ABILITIES_ENABLED_KEY;
@@ -28,10 +29,11 @@ public class PlayerUtility {
 	 *
 	 * @param plugin The plugin instance.
 	 */
-	public PlayerUtility(JavaPlugin plugin) {
-		this.TRIBE_KEY = new NamespacedKey(plugin, "tribe");
-		this.ATTRIBUTES_ENABLED_KEY = new NamespacedKey(plugin, "attributes_enabled");
-		this.ABILITIES_ENABLED_KEY = new NamespacedKey(plugin, "abilities_enabled");
+	public PlayerUtility(ElytrasOfFire plugin) {
+		PLUGIN = plugin;
+		TRIBE_KEY = new NamespacedKey(plugin, "tribe");
+		ATTRIBUTES_ENABLED_KEY = new NamespacedKey(plugin, "attributes_enabled");
+		ABILITIES_ENABLED_KEY = new NamespacedKey(plugin, "abilities_enabled");
 	}
 
 	/**
@@ -99,6 +101,6 @@ public class PlayerUtility {
 	public Tribe getPlayerTribe(@NonNull Player player) {
 		PersistentDataContainer persistentDataContainer = player.getPersistentDataContainer();
 		String tribeString = persistentDataContainer.get(TRIBE_KEY, PersistentDataType.STRING);
-		return TribeUtility.getTribeFromPDCValue(tribeString);
+		return PLUGIN.getTribeManager().getTribeFromPDCValue(tribeString);
 	}
 }
