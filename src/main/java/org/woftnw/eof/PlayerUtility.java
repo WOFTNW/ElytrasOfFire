@@ -17,6 +17,8 @@ public class PlayerUtility {
 	// See https://docs.papermc.io/paper/dev/pdc/
 
 	private final NamespacedKey TRIBE_KEY;
+	private final NamespacedKey ATTRIBUTES_ENABLED_KEY;
+	private final NamespacedKey ABILITIES_ENABLED_KEY;
 
 	/**
 	 * Create a PlayerUtility.
@@ -25,6 +27,52 @@ public class PlayerUtility {
 	 */
 	public PlayerUtility(JavaPlugin plugin) {
 		this.TRIBE_KEY = new NamespacedKey(plugin, "tribe");
+		this.ATTRIBUTES_ENABLED_KEY = new NamespacedKey(plugin, "attributes_enabled");
+		this.ABILITIES_ENABLED_KEY = new NamespacedKey(plugin, "abilities_enabled");
+	}
+
+	/**
+	 * Enable or disable a player's tribal attributes.
+	 *
+	 * @param player The player whose state to change.
+	 * @param enabled Whether to enable attributes.
+	 */
+	public void setPlayerAttributesEnabled(@NonNull Player player, boolean enabled) {
+		PersistentDataContainer persistentDataContainer = player.getPersistentDataContainer();
+		persistentDataContainer.set(ATTRIBUTES_ENABLED_KEY, PersistentDataType.BOOLEAN, enabled);
+	}
+
+	/**
+	 * Check whether a player's tribal attributes are enabled.
+	 *
+	 * @param player The player whose state to get.
+	 * @return Whether attributes are enabled or disabled.
+	 */
+	public boolean arePlayerPlayerAttributesEnabled(@NonNull Player player) {
+		PersistentDataContainer persistentDataContainer = player.getPersistentDataContainer();
+		return persistentDataContainer.getOrDefault(ATTRIBUTES_ENABLED_KEY, PersistentDataType.BOOLEAN, false);
+	}
+
+	/**
+	 * Enable or disable a player's tribal abilities.
+	 *
+	 * @param player The player whose state to change.
+	 * @param enabled Whether to enable abilities.
+	 */
+	public void setPlayerAbilitiesEnabled(@NonNull Player player, boolean enabled) {
+		PersistentDataContainer persistentDataContainer = player.getPersistentDataContainer();
+		persistentDataContainer.set(ABILITIES_ENABLED_KEY, PersistentDataType.BOOLEAN, enabled);
+	}
+
+	/**
+	 * Check whether a player's tribal abilities are enabled.
+	 *
+	 * @param player The player whose state to get.
+	 * @return Whether abilities are enabled or disabled.
+	 */
+	public boolean arePlayerPlayerAbilitiesEnabled(@NonNull Player player) {
+		PersistentDataContainer persistentDataContainer = player.getPersistentDataContainer();
+		return persistentDataContainer.getOrDefault(ABILITIES_ENABLED_KEY, PersistentDataType.BOOLEAN, false);
 	}
 
 	/**
