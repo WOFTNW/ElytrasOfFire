@@ -13,9 +13,9 @@ public class Attribute {
 	private static final int ATTRIBUTE_TICK_DURATION = 20;
 	private static final int EFFECT_OVERSHOOT_DURATION = 40;
 
-	protected PotionEffect effect;
+	private final PotionEffect EFFECT;
 	@Nullable
-	protected Predicate<Player> predicate;
+	private final Predicate<Player> PREDICATE;
 
 	/**
 	 * Create a tribe attribute.
@@ -24,8 +24,8 @@ public class Attribute {
 	 * @param predicate The predicate that must be true to apply the attribute or null if it should always be applied.
 	 */
 	public Attribute(PotionEffect effect, @Nullable Predicate<Player> predicate) {
-		this.effect = effect;
-		this.predicate = predicate;
+		this.EFFECT = effect;
+		this.PREDICATE = predicate;
 	}
 
 	/**
@@ -34,8 +34,8 @@ public class Attribute {
 	 * @param player The player to apply to.
 	 */
 	public void tick(Player player) {
-		if (predicate == null || predicate.test(player)) {
-			player.addPotionEffect(effect.withDuration(ATTRIBUTE_TICK_DURATION + EFFECT_OVERSHOOT_DURATION));
+		if (PREDICATE == null || PREDICATE.test(player)) {
+			player.addPotionEffect(EFFECT.withDuration(ATTRIBUTE_TICK_DURATION + EFFECT_OVERSHOOT_DURATION));
 		}
 	}
 }
