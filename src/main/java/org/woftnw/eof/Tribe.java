@@ -58,4 +58,13 @@ public enum Tribe {
 	public TextColor getTextColor() {
 		return color;
 	}
+
+	/**
+	 * Get the value that is used in the persistent data container.
+	 *
+	 * @return The value for the PDC.
+	 */
+	public String getPDCValue() {
+		return getSimpleName();
+	}
 }
