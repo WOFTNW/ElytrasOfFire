@@ -33,13 +33,13 @@ public class TribeCommand extends PluginCommand {
 		final Tribe TRIBE = context.getArgument("tribe", Tribe.class);
 
 		Entity executor = context.getSource().getExecutor();
-		if (executor instanceof Player player) {
-			PLUGIN.getPlayerUtility().setPlayerTribe(player, TRIBE);
-		} else {
+		if (!(executor instanceof Player player)) {
 			respondError(context, "You must specify a target.");
 			return 0;
 		}
 
+		PLUGIN.getPlayerUtility().setPlayerTribe(player, TRIBE);
+		respond(context, String.format("You have joined tribe %s", TRIBE.getTribeName()));
 		return Command.SINGLE_SUCCESS;
 	}
 }
