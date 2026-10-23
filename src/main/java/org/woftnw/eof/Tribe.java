@@ -172,7 +172,7 @@ public class Tribe {
 	 * @return The attributes this tribe has.
 	 */
 	public List<Attribute> getAttributes() {
-		return ATTRIBUTES;
+		return List.copyOf(ATTRIBUTES);
 	}
 
 	/**
@@ -181,6 +181,6 @@ public class Tribe {
 	 * @return The abilities this tribe has.
 	 */
 	public List<Ability> getAbilities() {
-		return ABILITIES;
+		return List.copyOf(ABILITIES);
 	}
 }
