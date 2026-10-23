@@ -24,8 +24,9 @@ public class TribeCommand extends PluginCommand {
 
 		LiteralArgumentBuilder<CommandSourceStack> joinSubcommand = Commands.literal("join");
 		joinSubcommand.requires(source -> source.getSender().hasPermission("eof.tribe.set"));
-		joinSubcommand.then(Commands.argument("tribe", new TribeArgument()));
-		joinSubcommand.executes(this::executeJoin);
+		joinSubcommand.then(Commands.argument("tribe", new TribeArgument()).executes(this::executeJoin));
+
+		tribeCommand.then(joinSubcommand);
 
 		return tribeCommand;
 	}
