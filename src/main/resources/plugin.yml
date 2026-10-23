@@ -7,3 +7,26 @@ contributors: [BogTheMudWing]
 website: https://woftnw.org
 api-version: '26.3'
 load: POSTWORLD
+
+permissions:
+  eof.tribe.set:
+    description: "Set own tribe."
+    default: true
+  eof.tribe.set.others:
+    description: "Set others' tribes."
+    default: false
+  eof.attributes.set:
+    description: "Toggle own attributes."
+    default: true
+  eof.attributes.set.others:
+    description: "Toggle others' attributes."
+    default: false
+  eof.abilities.set:
+    description: "Toggle own abilities."
+    default: true
+  eof.abilities.set.others:
+    description: "Toggle others' abilities."
+    default: false
+  eof.abilities.bypass_cooldown:
+    description: "Bypass ability cooldowns."
+    default: false
