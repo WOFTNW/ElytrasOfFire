@@ -2,8 +2,10 @@ package org.woftnw.eof;
 
 import net.kyori.adventure.text.format.TextColor;
 import org.woftnw.eof.ability.Ability;
+import org.woftnw.eof.ability.ActiveAbility;
 import org.woftnw.eof.attribute.Attribute;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -182,5 +184,18 @@ public class Tribe {
 	 */
 	public List<Ability> getAbilities() {
 		return List.copyOf(ABILITIES);
+	}
+
+	/**
+	 * Get the active abilities of this tribe.
+	 *
+	 * @return The active abilities this tribe has.
+	 */
+	public List<ActiveAbility> getActiveAbilities() {
+		final List<ActiveAbility> ACTIVE_ABILITIES = new ArrayList<>();
+		for (final Ability ABILITY : ABILITIES) {
+			if (ABILITY instanceof final ActiveAbility ACTIVE_ABILITY) ACTIVE_ABILITIES.add(ACTIVE_ABILITY);
+		}
+		return ACTIVE_ABILITIES;
 	}
 }
