@@ -14,13 +14,10 @@ public class PlayerUtility {
 	// Player data is stored in the persistent data container (PDC).
 	// See https://docs.papermc.io/paper/dev/pdc/
 
-	private final JavaPlugin PLUGIN;
-
 	private final NamespacedKey TRIBE_KEY;
 
 	public PlayerUtility(JavaPlugin plugin) {
-		this.PLUGIN = plugin;
-		this.TRIBE_KEY = new NamespacedKey(PLUGIN, "tribe");
+		this.TRIBE_KEY = new NamespacedKey(plugin, "tribe");
 	}
 
 	public void setPlayerTribe(@NonNull Player player, @NonNull Tribe tribe) {
