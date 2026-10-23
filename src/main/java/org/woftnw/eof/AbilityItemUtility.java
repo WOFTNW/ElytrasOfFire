@@ -52,7 +52,7 @@ public class AbilityItemUtility {
 
 		for (String effectDescriptor : effects.keySet()) {
 			TextComponent component = text(effectDescriptor).color(color);
-			final Long EFFECT_LENGTH = effects.get(effectDescriptor);
+			final Long EFFECT_LENGTH = effects.get(String.format("• %s", effectDescriptor));
 			if (EFFECT_LENGTH != 0) {
 				final long EFFECT_LENGTH_SECS = Math.round((float) EFFECT_LENGTH / 20);
 				component = component.append(text(String.format(" (%ss)", EFFECT_LENGTH_SECS)).color(MessageUtility.INFO_TEXT_COLOR));
@@ -114,6 +114,8 @@ public class AbilityItemUtility {
 
 		itemMeta.lore(LORE);
 		itemMeta.setItemModel(NamespacedKey.fromString(itemModel));
+
+		ITEM_STACK.setItemMeta(itemMeta);
 
 		return ITEM_STACK;
 	}
