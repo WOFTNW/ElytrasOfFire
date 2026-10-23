@@ -16,9 +16,7 @@ import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
 
 public class TribeArgument implements CustomArgumentType.Converted<Tribe, String> {
-	private static final DynamicCommandExceptionType ERROR_INVALID_TRIBE = new DynamicCommandExceptionType(tribe -> {
-		return new LiteralMessage(tribe + " is not a valid tribe!");
-	});
+	private static final DynamicCommandExceptionType ERROR_INVALID_TRIBE = new DynamicCommandExceptionType(tribe -> new LiteralMessage(tribe + " is not a valid tribe!"));
 
 	@Override
 	public @NonNull Tribe convert(final @NonNull String nativeType) throws CommandSyntaxException {
@@ -44,7 +42,7 @@ public class TribeArgument implements CustomArgumentType.Converted<Tribe, String
 	}
 
 	@Override
-	public ArgumentType<String> getNativeType() {
+	public @NonNull ArgumentType<String> getNativeType() {
 		return StringArgumentType.word();
 	}
 }
