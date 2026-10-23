@@ -39,6 +39,17 @@ public abstract class PluginCommand {
 	}
 
 	/**
+	 * Respond to the sender with a message.
+	 *
+	 * @param context The command context.
+	 * @param message The message to send.
+	 */
+	public static void respond(@NonNull CommandContext<CommandSourceStack> context, Component message) {
+		final Component MESSAGE = MessageUtility.buildMessage(message);
+		context.getSource().getSender().sendMessage(MESSAGE);
+	}
+
+	/**
 	 * Respond to the sender with a red error message.
 	 *
 	 * @param context The command context.
