@@ -23,7 +23,7 @@ public class AbilitiesCommand extends PluginCommand {
 		abilitiesCommand.requires(source -> source.getSender().hasPermission("eof.abilities.set"));
 		abilitiesCommand.executes(this::execute);
 
-		return null;
+		return abilitiesCommand;
 	}
 
 	private int execute(@NonNull CommandContext<CommandSourceStack> context) {
