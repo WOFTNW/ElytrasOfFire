@@ -23,6 +23,7 @@ public class RayCastAbility extends ActiveAbility {
 	private static final float PARTICLE_SPEED = 0.05f;
 	private static final int PARTICLE_COUNT = 1;
 	private static final float RAY_CAST_HIT_RANGE = 0.5f;
+	private static final Archetype ARCHETYPE = Archetype.PRIMARY;
 
 	protected final Particle PARTICLE;
 	protected float range;
@@ -37,7 +38,7 @@ public class RayCastAbility extends ActiveAbility {
 	 * @param particle         The particle to show in the activation.
 	 */
 	public RayCastAbility(TextComponent name, List<PotionEffect> selfEffects, ItemStack activationItem, Activation activationMethod, Particle particle) {
-		super(name, selfEffects, activationItem, activationMethod);
+		super(name, selfEffects, activationItem, activationMethod, ARCHETYPE);
 		PARTICLE = particle;
 	}
 
