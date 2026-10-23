@@ -12,11 +12,13 @@ public class TribeManager {
 	private final ArrayList<Tribe> TRIBES;
 	private final AttributeScheduler ATTRIBUTE_SCHEDULER;
 	private final AbilityManager ABILITY_MANAGER;
+	private final ElytrasOfFire PLUGIN;
 
 	public TribeManager(ElytrasOfFire plugin) {
 		TRIBES = new ArrayList<>();
 		ATTRIBUTE_SCHEDULER = new AttributeScheduler(plugin);
 		ABILITY_MANAGER = new AbilityManager(plugin);
+		PLUGIN = plugin;
 	}
 
 	public void disable() {
@@ -36,6 +38,17 @@ public class TribeManager {
 		for (Ability ability : tribe.getAbilities()) {
 			ABILITY_MANAGER.registerAbility(ability);
 		}
+		final int ATTRIBUTE_COUNT = tribe.getAttributes().length;
+		final int ABILITY_COUNT = tribe.getAbilities().length;
+
+		PLUGIN.getLogger().info(String.format(
+				"Registered tribe %s with %s attribute%s and %s abilit%s",
+				tribe.getPDCValue(),
+				ATTRIBUTE_COUNT,
+				MessageUtility.singularOrPlural(ATTRIBUTE_COUNT, "", "s"),
+				ABILITY_COUNT,
+				MessageUtility.singularOrPlural(ABILITY_COUNT, "y", "ies")
+		));
 	}
 
 	/**
@@ -70,5 +83,9 @@ public class TribeManager {
 			}
 		}
 		return null;
+	}
+
+	public AbilityManager getAbilityManager() {
+		return ABILITY_MANAGER;
 	}
 }
