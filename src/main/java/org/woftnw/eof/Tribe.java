@@ -174,4 +174,13 @@ public class Tribe {
 	public List<Attribute> getAttributes() {
 		return ATTRIBUTES;
 	}
+
+	/**
+	 * Get the abilities of this tribe.
+	 *
+	 * @return The abilities this tribe has.
+	 */
+	public List<Ability> getAbilities() {
+		return ABILITIES;
+	}
 }
