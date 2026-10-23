@@ -7,8 +7,8 @@ import org.bukkit.potion.PotionEffect;
 import java.util.List;
 
 public class Ability {
-	private TextComponent name;
-	private List<PotionEffect> selfEffects;
+	protected TextComponent name;
+	protected List<PotionEffect> selfEffects;
 
 	public Ability(TextComponent name, List<PotionEffect> selfEffects) {
 		this.name = name;
