@@ -15,6 +15,7 @@ public class ElytrasOfFire extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		playerUtility = new PlayerUtility(this);
+		tribeManager = new TribeManager(this);
 
 		// Register commands
 		this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, event -> {
