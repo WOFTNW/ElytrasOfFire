@@ -4,11 +4,9 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.jspecify.annotations.NonNull;
 import org.woftnw.eof.ElytrasOfFire;
-
-import static net.kyori.adventure.text.Component.text;
+import org.woftnw.eof.MessageUtility;
 
 /**
  * Represents a plugin command.
@@ -30,17 +28,24 @@ public abstract class PluginCommand {
 	}
 
 	/**
+	 * Respond to the sender with a message.
+	 *
+	 * @param context The command context.
+	 * @param message The message to send.
+	 */
+	public static void respond(@NonNull CommandContext<CommandSourceStack> context, String message) {
+		final Component MESSAGE = MessageUtility.buildMessage(message);
+		context.getSource().getSender().sendMessage(MESSAGE);
+	}
+
+	/**
 	 * Respond to the sender with a red error message.
 	 *
 	 * @param context The command context.
 	 * @param message The message to send.
 	 */
 	public static void respondError(@NonNull CommandContext<CommandSourceStack> context, String message) {
-
-		final Component MESSAGE = text()
-				.content(message).color(NamedTextColor.RED)
-						.build();
-
+		final Component MESSAGE = MessageUtility.buildErrorMessage(message);
 		context.getSource().getSender().sendMessage(MESSAGE);
 	}
 
