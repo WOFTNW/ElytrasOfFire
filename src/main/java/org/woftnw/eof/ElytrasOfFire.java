@@ -4,7 +4,6 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.woftnw.eof.attributes.Attribute;
 import org.woftnw.eof.command.RootCommand;
 
 public class ElytrasOfFire extends JavaPlugin {

@@ -1,4 +1,4 @@
-package org.woftnw.eof.attributes;
+package org.woftnw.eof;
 
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;

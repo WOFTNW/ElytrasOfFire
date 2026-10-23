@@ -3,7 +3,6 @@ package org.woftnw.eof;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 import org.jspecify.annotations.NonNull;
-import org.woftnw.eof.attributes.Attribute;
 
 import java.util.*;
 
