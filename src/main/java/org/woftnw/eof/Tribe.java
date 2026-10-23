@@ -102,6 +102,12 @@ public enum Tribe {
 					new Attribute(new PotionEffect(PotionEffectType.SPEED, 60, 2)),
 					new Attribute(new PotionEffect(PotionEffectType.STRENGTH, 60, 0))
 			)
+	),
+	HUMAN(
+			"Human",
+			"Human",
+			NamedTextColor.GRAY,
+			List.of()
 	);
 
 	private final String tribeName;
