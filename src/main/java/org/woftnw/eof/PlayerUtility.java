@@ -16,6 +16,9 @@ public class PlayerUtility {
 	// Player data is stored in the persistent data container (PDC).
 	// See https://docs.papermc.io/paper/dev/pdc/
 
+	private static final boolean ATTRIBUTES_ENABLED_DEFAULT = false;
+	private static final boolean ABILITIES_ENABLED_DEFAULT = false;
+
 	private final NamespacedKey TRIBE_KEY;
 	private final NamespacedKey ATTRIBUTES_ENABLED_KEY;
 	private final NamespacedKey ABILITIES_ENABLED_KEY;
@@ -50,7 +53,7 @@ public class PlayerUtility {
 	 */
 	public boolean arePlayerPlayerAttributesEnabled(@NonNull Player player) {
 		PersistentDataContainer persistentDataContainer = player.getPersistentDataContainer();
-		return persistentDataContainer.getOrDefault(ATTRIBUTES_ENABLED_KEY, PersistentDataType.BOOLEAN, false);
+		return persistentDataContainer.getOrDefault(ATTRIBUTES_ENABLED_KEY, PersistentDataType.BOOLEAN, ATTRIBUTES_ENABLED_DEFAULT);
 	}
 
 	/**
@@ -72,7 +75,7 @@ public class PlayerUtility {
 	 */
 	public boolean arePlayerPlayerAbilitiesEnabled(@NonNull Player player) {
 		PersistentDataContainer persistentDataContainer = player.getPersistentDataContainer();
-		return persistentDataContainer.getOrDefault(ABILITIES_ENABLED_KEY, PersistentDataType.BOOLEAN, false);
+		return persistentDataContainer.getOrDefault(ABILITIES_ENABLED_KEY, PersistentDataType.BOOLEAN, ABILITIES_ENABLED_DEFAULT);
 	}
 
 	/**
