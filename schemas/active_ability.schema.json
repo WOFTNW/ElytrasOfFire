@@ -33,7 +33,12 @@
         },
         "display_name": {
             "description": "The display name of the active ability.",
-            "$ref": "./_common/_strings.json#/$defs/natural_case"
+            "$ref": "#/$defs/display_name"
+        },
+        "ability_item": {
+            "description": "The physical item used to represent the ability in players' inventories.",
+            "pattern": "^minecraft:[^:0-9A-Z\\s]+$",
+            "$ref": "./_common/_strings.json#/$defs/namespace"
         },
         "activation_inputs": {
             "description": "The inputs required to activate the active ability.",
@@ -74,6 +79,57 @@
         },
         "use": {
             "type": "string"
+        }
+    },
+    "$defs": {
+        "display_name": {
+            "anyOf": [
+                {
+                    "$ref": "./_common/_strings.json#/$defs/natural_case"
+                },
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["text"],
+                    "default": {
+                        "text": "Display Name",
+                        "color": "white"
+                    },
+                    "properties": {
+                        "text": {
+                            "$ref": "./_common/_strings.json#/$defs/natural_case"
+                        },
+                        "color": {
+                            "anyOf": [
+                                {
+                                    "$ref": "./_common/_strings.json#/$defs/hex_code"
+                                },
+                                {
+                                    "type": "string",
+                                    "enum": [
+                                        "aqua",
+                                        "black",
+                                        "blue",
+                                        "dark_aqua",
+                                        "dark_blue",
+                                        "dark_gray",
+                                        "dark_green",
+                                        "dark_purple",
+                                        "dark_red",
+                                        "gold",
+                                        "gray",
+                                        "green",
+                                        "light_purple",
+                                        "red",
+                                        "white",
+                                        "yellow"
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
         }
     }
 }

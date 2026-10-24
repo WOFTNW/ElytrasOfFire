@@ -151,7 +151,7 @@
                 "minecraft:wind_charged",
                 "minecraft:wither"
             ],
-            "pattern": "^minecraft:[^:0-9A-Z]+$",
+            "pattern": "^minecraft:[^:0-9A-Z\\s]+$",
             "$ref": "./_common/_strings.json#/$defs/namespace"
         },
         "potion_effect_object": {

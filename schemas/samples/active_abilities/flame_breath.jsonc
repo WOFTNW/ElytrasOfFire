@@ -1,7 +1,8 @@
 {
     "$schema": "../../active_ability.schema.json",
     "id": "eof:flame_breath",
-    "display_name": "Flame Breath",
+    "display_name": { "text": "Flame Breath", "color": "red" },
+    "ability_item": "minecraft:gray_dye",
     "activation_inputs": ["sneak", "use"],
     "activation_type": "raycast",
     "cooldown": 10,

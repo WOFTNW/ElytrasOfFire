@@ -1,7 +1,8 @@
 {
     "$schema": "../../active_ability.schema.json",
     "id": "eof:tidal_wave",
-    "display_name": "Tidal Wave",
+    "display_name": { "text": "Tidal Wave", "color": "aqua" },
+    "ability_item": "minecraft:gray_dye",
     "activation_inputs": ["sneak", "use"],
     "activation_type": "raycast",
     "cooldown": 10,

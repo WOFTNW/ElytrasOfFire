@@ -1,7 +1,8 @@
 {
     "$schema": "../../active_ability.schema.json",
     "id": "eof:frost_breath",
-    "display_name": "Frost Breath",
+    "display_name": { "text": "Frost Breath", "color": "red" },
+    "ability_item": "minecraft:gray_dye",
     "activation_inputs": ["sneak", "use"],
     "activation_type": "raycast",
     "cooldown": 10,

@@ -11,12 +11,23 @@
         "namespace": {
             "type": "string",
             "minLength": 3,
-            "pattern": "^[^:0-9A-Z]+:[^:0-9A-Z]+$"
+            "allOf": [
+                { "pattern": "^[^:]+:[^:]+$" },
+                { "pattern": "^[a-z_-]+:[a-z_-]+$" }
+            ]
         },
         "snake_case": {
             "type": "string",
             "minLength": 1,
             "pattern": "^[a-z0-9_]+$"
+        },
+        "hex_code": {
+            "type": "string",
+            "minLength": 1,
+            "anyOf": [
+                { "pattern": "^#[0-9A-Fa-f]{6}$" },
+                { "pattern": "^#[0-9A-Fa-f]{8}$" }
+            ]
         }
     }
 }

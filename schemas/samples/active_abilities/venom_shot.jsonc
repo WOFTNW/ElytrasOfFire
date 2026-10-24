@@ -1,7 +1,8 @@
 {
     "$schema": "../../active_ability.schema.json",
     "id": "eof:venom_shot",
-    "display_name": "Venom Shot",
+    "display_name": { "text": "Venom Shot", "color": "white" },
+    "ability_item": "minecraft:gray_dye",
     "activation_inputs": ["sneak", "use"],
     "activation_type": "raycast",
     "cooldown": 10,
