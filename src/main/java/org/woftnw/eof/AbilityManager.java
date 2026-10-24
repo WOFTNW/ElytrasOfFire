@@ -1,6 +1,8 @@
 package org.woftnw.eof;
 
 import org.bukkit.Bukkit;
+import org.bukkit.damage.DamageType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -106,6 +108,13 @@ public class AbilityManager implements Listener {
 	public void onEntityDamageByEntity(@NonNull EntityDamageByEntityEvent event) {
 		if (!(event.getDamager() instanceof final Player PLAYER)) return;
 		final ItemStack ITEM = PLAYER.getInventory().getItemInMainHand();
+
+		// I have not tested whether this is specific to a melee attack or if this is also true on a player's arrow or
+		// other type of attack.
+		if (!event.getDamageSource().getDamageType().equals(DamageType.PLAYER_ATTACK)) return;
+
+		if (!(event.getEntity() instanceof final LivingEntity ENTITY)) return;
+		PLUGIN.getPlayerUtility().setPlayerAttackTarget(PLAYER, ENTITY);
 
 		for (final Ability ABILITY : ABILITIES) {
 			if (!(ABILITY instanceof ActiveAbility ability)) continue;
