@@ -20,7 +20,7 @@ public class ActiveAbility extends CooldownAbility {
 	 * Create a new ActiveAbility
 	 *
 	 * @param name                   The name of the ability.
-	 * @param effects                The effects applied to the user.
+	 * @param effects                The effects to apply on activation. May be empty.
 	 * @param activationItemMaterial The material for the activation item or <code>null</code> for the default.
 	 * @param itemModel              The item model key for the activation item or <code>null</code> if none.
 	 * @param tribe                  The tribe this ability is for.

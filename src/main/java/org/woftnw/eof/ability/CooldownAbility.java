@@ -24,13 +24,13 @@ public class CooldownAbility extends Ability {
 	 * You probably want to use a subclass like {@link ActiveAbility}. A generic CooldownAbility will not be of much use.
 	 * </p>
 	 *
-	 * @param name        The display name of this ability.
-	 * @param selfEffects The effects to apply to the user on activation. May be empty.
-	 * @param cooldown    The number of ticks after activation until the ability can be activated again.
+	 * @param name     The display name of this ability.
+	 * @param effects  The effects to apply on activation. May be empty.
+	 * @param cooldown The number of ticks after activation until the ability can be activated again.
 	 * @see ActiveAbility
 	 */
-	public CooldownAbility(TextComponent name, AbilityEffect[] selfEffects, int cooldown) {
-		super(name, selfEffects);
+	public CooldownAbility(TextComponent name, AbilityEffect[] effects, int cooldown) {
+		super(name, effects);
 		this.COOLDOWN = cooldown;
 		this.lastUsed = 0;
 	}
@@ -41,12 +41,12 @@ public class CooldownAbility extends Ability {
 	 * You probably want to use a subclass like {@link ActiveAbility}. A generic CooldownAbility will not be of much use.
 	 * </p>
 	 *
-	 * @param name        The display name of this ability.
-	 * @param selfEffects The effects to apply to the user on activation. May be empty.
+	 * @param name    The display name of this ability.
+	 * @param effects The effects to apply on activation. May be empty.
 	 * @see ActiveAbility
 	 */
-	public CooldownAbility(TextComponent name, AbilityEffect[] selfEffects) {
-		this(name, selfEffects, DEFAULT_COOLDOWN);
+	public CooldownAbility(TextComponent name, AbilityEffect[] effects) {
+		this(name, effects, DEFAULT_COOLDOWN);
 	}
 
 	/**
