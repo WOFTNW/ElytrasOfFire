@@ -7,7 +7,7 @@ import org.bukkit.potion.PotionEffect;
 import java.util.List;
 
 /**
- * Represents an ability that is activated using an item.
+ * Represents a {@link CooldownAbility} that is activated using an item.
  */
 public class ActiveAbility extends CooldownAbility {
 	private final ItemStack ACTIVATION_ITEM;
