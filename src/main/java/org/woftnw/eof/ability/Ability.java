@@ -5,13 +5,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.woftnw.eof.exception.AbilityActivationException;
 
-import java.util.List;
-
 public class Ability {
 	protected TextComponent name;
-	protected List<PotionEffect> selfEffects;
+	protected PotionEffect[] selfEffects;
 
-	public Ability(TextComponent name, List<PotionEffect> selfEffects) {
+	public Ability(TextComponent name, PotionEffect[] selfEffects) {
 		this.name = name;
 		this.selfEffects = selfEffects;
 	}
