@@ -4,9 +4,9 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.jspecify.annotations.Nullable;
 import org.jspecify.annotations.NonNull;
+import org.woftnw.eof.exception.NotEnoughAbilitySlotsException;
 
 /**
  * Contains useful player utilities. This should only be created once on enable by this plugin.
@@ -64,7 +64,14 @@ public class PlayerUtility {
 	 * @param player The player whose state to change.
 	 * @param enabled Whether to enable abilities.
 	 */
-	public void setPlayerAbilitiesEnabled(@NonNull Player player, boolean enabled) {
+	public void setPlayerAbilitiesEnabled(@NonNull Player player, boolean enabled) throws NotEnoughAbilitySlotsException {
+		AbilityManager abilityManager = PLUGIN.getTribeManager().getAbilityManager();
+		if (enabled) {
+			abilityManager.givePlayerAbilities(player);
+		} else {
+			abilityManager.removeAbilitiesFromInventory(player.getInventory());
+		}
+
 		PersistentDataContainer persistentDataContainer = player.getPersistentDataContainer();
 		persistentDataContainer.set(ABILITIES_ENABLED_KEY, PersistentDataType.BOOLEAN, enabled);
 	}
