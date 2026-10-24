@@ -1,9 +1,9 @@
 package org.woftnw.eof.ability;
 
 import net.kyori.adventure.text.TextComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
-import org.jspecify.annotations.NonNull;
 import org.woftnw.eof.exception.AbilityActivationException;
 import org.woftnw.eof.exception.AbilityCooldownException;
 
@@ -25,20 +25,21 @@ public class CooldownAbility extends Ability {
 		this(name, selfEffects, DEFAULT_COOLDOWN);
 	}
 
-	public boolean isOnCooldown(@NonNull Player player) {
-		final long GAME_TIME = player.getWorld().getGameTime();
-		return (getCoolDownEndTime(player) < GAME_TIME);
+	public boolean isOnCooldown() {
+		final long GAME_TIME = Bukkit.getWorlds().getFirst().getGameTime();
+		return (getCoolDownEndTime() > GAME_TIME);
 	}
 
-	public long getCoolDownEndTime(@NonNull Player player) {
+	public long getCoolDownEndTime() {
 		return (lastUsed + COOLDOWN);
 	}
 
 	@Override
 	public void activate(Player player) throws AbilityActivationException {
-		if (isOnCooldown(player)) {
-			throw new AbilityCooldownException(getCoolDownEndTime(player));
+		if (isOnCooldown()) {
+			throw new AbilityCooldownException(getCoolDownEndTime());
 		}
+		lastUsed = Bukkit.getWorlds().getFirst().getGameTime();
 		super.activate(player);
 	}
 }
