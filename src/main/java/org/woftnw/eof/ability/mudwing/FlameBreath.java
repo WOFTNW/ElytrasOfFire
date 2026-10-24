@@ -16,7 +16,7 @@ import static net.kyori.adventure.text.Component.text;
 
 public class FlameBreath extends RayCastAbility {
 	private static final TextComponent NAME = text("Flame Breath").color(NamedTextColor.RED);
-	private static final List<PotionEffect> SELF_EFFECTS = List.of();
+	private static final PotionEffect[] SELF_EFFECTS = new PotionEffect[0];
 	private static final Activation ACTIVATION_METHOD = Activation.SNEAK_USE;
 	private static final Particle PARTICLE = Particle.FLAME;
 

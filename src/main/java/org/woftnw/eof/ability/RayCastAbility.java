@@ -36,7 +36,7 @@ public class RayCastAbility extends ActiveAbility {
 	 * @param activationMethod The activation method.
 	 * @param particle         The particle to show in the activation.
 	 */
-	public RayCastAbility(TextComponent name, List<PotionEffect> selfEffects, ItemStack activationItem, Activation activationMethod, Particle particle) {
+	public RayCastAbility(TextComponent name, PotionEffect[] selfEffects, ItemStack activationItem, Activation activationMethod, Particle particle) {
 		super(name, selfEffects, activationItem, activationMethod, ARCHETYPE);
 		PARTICLE = particle;
 	}

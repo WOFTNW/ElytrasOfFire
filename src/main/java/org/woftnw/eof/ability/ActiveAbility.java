@@ -22,7 +22,7 @@ public class ActiveAbility extends CooldownAbility {
 	 * @param activationItem The item used for activation.
 	 * @param activationMethod The activation method.
 	 */
-	public ActiveAbility(TextComponent name, List<PotionEffect> selfEffects, ItemStack activationItem, Activation activationMethod, Archetype archetype) {
+	public ActiveAbility(TextComponent name, PotionEffect[] selfEffects, ItemStack activationItem, Activation activationMethod, Archetype archetype) {
 		super(name, selfEffects);
 		ACTIVATION_ITEM = activationItem;
 		ACTIVATION_METHOD = activationMethod;
