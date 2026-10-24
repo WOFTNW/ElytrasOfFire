@@ -4,8 +4,6 @@ import net.kyori.adventure.text.TextComponent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
-import java.util.List;
-
 /**
  * Represents a {@link CooldownAbility} that is activated using an item.
  */
