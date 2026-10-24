@@ -51,10 +51,9 @@ public class AbilityItemUtility {
 		final List<Component> LINES = new ArrayList<>();
 
 		for (final AbilityEffect EFFECT : effects) {
-			Component DESCRIPTION = EFFECT.getDescription();
-			Component FIRST_COMPONENT = DESCRIPTION.children().getFirst();
-			TextColor color = FIRST_COMPONENT.color();
-			TextComponent LINE = text("• ").color(color).decoration(TextDecoration.ITALIC, false)
+			final Component DESCRIPTION = EFFECT.getDescription();
+			final TextColor COLOR = EFFECT.getTarget().getTextColor();
+			final TextComponent LINE = text("• ").color(COLOR).decoration(TextDecoration.ITALIC, false)
 					.append(DESCRIPTION).decoration(TextDecoration.ITALIC, false);
 			LINES.add(LINE);
 		}
