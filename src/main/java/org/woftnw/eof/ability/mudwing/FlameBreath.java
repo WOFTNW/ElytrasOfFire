@@ -30,7 +30,6 @@ public class FlameBreath extends RayCastAbility {
 	@Override
 	public void activate(Player player) throws AbilityActivationException {
 		super.activate(player);
-		super.createParticles(player);
 		List<Player> hitPlayers = super.getHitPlayers(player);
 		// TODO: remove frostbite
 
