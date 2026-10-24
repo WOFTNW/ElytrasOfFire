@@ -10,8 +10,11 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+import org.woftnw.eof.ability.Ability;
 import org.woftnw.eof.ability.Activation;
 import org.woftnw.eof.ability.Archetype;
+import org.woftnw.eof.ability.effect.AbilityEffect;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +28,7 @@ import static net.kyori.adventure.text.Component.text;
  */
 public class AbilityItemUtility {
 	final static TextColor LABEL_COLOR = NamedTextColor.DARK_GRAY;
-	final static TextColor NEGATIVE_EFFECT_COLOR = NamedTextColor.RED;
-	final static TextColor POSITIVE_EFFECT_COLOR = NamedTextColor.GREEN;
+	final static Material DEFAULT_MATERIAL = Material.GRAY_DYE;
 
 	private static @NonNull Component label(String label) {
 		return text(String.format("- %s:", label)).color(LABEL_COLOR).decorate(TextDecoration.ITALIC);
@@ -45,19 +47,16 @@ public class AbilityItemUtility {
 		return message;
 	}
 
-	private static @NonNull List<Component> effectList(Map<String, Long> effects, boolean negative) {
+	private static @NonNull List<Component> effectList(AbilityEffect @NonNull [] effects) {
 		final List<Component> LINES = new ArrayList<>();
-		TextColor color = POSITIVE_EFFECT_COLOR;
-		if (negative) color = NEGATIVE_EFFECT_COLOR;
 
-		for (String effectDescriptor : effects.keySet()) {
-			TextComponent component = text(effectDescriptor).color(color).decoration(TextDecoration.ITALIC, false);
-			final Long EFFECT_LENGTH = effects.get(String.format("• %s", effectDescriptor));
-			if (EFFECT_LENGTH != 0) {
-				final long EFFECT_LENGTH_SECS = Math.round((float) EFFECT_LENGTH / 20);
-				component = component.append(text(String.format(" (%ss)", EFFECT_LENGTH_SECS)).color(MessageUtility.INFO_TEXT_COLOR));
-			}
-			LINES.add(component);
+		for (final AbilityEffect EFFECT : effects) {
+			Component DESCRIPTION = EFFECT.getDescription();
+			Component FIRST_COMPONENT = DESCRIPTION.children().getFirst();
+			TextColor color = FIRST_COMPONENT.color();
+			TextComponent LINE = text("• ").color(color).decoration(TextDecoration.ITALIC, false)
+					.append(DESCRIPTION).decoration(TextDecoration.ITALIC, false);
+			LINES.add(LINE);
 		}
 		return LINES;
 	}
@@ -70,23 +69,22 @@ public class AbilityItemUtility {
 	 * @param tribe The tribe this ability belongs to.
 	 * @param archetype The archetype of the ability.
 	 * @param activation The activation type of the ability.
-	 * @param negativeEffects The negative effects and their lengths as a <code>Map<String, Long></code>.
-	 * @param positiveEffects The positive effects and their lengths as a <code>Map<String, Long></code>.
+	 * @param effects The AbilityEffects.
 	 * @param itemModel The path of the custom item model to use.
 	 * @param cooldown The cooldown length of the ability.
 	 * @return The resulting ItemStack.
 	 */
 	public static @NonNull ItemStack createItem(
-			Material material,
-			TextComponent name,
+			@Nullable Material material,
+			@NonNull TextComponent name,
 			@NonNull Tribe tribe,
 			@NonNull Archetype archetype,
-			Activation activation,
-			@NonNull Map<String, Long> negativeEffects,
-			Map<String, Long> positiveEffects,
-			String itemModel,
-			long cooldown
+			@NonNull Activation activation,
+			@NonNull AbilityEffect[] effects,
+			@Nullable String itemModel,
+			int cooldown
 	) {
+		if (material == null) material = DEFAULT_MATERIAL;
 		final ItemStack ITEM_STACK = new ItemStack(material, 1);
 
 		ItemMeta itemMeta = ITEM_STACK.getItemMeta();
@@ -100,11 +98,9 @@ public class AbilityItemUtility {
 		LORE.add(text(archetype.getName()).color(MessageUtility.INFO_TEXT_COLOR).decoration(TextDecoration.ITALIC, false));
 		LORE.add(label("Activation"));
 		LORE.add(activationComponent(activation));
-		if (!negativeEffects.isEmpty() && !positiveEffects.isEmpty()) {
+		if (effects.length != 0) {
 			LORE.add(label("Effects"));
-
-			LORE.addAll(effectList(negativeEffects, true));
-			LORE.addAll(effectList(positiveEffects, false));
+			LORE.addAll(effectList(effects));
 		}
 		if (cooldown != 0) {
 			LORE.add(label("Cooldown"));
@@ -113,7 +109,7 @@ public class AbilityItemUtility {
 		}
 
 		itemMeta.lore(LORE);
-		itemMeta.setItemModel(NamespacedKey.fromString(itemModel));
+		if (itemModel != null) itemMeta.setItemModel(NamespacedKey.fromString(itemModel));
 
 		ITEM_STACK.setItemMeta(itemMeta);
 
@@ -128,21 +124,19 @@ public class AbilityItemUtility {
 	 * @param tribe The tribe this ability belongs to.
 	 * @param archetype The archetype of the ability.
 	 * @param activation The activation type of the ability.
-	 * @param negativeEffects The negative effects and their lengths as a <code>Map<String, Long></code>.
-	 * @param positiveEffects The positive effects and their lengths as a <code>Map<String, Long></code>.
+	 * @param effects The AbilityEffects.
 	 * @param itemModel The path of the custom item model to use.
 	 * @return The resulting ItemStack.
 	 */
 	public static @NonNull ItemStack createItem(
-			Material material,
-			TextComponent name,
+			@Nullable Material material,
+			@NonNull TextComponent name,
 			@NonNull Tribe tribe,
 			@NonNull Archetype archetype,
-			Activation activation,
-			@NonNull Map<String, Long> negativeEffects,
-			Map<String, Long> positiveEffects,
-			String itemModel
+			@NonNull Activation activation,
+			@NonNull AbilityEffect[] effects,
+			@Nullable String itemModel
 	) {
-		return createItem(material, name, tribe, archetype, activation, negativeEffects, positiveEffects, itemModel, 0);
+		return createItem(material, name, tribe, archetype, activation, effects, itemModel, 0);
 	}
 }
