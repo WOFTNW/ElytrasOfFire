@@ -10,19 +10,19 @@ import java.util.Objects;
 
 public class TribeManager {
 	private final ArrayList<Tribe> TRIBES;
-	private final AttributeScheduler ATTRIBUTE_SCHEDULER;
+	private final AttributeManager ATTRIBUTE_MANAGER;
 	private final AbilityManager ABILITY_MANAGER;
 	private final ElytrasOfFire PLUGIN;
 
 	public TribeManager(ElytrasOfFire plugin) {
 		TRIBES = new ArrayList<>();
-		ATTRIBUTE_SCHEDULER = new AttributeScheduler(plugin);
+		ATTRIBUTE_MANAGER = new AttributeManager(plugin);
 		ABILITY_MANAGER = new AbilityManager(plugin);
 		PLUGIN = plugin;
 	}
 
 	public void disable() {
-		ATTRIBUTE_SCHEDULER.disable();
+		ATTRIBUTE_MANAGER.disable();
 	}
 
 	/**
@@ -33,7 +33,7 @@ public class TribeManager {
 	public void register(Tribe tribe) {
 		TRIBES.add(tribe);
 		for (Attribute attribute : tribe.getAttributes()) {
-			ATTRIBUTE_SCHEDULER.registerAttribute(tribe, attribute);
+			ATTRIBUTE_MANAGER.registerAttribute(tribe, attribute);
 		}
 		for (Ability ability : tribe.getAbilities()) {
 			ABILITY_MANAGER.registerAbility(ability);
@@ -58,7 +58,7 @@ public class TribeManager {
 	 * @param attribute The attribute to add.
 	 */
 	public void registerAttribute(Tribe tribe, Attribute attribute) {
-		ATTRIBUTE_SCHEDULER.registerAttribute(tribe, attribute);
+		ATTRIBUTE_MANAGER.registerAttribute(tribe, attribute);
 	}
 
 	/**
@@ -87,5 +87,9 @@ public class TribeManager {
 
 	public AbilityManager getAbilityManager() {
 		return ABILITY_MANAGER;
+	}
+
+	public AttributeManager getAttributeManager() {
+		return ATTRIBUTE_MANAGER;
 	}
 }

@@ -82,22 +82,27 @@ public class AttributeModifierAttribute extends Attribute {
 	public void tick(Player player) {
 		if (PREDICATE == null) return;
 
-		final boolean TEST = PREDICATE.test(player);
-		if (TEST && !lastTest) {
+		if (meetsPredicate(player)) {
 			apply(player);
-		} else if (!TEST && lastTest) {
+		} else {
 			unapply(player);
 		}
 	}
 
 	@Override
-	public void apply(@NonNull Player player) {
-		AttributeInstance attribute = Objects.requireNonNull(player.getAttribute(ATTRIBUTE_TYPE));
-		attribute.addModifier(ATTRIBUTE_MODIFIER);
+	public void apply(@NonNull Player player) throws IllegalArgumentException {
+		if (meetsPredicate(player)) {
+			AttributeInstance attribute = Objects.requireNonNull(player.getAttribute(ATTRIBUTE_TYPE));
+			try {
+				attribute.addModifier(ATTRIBUTE_MODIFIER);
+			} catch (IllegalArgumentException e) {
+				// Player already has this attribute applied.
+			}
+		}
 	}
 
 	@Override
-	public void unapply(@NonNull Player player) {
+	public void unapply(@NonNull Player player) throws IllegalArgumentException {
 		AttributeInstance attribute = Objects.requireNonNull(player.getAttribute(ATTRIBUTE_TYPE));
 		attribute.removeModifier(ATTRIBUTE_MODIFIER);
 	}

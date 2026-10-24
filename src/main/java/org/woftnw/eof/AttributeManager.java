@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 import org.jspecify.annotations.NonNull;
 import org.woftnw.eof.attribute.Attribute;
+import org.woftnw.eof.exception.NoTribeException;
 
 import java.util.*;
 
@@ -61,6 +62,33 @@ public class AttributeManager {
 					if (playerUtility.arePlayerPlayerAttributesEnabled(player)) attribute.tick(player);
 				}
 			}
+		}
+	}
+
+	public void apply(@NonNull Player player) throws NoTribeException {
+		PlayerUtility playerUtility = PLUGIN.getPlayerUtility();
+
+		final Tribe TRIBE = playerUtility.getPlayerTribe(player);
+		if (TRIBE == null) {
+			throw new NoTribeException();
+		}
+		final List<Attribute> TRIBE_ATTRIBUTES = attributes.get(TRIBE);
+		for (int i = 0; i < TRIBE_ATTRIBUTES.size(); i++) {
+			Attribute ATTRIBUTE = TRIBE_ATTRIBUTES.get(i);
+			try {
+				ATTRIBUTE.apply(player);
+			} catch (IllegalArgumentException e) {
+				PLUGIN.getLogger().warning(String.format("Tried to apply attribute %s of tribe %s, but the target already has it.", i, TRIBE.getPDCValue()));
+			}
+		}
+	}
+
+	public void unapply(@NonNull Player player) {
+		PlayerUtility playerUtility = PLUGIN.getPlayerUtility();
+
+		final List<Attribute> TRIBE_ATTRIBUTES = attributes.get(playerUtility.getPlayerTribe(player));
+		for (final Attribute ATTRIBUTE : TRIBE_ATTRIBUTES) {
+			ATTRIBUTE.unapply(player);
 		}
 	}
 }

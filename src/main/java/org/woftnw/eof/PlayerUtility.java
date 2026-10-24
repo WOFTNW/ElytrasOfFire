@@ -7,6 +7,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jspecify.annotations.Nullable;
 import org.jspecify.annotations.NonNull;
+import org.woftnw.eof.exception.NoTribeException;
 import org.woftnw.eof.exception.NotEnoughAbilitySlotsException;
 
 import java.util.ArrayList;
@@ -64,9 +65,16 @@ public class PlayerUtility {
 	 * @param player The player whose state to change.
 	 * @param enabled Whether to enable attributes.
 	 */
-	public void setPlayerAttributesEnabled(@NonNull Player player, boolean enabled) {
-		PersistentDataContainer persistentDataContainer = player.getPersistentDataContainer();
-		persistentDataContainer.set(ATTRIBUTES_ENABLED_KEY, PersistentDataType.BOOLEAN, enabled);
+	public void setPlayerAttributesEnabled(@NonNull Player player, boolean enabled) throws NoTribeException {
+		final PersistentDataContainer PDC = player.getPersistentDataContainer();
+		PDC.set(ATTRIBUTES_ENABLED_KEY, PersistentDataType.BOOLEAN, enabled);
+
+		final AttributeManager ATTRIBUTE_MANAGER = PLUGIN.getTribeManager().getAttributeManager();
+		if (enabled) {
+			ATTRIBUTE_MANAGER.apply(player);
+		} else {
+			ATTRIBUTE_MANAGER.unapply(player);
+		}
 	}
 
 	/**

@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.jspecify.annotations.NonNull;
 import org.woftnw.eof.ElytrasOfFire;
 import org.woftnw.eof.PlayerUtility;
+import org.woftnw.eof.exception.NoTribeException;
 
 public class AttributesCommand extends PluginCommand {
 
@@ -36,7 +37,12 @@ public class AttributesCommand extends PluginCommand {
 		PlayerUtility playerUtility = PLUGIN.getPlayerUtility();
 		boolean currentlyEnabled = playerUtility.arePlayerPlayerAttributesEnabled(player);
 		boolean newState = !currentlyEnabled;
-		playerUtility.setPlayerAttributesEnabled(player, newState);
+		try {
+			playerUtility.setPlayerAttributesEnabled(player, newState);
+		} catch (NoTribeException e) {
+			respondError(context, "You are not part of a tribe.");
+			return 0;
+		}
 
 		String newStateDescriptor;
 		if (newState) newStateDescriptor = "on";

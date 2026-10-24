@@ -54,7 +54,13 @@ public abstract class Attribute {
 	 *
 	 * @param player The player to apply to.
 	 */
-	public abstract void tick(Player player);
+	public void tick(Player player) {
+		if (meetsPredicate(player)) {
+			apply(player);
+		} else {
+			unapply(player);
+		}
+	};
 
 	/**
 	 * Apply this attribute. This is only used when the player changes tribes or activates attributes.

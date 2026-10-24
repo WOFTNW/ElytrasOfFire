@@ -47,14 +47,6 @@ public class PotionEffectAttribute extends Attribute {
 		this(effect, null);
 	}
 
-	public void tick(Player player) {
-		boolean test = PREDICATE == null || PREDICATE.test(player);
-		if ((!REFRESH_ON_PREDICATE || !lastTest) && test) {
-			player.addPotionEffect(EFFECT);
-		}
-		lastTest = test;
-	}
-
 	@Override
 	public void apply(Player player) {
 		// nothing to do
