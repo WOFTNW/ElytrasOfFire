@@ -77,6 +77,19 @@ public class PlayerUtility {
 	}
 
 	/**
+	 * Disable a player's tribal abilities.
+	 *
+	 * @param player The player whose state to change.
+	 */
+	public void disablePlayerAbilities(@NonNull Player player) {
+		AbilityManager abilityManager = PLUGIN.getTribeManager().getAbilityManager();
+		abilityManager.removeAbilitiesFromInventory(player.getInventory());
+
+		PersistentDataContainer persistentDataContainer = player.getPersistentDataContainer();
+		persistentDataContainer.set(ABILITIES_ENABLED_KEY, PersistentDataType.BOOLEAN, false);
+	}
+
+	/**
 	 * Check whether a player's tribal abilities are enabled.
 	 *
 	 * @param player The player whose state to get.

@@ -1,5 +1,6 @@
 package org.woftnw.eof;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,14 +18,17 @@ import org.woftnw.eof.exception.NotEnoughAbilitySlotsException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class AbilityManager implements Listener {
 	private static final int ABILITY_LIMIT = 3;
 
+	private final ElytrasOfFire PLUGIN;
 	private final List<Ability> ABILITIES;
 	private final PlayerUtility PLAYER_UTILITY;
 
 	public AbilityManager(@NonNull ElytrasOfFire plugin) {
+		PLUGIN = plugin;
 		ABILITIES = new ArrayList<>();
 		PLAYER_UTILITY = plugin.getPlayerUtility();
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
@@ -118,11 +122,23 @@ public class AbilityManager implements Listener {
 	@EventHandler
 	public void onInventoryClick(@NonNull InventoryClickEvent event) {
 		final ItemStack ITEM = event.getCurrentItem();
+		if (!(event.getWhoClicked() instanceof final Player PLAYER)) return;
 
 		for (final Ability ABILITY : ABILITIES) {
 			if (!(ABILITY instanceof ActiveAbility ability)) continue;
 			if (!ability.getActivationItem().equals(ITEM)) continue;
 			event.setCancelled(true);
+
+			Bukkit.getScheduler().runTask(PLUGIN, () -> {
+				removeAbilitiesFromInventory(Objects.requireNonNull(event.getClickedInventory()));
+				try {
+					givePlayerAbilities(PLAYER);
+				} catch (NotEnoughAbilitySlotsException e) {
+					// This should not happen.
+					PLUGIN.getLogger().warning("Failed to reset player abilities after inventory click.");
+					PLUGIN.getPlayerUtility().disablePlayerAbilities(PLAYER);
+				}
+			});
 		}
 	}
 
