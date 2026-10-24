@@ -1,0 +1,34 @@
+{
+    "$schema": "../../active_ability.schema.json",
+    "id": "eof:tidal_wave",
+    "display_name": "Tidal Wave",
+    "activation_inputs": ["sneak", "use"],
+    "activation_type": "raycast",
+    "cooldown": 10,
+    "raycast_data": {
+        // count: integer >0 is deferred
+        // spread: number >0 is deferred
+        // arc: number >0 is deferred
+        "range": 10,
+        "effects": [
+            {
+                "effect_type": "damage",
+                "damage": 2,
+                "target": "raycast"
+            },
+            {
+                "effect_type": "potion",
+                "potion_effect": { "id": "minecraft:mining_fatigue" },
+                "duration": { "unit": "ticks", "amount": 80 },
+                "target": "raycast"
+            },
+            {
+                "effect_type": "potion",
+                "potion_effect": { "id": "minecraft:slowness" },
+                "duration": { "unit": "ticks", "amount": 80 },
+                "target": "raycast"
+            }
+            // Torrent I and II apply Poison II for 3s and IV for 3s respectively, but that's a conditional i don't feel like writing.
+        ]
+    }
+}

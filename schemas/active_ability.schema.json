@@ -38,7 +38,7 @@
             "description": "The type of activation this ability emits.",
             "type": "string",
             "default": "self",
-            "enum": ["raycast", "aura", "self", "nearest"],
+            "enum": ["raycast", "aura", "self", "target", "nearest"],
             "$comment": "'raycast' is... a raycast and will require 'raycast_data'; 'aura' is a spherical emanation and will require 'radius' (or... i guess just 'range' since it represents the same idea); 'self' will only affect the user; and 'nearest' will require 'count', which represents targeting the x nearest valid entities with the ability."
         },
         "cooldown": {
@@ -47,6 +47,26 @@
             "type": "number",
             "minimum": 0
         },
-        "raycast_data": true
+        "raycast_data": {
+            "description": "The raycast data.",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["range"],
+            "properties": {
+                "range": {
+                    "description": "The distance the raycast will travel in blocks.",
+                    "type": "number",
+                    "minimum": 0,
+                    "default": 10
+                },
+                "effects": {
+                    "description": "An effect or array of effects to apply.",
+                    "$ref": "./effect.schema.json"
+                }
+            }
+        },
+        "use": {
+            "type": "string"
+        }
     }
 }

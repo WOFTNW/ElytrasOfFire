@@ -1,16 +1,32 @@
 {
+    "$schema": "../../active_ability.schema.json",
     "id": "eof:flame_breath",
     "display_name": "Flame Breath",
-    "activation_inputs": ["sneak", "attack"],
+    "activation_inputs": ["sneak", "use"],
     "activation_type": "raycast",
     "cooldown": 10,
     "raycast_data": {
         "range": 12,
-        "damage": 3.2,
         "effects": [
             {
                 "effect_type": "ignite",
-                "duration": 10
+                "duration": { "unit": "ticks", "amount": 200 },
+                "target": "raycast"
+            },
+            {
+                "effect_type": "damage",
+                "damage": 2.5,
+                "target": "raycast"
+            },
+            {
+                "effect_type": "data",
+                "remove_data": "eof:frostbite",
+                "target": "raycast"
+            },
+            {
+                "effect_type": "data",
+                "remove_data": "eof:frostbite",
+                "target": "self"
             }
         ]
     }

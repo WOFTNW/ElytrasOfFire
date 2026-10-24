@@ -1,0 +1,19 @@
+{
+    "$schema": "../../active_ability.schema.json",
+    "id": "eof:venom_shot",
+    "display_name": "Venom Shot",
+    "activation_inputs": ["sneak", "use"],
+    "activation_type": "raycast",
+    "cooldown": 10,
+    "raycast_data": {
+        "range": 12,
+        "effects": [
+            {
+                "effect_type": "potion",
+                "potion_effect": { "id": "minecraft:wither", "amplifier": 2 },
+                "duration": { "unit": "ticks", "amount": 60 },
+                "target": "raycast"
+            }
+        ]
+    }
+}

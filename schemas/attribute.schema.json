@@ -3,9 +3,13 @@
     "type": "object",
     "additionalProperties": false,
     "required": ["attribute_type"],
-    "if": { "properties": { "attribute_type": { "pattern": "potion" } } },
-    "then": { "required": ["potion_effect", "amplifier"] },
-    "else": { "not": { "required": ["potion_effect", "amplifier"] } },
+    "allOf": [
+        {
+            "if": { "properties": { "attribute_type": { "const": "potion" } } },
+            "then": { "required": ["potion_effect"] },
+            "else": { "not": { "required": ["potion_effect"] } }
+        }
+    ],
     "properties": {
         "attribute_type": {
             "description": "The type of attribute to apply.",
@@ -14,34 +18,11 @@
         },
         "potion_effect": {
             "description": "The potion effect to apply.",
-            "pattern": "^minecraft:[^:0-9A-Z]+$",
-            "$ref": "./_common/_strings.json#/$defs/namespace"
-        },
-        "amplifier": {
-            "description": "The amplifier of the potion effect.",
-            "$ref": "./_common/_numbers.json#/$defs/nonnegative_int"
+            "$ref": "./effect.schema.json#/$defs/potion_effect"
         },
         "duration": {
-            "description": "The amount of time the potion effect is applied for. If this is a number, it represents the amount of seconds.",
-            "anyOf": [
-                {
-                    "$ref": "./_common/_numbers.json#/$defs/positive_int"
-                },
-                {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "required": ["unit", "amount"],
-                    "properties": {
-                        "unit": {
-                            "type": "string",
-                            "enum": ["seconds", "ticks"]
-                        },
-                        "amount": {
-                            "$ref": "./_common/_numbers.json#/$defs/positive_int"
-                        }
-                    }
-                }
-            ]
+            "description": "The amount of time the effect is applied for. If this is a number, it represents the amount of seconds.",
+            "$ref": "./_common/duration.schema.json"
         },
         "predicates": {
             "description": "A predicate or list of predicates that must be met to activate the attribute.",

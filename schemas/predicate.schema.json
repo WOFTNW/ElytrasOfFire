@@ -81,7 +81,9 @@
                 "is_flying",
                 "is_gliding",
                 "is_on_fire",
-                "is_swimming"
+                "is_swimming",
+                "is_in_water",
+                "is_under_water"
             ]
         },
         "time": {

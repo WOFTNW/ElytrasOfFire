@@ -1,0 +1,42 @@
+{
+    "$schema": "../../active_ability.schema.json",
+    "id": "eof:frost_breath",
+    "display_name": "Frost Breath",
+    "activation_inputs": ["sneak", "use"],
+    "activation_type": "raycast",
+    "cooldown": 10,
+    "raycast_data": {
+        "range": 13,
+        "effects": [
+            {
+                "effect_type": "damage",
+                "damage": 4
+            },
+            {
+                "effect_type": "potion",
+                "potion_effect": {
+                    "id": "minecraft:mining_fatigue",
+                    "amplifier": 1
+                },
+                "duration": { "unit": "ticks", "amount": 100 },
+                "target": "raycast"
+            },
+            {
+                "effect_type": "potion",
+                "potion_effect": { "id": "minecraft:slowness", "amplifier": 1 },
+                "duration": { "unit": "ticks", "amount": 100 },
+                "target": "raycast"
+            },
+            {
+                "effect_type": "potion",
+                "potion_effect": { "id": "minecraft:weakness" },
+                "duration": { "unit": "ticks", "amount": 100 },
+                "target": "raycast"
+            },
+            {
+                "effect_type": "data",
+                "apply_data": "eof:frostbite"
+            }
+        ]
+    }
+}

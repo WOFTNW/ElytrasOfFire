@@ -6,40 +6,31 @@
     "attributes": [
         {
             "attribute_type": "potion",
-            "potion_effect": "minecraft:strength",
-            "amplifier": 1
+            "potion_effect": { "id": "minecraft:strength", "amplifier": 1 }
         },
         {
             "attribute_type": "potion",
             "potion_effect": "minecraft:speed",
-            "amplifier": 0,
             "predicates": [
-                {
-                    "predicate_type": "state",
-                    "state": "is_swimming"
-                }
+                { "predicate_type": "state", "state": "is_under_water" }
             ]
         },
         {
             "attribute_type": "potion",
             "potion_effect": "minecraft:water_breathing",
-            "amplifier": 0,
             "duration": {
                 "amount": 150,
                 "unit": "seconds"
             },
             "predicates": [
-                {
-                    "predicate_type": "state",
-                    "state": "is_swimming"
-                }
+                { "predicate_type": "state", "state": "is_under_water" }
             ]
         }
     ],
     "active_abilities": [
         {
-            "use": "eof:flame_breath",
-            "overrides": {}
+            "use": "eof:flame_breath"
+            // "overrides": {}
         }
     ],
     "passive_abilities": []
