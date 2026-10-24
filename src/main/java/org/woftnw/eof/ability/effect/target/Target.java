@@ -1,5 +1,6 @@
 package org.woftnw.eof.ability.effect.target;
 
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.entity.*;
 
 import java.util.Collection;
@@ -18,4 +19,6 @@ public interface Target {
 	 * @return The Players affected.
 	 */
 	Collection<LivingEntity> getTargets(Player user);
+
+	TextColor getTextColor();
 }

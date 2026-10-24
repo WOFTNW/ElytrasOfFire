@@ -1,5 +1,7 @@
 package org.woftnw.eof.ability.effect.target;
 
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -30,5 +32,10 @@ public class MeleeTarget implements Target {
 		if (!(ENTITY instanceof final LivingEntity LIVING_ENTITY)) return NONE;
 
 		return List.of(LIVING_ENTITY);
+	}
+
+	@Override
+	public TextColor getTextColor() {
+		return NamedTextColor.RED;
 	}
 }

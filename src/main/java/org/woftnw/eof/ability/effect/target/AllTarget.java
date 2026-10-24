@@ -1,5 +1,7 @@
 package org.woftnw.eof.ability.effect.target;
 
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.jspecify.annotations.NonNull;
@@ -17,5 +19,10 @@ public class AllTarget extends RangedTarget {
 	@Override
 	public Collection<LivingEntity> getTargets(@NonNull Player user) {
 		return user.getLocation().getNearbyLivingEntities(RANGE);
+	}
+
+	@Override
+	public TextColor getTextColor() {
+		return NamedTextColor.YELLOW;
 	}
 }
