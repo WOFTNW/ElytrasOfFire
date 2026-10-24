@@ -150,8 +150,9 @@ public class AbilityManager implements Listener {
 			case Activation.USE -> {
 				return event.getAction().isRightClick();
 			}
+			default -> {
+			    return false;
+			}
 		}
-
-		return false;
 	}
 }
