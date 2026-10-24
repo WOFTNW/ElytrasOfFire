@@ -104,7 +104,7 @@ public class AbilityItemUtility {
 		if (cooldown != 0) {
 			LORE.add(label("Cooldown"));
 			final long COOLDOWN_SECS = Math.round((float) cooldown / 20);
-			LORE.add(text(String.format("%ss", COOLDOWN_SECS)).color(MessageUtility.INFO_TEXT_COLOR));
+			LORE.add(text(String.format("%ss", COOLDOWN_SECS)).color(MessageUtility.INFO_TEXT_COLOR).decoration(TextDecoration.ITALIC, false));
 		}
 
 		itemMeta.lore(LORE);
