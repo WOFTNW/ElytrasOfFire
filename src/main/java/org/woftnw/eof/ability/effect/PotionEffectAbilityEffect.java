@@ -1,5 +1,6 @@
 package org.woftnw.eof.ability.effect;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -7,6 +8,9 @@ import org.woftnw.eof.ElytrasOfFire;
 import org.woftnw.eof.ability.effect.target.Target;
 
 import java.util.Collection;
+
+import static net.kyori.adventure.text.Component.text;
+import static net.kyori.adventure.text.Component.translatable;
 
 public class PotionEffectAbilityEffect extends AbilityEffect {
 	protected final PotionEffect POTION_EFFECT;
@@ -29,6 +33,16 @@ public class PotionEffectAbilityEffect extends AbilityEffect {
 	 */
 	public PotionEffect getPotionEffect() {
 		return POTION_EFFECT;
+	}
+
+	@Override
+	public Component getDescription() {
+		Component description = translatable(POTION_EFFECT.getType().translationKey()).color(TARGET.getTextColor());
+		if (POTION_EFFECT.getAmplifier() > 0) {
+			description = description.append(text(String.format(" %s", POTION_EFFECT.getAmplifier() / 20)).color(TARGET.getTextColor()));
+		}
+		description = description.append(text(String.format(" (%ss)", POTION_EFFECT.getDuration() / 20)).color(TARGET.getTextColor()));
+		return description;
 	}
 
 	@Override

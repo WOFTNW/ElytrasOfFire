@@ -1,5 +1,6 @@
 package org.woftnw.eof.ability.effect;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.woftnw.eof.ElytrasOfFire;
@@ -25,6 +26,11 @@ public class DataAbilityEffect extends AbilityEffect {
 
 	public String getDataString() {
 		return DATA_STRING;
+	}
+
+	@Override
+	public Component getDescription() {
+		return Component.text(String.format("Adds %s", DATA_STRING)).color(TARGET.getTextColor());
 	}
 
 	@Override

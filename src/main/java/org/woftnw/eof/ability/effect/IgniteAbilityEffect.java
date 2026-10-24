@@ -1,5 +1,6 @@
 package org.woftnw.eof.ability.effect;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.woftnw.eof.ElytrasOfFire;
@@ -28,6 +29,11 @@ public class IgniteAbilityEffect extends AbilityEffect {
 	 */
 	public int getFireTicks() {
 		return FIRE_TICKS;
+	}
+
+	@Override
+	public Component getDescription() {
+		return Component.text(String.format("Ignites for %s seconds", (float) FIRE_TICKS / 20)).color(TARGET.getTextColor());
 	}
 
 	@Override

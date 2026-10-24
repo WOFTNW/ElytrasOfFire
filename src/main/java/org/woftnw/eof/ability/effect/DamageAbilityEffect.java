@@ -1,5 +1,6 @@
 package org.woftnw.eof.ability.effect;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.woftnw.eof.ElytrasOfFire;
@@ -31,6 +32,11 @@ public class DamageAbilityEffect extends AbilityEffect {
 	 */
 	public float getDamage() {
 		return DAMAGE;
+	}
+
+	@Override
+	public Component getDescription() {
+		return Component.text(String.format("%s ❤ damage", DAMAGE)).color(TARGET.getTextColor());
 	}
 
 	@Override
