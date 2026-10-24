@@ -21,4 +21,22 @@ public class Ability {
 			player.addPotionEffect(effect);
 		}
 	}
+
+	/**
+	 * Get the name of this ability.
+	 *
+	 * @return The ability name as a TextComponent.
+	 */
+	public TextComponent getName() {
+		return name;
+	}
+
+	/**
+	 * Get the name of this ability as a String.
+	 *
+	 * @return The ability name as a String.
+	 */
+	public String getNameAsString() {
+		return name.content();
+	}
 }
