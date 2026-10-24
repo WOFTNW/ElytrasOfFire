@@ -113,19 +113,15 @@ public class Tribe {
 	private final String SIMPLE_NAME;
 	private final TextColor COLOR;
 
-	private final List<Attribute> ATTRIBUTES;
-	private final List<Ability> ABILITIES;
+	private final ArrayList<Attribute> ATTRIBUTES;
+	private final ArrayList<Ability> ABILITIES;
 
-	Tribe(String tribeName, String simpleName, TextColor color, List<Attribute> attributes, List<Ability> abilities) {
+	Tribe(String tribeName, String simpleName, TextColor color) {
 		TRIBE_NAME = tribeName;
 		SIMPLE_NAME = simpleName;
 		COLOR = color;
-		ATTRIBUTES = attributes;
-		ABILITIES = abilities;
-	}
-
-	Tribe(String tribeName, String simpleName, TextColor color) {
-		this(tribeName, simpleName, color, List.of(), List.of());
+		ATTRIBUTES = new ArrayList<>();
+		ABILITIES = new ArrayList<>();
 	}
 
 	/**
@@ -173,8 +169,12 @@ public class Tribe {
 	 *
 	 * @return The attributes this tribe has.
 	 */
-	public List<Attribute> getAttributes() {
-		return List.copyOf(ATTRIBUTES);
+	public Attribute[] getAttributes() {
+		return ATTRIBUTES.toArray(new Attribute[0]);
+	}
+
+	public void addAttribute(Attribute attribute) {
+		ATTRIBUTES.add(attribute);
 	}
 
 	/**
@@ -182,8 +182,12 @@ public class Tribe {
 	 *
 	 * @return The abilities this tribe has.
 	 */
-	public List<Ability> getAbilities() {
-		return List.copyOf(ABILITIES);
+	public Ability[] getAbilities() {
+		return ABILITIES.toArray(new Ability[0]);
+	}
+
+	public void addAbility(Ability ability) {
+		ABILITIES.add(ability);
 	}
 
 	/**
