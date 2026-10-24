@@ -1,8 +1,8 @@
 {
     "$schema": "../../tribes.schema.json",
-    "id": "eof:mudwings",
+    "id": "eof:mudwing",
     // Would be real nice if this could be a JSON object/array too
-    "display_name": "MudWings",
+    "display_name": "MudWing",
     "attributes": [
         {
             "attribute_type": "potion",

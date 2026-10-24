@@ -1,0 +1,15 @@
+{
+    "id": "eof:nightwing",
+    "display_name": "NightWing",
+    "attributes": [
+        { "attribute_type": "potion", "potion_effect": "minecraft:speed" },
+        { "attribute_type": "potion", "potion_effect": "minecraft:strength" },
+        {
+            "attribute_type": "potion",
+            "potion_effect": "minecraft:night_vision"
+        }
+        // Predicate for attributes is missing; NightWings should get Invis while crouching at night
+    ],
+    "active_abilities": [{ "use": "eof:flame_breath" }],
+    "passive_abilities": []
+}

@@ -1,0 +1,13 @@
+{
+    "id": "eof:skywing",
+    "display_name": "SkyWing",
+    "attributes": [
+        {
+            "attribute_type": "potion",
+            "potion_effect": { "id": "minecraft:speed", "amplifier": 2 }
+        },
+        { "attribute_type": "potion", "potion_effect": "minecraft:strength" }
+    ],
+    "active_abilities": [{ "use": "eof:tidal_wave" }],
+    "passive_abilities": []
+}

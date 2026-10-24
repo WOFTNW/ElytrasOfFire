@@ -2,12 +2,19 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "additionalProperties": false,
-    "required": [
-        "id",
-        "display_name",
-        "activation_inputs",
-        "activation_type",
-        "cooldown"
+    "anyOf": [
+        {
+            "required": [
+                "id",
+                "display_name",
+                "activation_inputs",
+                "activation_type",
+                "cooldown"
+            ]
+        },
+        {
+            "required": ["use"]
+        }
     ],
     "allOf": [
         {

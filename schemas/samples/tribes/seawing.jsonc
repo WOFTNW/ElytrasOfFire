@@ -1,0 +1,12 @@
+{
+    "id": "eof:seawing",
+    "display_name": "SeaWing",
+    "attributes": [
+        {
+            "attribute_type": "potion",
+            "potion_effect": "minecraft:night_vision"
+        }
+    ],
+    "active_abilities": [{ "use": "eof:tidal_wave" }],
+    "passive_abilities": []
+}

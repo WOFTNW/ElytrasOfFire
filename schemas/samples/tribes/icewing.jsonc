@@ -1,0 +1,15 @@
+{
+    "id": "eof:icewing",
+    "display_name": "IceWing",
+    "attributes": [
+        { "attribute_type": "potion", "potion_effect": "minecraft:speed" },
+        {
+            "attribute_type": "potion",
+            "potion_effect": { "id": "minecraft:strength", "amplifier": 1 }
+        }
+    ],
+    "active_abilities": [{ "use": "eof:frost_breath" }],
+    "passive_abilities": [
+        // Passive schema not yet generated; IceWings should get Speed II on ice and Speed III on snow
+    ]
+}

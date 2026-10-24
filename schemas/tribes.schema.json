@@ -9,36 +9,45 @@
         "active_abilities",
         "passive_abilities"
     ],
+    "default": {
+        "id": "namespace:tribe_name",
+        "display_name": "Tribe Name",
+        "attributes": [],
+        "active_abilities": [],
+        "passive_abilities": []
+    },
     "properties": {
         "$schema": true,
         "id": {
             "description": "The tribe's ID. Must be a namespaced string.",
+            "default": "namespace:tribe_name",
             "$ref": "./_common/_strings.json#/$defs/namespace"
         },
         "display_name": {
             "description": "The display name of the tribe.",
+            "default": "Tribe Name",
             "$ref": "./_common/_strings.json#/$defs/natural_case"
         },
         "attributes": {
             "description": "A list of the tribe's attributes.",
             "type": "array",
-            "items": {
-                "$ref": "./attribute.schema.json"
-            }
+            "default": [],
+            "items": { "$ref": "./attribute.schema.json" }
         },
         "active_abilities": {
             "description": "A list of the tribe's active abilities",
             "type": "array",
+            "default": [],
             "items": {
-                "description": "An active ability object."
+                "description": "An active ability object.",
+                "$ref": "./active_ability.schema.json"
             }
         },
         "passive_abilities": {
             "description": "A list of the tribe's passive abilities",
             "type": "array",
-            "items": {
-                "$comment": "@TODO"
-            }
+            "default": [],
+            "items": { "$comment": "@TODO" }
         }
     }
 }

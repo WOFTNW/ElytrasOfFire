@@ -1,0 +1,10 @@
+{
+    "id": "eof:sandwing",
+    "display_name": "SandWing",
+    "attributes": [
+        { "attribute_type": "potion", "potion_effect": "minecraft:speed" },
+        { "attribute_type": "potion", "potion_effect": "minecraft:strength" }
+    ],
+    "active_abilities": [{ "use": "eof:flame_breath" }],
+    "passive_abilities": []
+}

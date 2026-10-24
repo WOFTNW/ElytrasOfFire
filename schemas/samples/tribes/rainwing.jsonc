@@ -1,0 +1,13 @@
+{
+    "id": "eof:rainwing",
+    "display_name": "RainWing",
+    "attributes": [
+        {
+            "attribute_type": "potion",
+            "potion_effect": { "id": "minecraft:speed", "amplifier": 1 }
+        }
+        // Predicate for attributes is missing; RainWings should get Invis and Speed III while crouching and
+    ],
+    "active_abilities": [{ "use": "eof:venom_shot" }],
+    "passive_abilities": []
+}
