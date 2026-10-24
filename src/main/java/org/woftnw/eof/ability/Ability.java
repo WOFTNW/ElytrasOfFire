@@ -2,7 +2,7 @@ package org.woftnw.eof.ability;
 
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
+import org.woftnw.eof.ability.effect.AbilityEffect;
 import org.woftnw.eof.exception.AbilityActivationException;
 
 /**
@@ -17,7 +17,7 @@ import org.woftnw.eof.exception.AbilityActivationException;
  * @see RayCastAbility
  */
 public class Ability {
-	protected static PotionEffect[] DEFAULT_SELF_EFFECTS;
+	protected final static AbilityEffect[] DEFAULT_EFFECTS = new AbilityEffect[0];
 
 	/**
 	 * The display name of this ability.
@@ -26,7 +26,7 @@ public class Ability {
 	/**
 	 * The effects to apply to the user on activation.
 	 */
-	protected PotionEffect[] selfEffects;
+	protected AbilityEffect[] effects;
 
 	/**
 	 * Create an ability with some self effects.
@@ -34,12 +34,12 @@ public class Ability {
 	 * You probably want to use a subclass like {@link ActiveAbility}. A generic Ability will not be of much use.
 	 * </p>
 	 *
-	 * @param name        The display name of this ability.
-	 * @param selfEffects The effects to apply to the user on activation. May be empty.
+	 * @param name    The display name of this ability.
+	 * @param effects The effects to apply on activation. May be empty.
 	 */
-	public Ability(TextComponent name, PotionEffect[] selfEffects) {
+	public Ability(TextComponent name, AbilityEffect[] effects) {
 		this.name = name;
-		this.selfEffects = selfEffects;
+		this.effects = effects;
 	}
 
 	/**
@@ -52,7 +52,7 @@ public class Ability {
 	 */
 	public Ability(TextComponent name) {
 		this.name = name;
-		this.selfEffects = DEFAULT_SELF_EFFECTS;
+		this.effects = DEFAULT_EFFECTS;
 	}
 
 	/**
@@ -62,8 +62,8 @@ public class Ability {
 	 * @throws AbilityActivationException When an exception occurs that prevents the ability from being fully activated.
 	 */
 	public void activate(Player player) throws AbilityActivationException {
-		for (PotionEffect effect : selfEffects) {
-			player.addPotionEffect(effect);
+		for (AbilityEffect effect : effects) {
+			effect.apply(player);
 		}
 	}
 

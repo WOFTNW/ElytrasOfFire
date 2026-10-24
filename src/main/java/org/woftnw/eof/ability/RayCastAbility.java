@@ -6,9 +6,9 @@ import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.util.Vector;
 import org.jspecify.annotations.NonNull;
+import org.woftnw.eof.ability.effect.AbilityEffect;
 import org.woftnw.eof.exception.AbilityActivationException;
 
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class RayCastAbility extends ActiveAbility {
 	 * @param activationMethod The activation method.
 	 * @param particle         The particle to show in the activation.
 	 */
-	public RayCastAbility(TextComponent name, PotionEffect[] selfEffects, ItemStack activationItem, Activation activationMethod, Particle particle) {
+	public RayCastAbility(TextComponent name, AbilityEffect[] selfEffects, ItemStack activationItem, Activation activationMethod, Particle particle) {
 		super(name, selfEffects, activationItem, activationMethod, ARCHETYPE);
 		PARTICLE = particle;
 	}

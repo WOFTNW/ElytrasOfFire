@@ -3,7 +3,7 @@ package org.woftnw.eof.ability;
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
+import org.woftnw.eof.ability.effect.AbilityEffect;
 import org.woftnw.eof.exception.AbilityActivationException;
 import org.woftnw.eof.exception.AbilityCooldownException;
 
@@ -31,7 +31,7 @@ public class CooldownAbility extends Ability {
 	 * @see ActiveAbility
 	 * @see RayCastAbility
 	 */
-	public CooldownAbility(TextComponent name, PotionEffect[] selfEffects, int cooldown) {
+	public CooldownAbility(TextComponent name, AbilityEffect[] selfEffects, int cooldown) {
 		super(name, selfEffects);
 		this.COOLDOWN = cooldown;
 		this.lastUsed = 0;
@@ -48,7 +48,7 @@ public class CooldownAbility extends Ability {
 	 * @see ActiveAbility
 	 * @see RayCastAbility
 	 */
-	public CooldownAbility(TextComponent name, PotionEffect[] selfEffects) {
+	public CooldownAbility(TextComponent name, AbilityEffect[] selfEffects) {
 		this(name, selfEffects, DEFAULT_COOLDOWN);
 	}
 
@@ -63,7 +63,7 @@ public class CooldownAbility extends Ability {
 	 * @see RayCastAbility
 	 */
 	public CooldownAbility(TextComponent name) {
-		this(name, DEFAULT_SELF_EFFECTS, DEFAULT_COOLDOWN);
+		this(name, DEFAULT_EFFECTS, DEFAULT_COOLDOWN);
 	}
 
 	public boolean isOnCooldown() {

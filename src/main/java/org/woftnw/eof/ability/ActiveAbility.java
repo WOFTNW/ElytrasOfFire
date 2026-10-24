@@ -2,7 +2,7 @@ package org.woftnw.eof.ability;
 
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
+import org.woftnw.eof.ability.effect.AbilityEffect;
 
 /**
  * Represents a {@link CooldownAbility} that is activated using an item.
@@ -20,7 +20,7 @@ public class ActiveAbility extends CooldownAbility {
 	 * @param activationItem The item used for activation.
 	 * @param activationMethod The activation method.
 	 */
-	public ActiveAbility(TextComponent name, PotionEffect[] selfEffects, ItemStack activationItem, Activation activationMethod, Archetype archetype) {
+	public ActiveAbility(TextComponent name, AbilityEffect[] selfEffects, ItemStack activationItem, Activation activationMethod, Archetype archetype) {
 		super(name, selfEffects);
 		ACTIVATION_ITEM = activationItem;
 		ACTIVATION_METHOD = activationMethod;
