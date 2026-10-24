@@ -11,7 +11,6 @@ import org.woftnw.eof.exception.AbilityCooldownException;
  * Represents an ability that has an activation cooldown.
  *
  * @see ActiveAbility
- * @see RayCastAbility
  */
 public class CooldownAbility extends Ability {
 	private static final int DEFAULT_COOLDOWN = 20 * 10;
@@ -29,7 +28,6 @@ public class CooldownAbility extends Ability {
 	 * @param selfEffects The effects to apply to the user on activation. May be empty.
 	 * @param cooldown    The number of ticks after activation until the ability can be activated again.
 	 * @see ActiveAbility
-	 * @see RayCastAbility
 	 */
 	public CooldownAbility(TextComponent name, AbilityEffect[] selfEffects, int cooldown) {
 		super(name, selfEffects);
@@ -46,7 +44,6 @@ public class CooldownAbility extends Ability {
 	 * @param name        The display name of this ability.
 	 * @param selfEffects The effects to apply to the user on activation. May be empty.
 	 * @see ActiveAbility
-	 * @see RayCastAbility
 	 */
 	public CooldownAbility(TextComponent name, AbilityEffect[] selfEffects) {
 		this(name, selfEffects, DEFAULT_COOLDOWN);
@@ -60,7 +57,6 @@ public class CooldownAbility extends Ability {
 	 *
 	 * @param name The display name of this ability.
 	 * @see ActiveAbility
-	 * @see RayCastAbility
 	 */
 	public CooldownAbility(TextComponent name) {
 		this(name, DEFAULT_EFFECTS, DEFAULT_COOLDOWN);

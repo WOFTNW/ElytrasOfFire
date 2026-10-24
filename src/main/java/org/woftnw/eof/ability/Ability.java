@@ -9,12 +9,11 @@ import org.woftnw.eof.exception.AbilityActivationException;
  * Represents the simplest most generic form of an ability.
  * <p>
  * This class only provides the most basic attributes and behaviors of a tribal ability. If you're creating an ability,
- * you should extend a subclass of Ability like {@link ActiveAbility} or {@link RayCastAbility}.
+ * you should extend a subclass of Ability like {@link ActiveAbility}.
  * </p>
  *
  * @see CooldownAbility
  * @see ActiveAbility
- * @see RayCastAbility
  */
 public class Ability {
 	protected final static AbilityEffect[] DEFAULT_EFFECTS = new AbilityEffect[0];

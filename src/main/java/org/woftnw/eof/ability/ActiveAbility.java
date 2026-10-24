@@ -1,7 +1,11 @@
 package org.woftnw.eof.ability;
 
 import net.kyori.adventure.text.TextComponent;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.jspecify.annotations.Nullable;
+import org.woftnw.eof.AbilityItemUtility;
+import org.woftnw.eof.Tribe;
 import org.woftnw.eof.ability.effect.AbilityEffect;
 
 /**
@@ -15,14 +19,27 @@ public class ActiveAbility extends CooldownAbility {
 	/**
 	 * Create a new ActiveAbility
 	 *
-	 * @param name The name of the ability.
-	 * @param selfEffects The effects applied to the user.
-	 * @param activationItem The item used for activation.
-	 * @param activationMethod The activation method.
+	 * @param name                   The name of the ability.
+	 * @param effects                The effects applied to the user.
+	 * @param activationItemMaterial The material for the activation item or <code>null</code> for the default.
+	 * @param itemModel              The item model key for the activation item or <code>null</code> if none.
+	 * @param tribe                  The tribe this ability is for.
+	 * @param activationMethod       The activation method.
+	 * @param archetype              The {@link Archetype} of this ability.
+	 * @param cooldown               The time after activation before this ability can be activated again.
 	 */
-	public ActiveAbility(TextComponent name, AbilityEffect[] selfEffects, ItemStack activationItem, Activation activationMethod, Archetype archetype) {
-		super(name, selfEffects);
-		ACTIVATION_ITEM = activationItem;
+	public ActiveAbility(TextComponent name, AbilityEffect[] effects, @Nullable Material activationItemMaterial, @Nullable String itemModel, Tribe tribe, Activation activationMethod, Archetype archetype, int cooldown) {
+		super(name, effects, cooldown);
+		ACTIVATION_ITEM = AbilityItemUtility.createItem(
+				activationItemMaterial,
+				name,
+				tribe,
+				archetype,
+				activationMethod,
+				effects,
+				itemModel,
+				cooldown
+		);
 		ACTIVATION_METHOD = activationMethod;
 		ARCHETYPE = archetype;
 	}
