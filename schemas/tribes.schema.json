@@ -29,14 +29,14 @@
         "active_abilities": {
             "description": "A list of the tribe's active abilities",
             "type": "array",
-            "item": {
+            "items": {
                 "$comment": "@TODO"
             }
         },
         "passive_abilities": {
             "description": "A list of the tribe's passive abilities",
             "type": "array",
-            "item": {
+            "items": {
                 "$comment": "@TODO"
             }
         }
