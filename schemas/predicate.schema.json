@@ -1,0 +1,96 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$ref": "#/$defs/predicate",
+    "$defs": {
+        "predicate": {
+            "type": "object",
+            "additionalProperties": false,
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "predicate_type": { "const": "action" }
+                        }
+                    },
+                    "then": { "required": ["action"] },
+                    "else": { "not": { "required": ["action"] } }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "predicate_type": { "const": "location" }
+                        }
+                    },
+                    "then": { "required": ["location"] },
+                    "else": { "not": { "required": ["location"] } }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "predicate_type": { "const": "state" }
+                        }
+                    },
+                    "then": { "required": ["state"] },
+                    "else": { "not": { "required": ["state"] } }
+                }
+            ],
+            "properties": {
+                "predicate_type": {
+                    "type": "string",
+                    "enum": ["action", "location", "state", "time"]
+                },
+                "action": {
+                    "type": "string",
+                    "enum": [
+                        "attack",
+                        "climb",
+                        "fly",
+                        "glide",
+                        "sneak",
+                        "sprint",
+                        "swim",
+                        "use"
+                    ]
+                },
+                "location": {
+                    "type": "string",
+                    "enum": ["on_blocks", "in_blocks"]
+                },
+                "state": {
+                    "type": "string",
+                    "enum": [
+                        "is_falling",
+                        "is_flying",
+                        "is_gliding",
+                        "is_on_fire",
+                        "is_swimming"
+                    ]
+                },
+                "time": {
+                    "description": "",
+                    "anyOf": [
+                        {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 23999
+                        },
+                        {
+                            "type": "string",
+                            "enum": [
+                                "dawn",
+                                "day",
+                                "midday",
+                                "dusk",
+                                "night",
+                                "midnight"
+                            ]
+                        }
+                    ]
+                },
+                "blocks": {
+                    "description": "A list of blocks or block tags."
+                }
+            }
+        }
+    }
+}

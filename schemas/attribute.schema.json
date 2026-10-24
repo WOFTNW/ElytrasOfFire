@@ -1,0 +1,61 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["attribute_type"],
+    "if": {
+        "properties": {
+            "attribute_type": {
+                "pattern": "potion"
+            }
+        }
+    },
+    "then": { "required": ["potion_effect", "amplifier"] },
+    "else": { "not": { "required": ["potion_effect", "amplifier"] } },
+    "properties": {
+        "attribute_type": {
+            "description": "The type of attribute to apply.",
+            "type": "string",
+            "enum": ["potion", "modifier"]
+        },
+        "potion_effect": {
+            "description": "The potion effect to apply.",
+            "pattern": "^minecraft:[^:0-9A-Z]+$",
+            "$ref": "./_common/_strings.json#/$defs/namespace"
+        },
+        "amplifier": {
+            "description": "The amplifier of the potion effect.",
+            "$ref": "./_common/_numbers.json#/$defs/nonnegative_int"
+        },
+        "duration": {
+            "description": "The amount of time the potion effect is applied for. If this is a number, it represents the amount of seconds.",
+            "anyOf": [
+                {
+                    "$ref": "./_common/_numbers.json#/$defs/positive_int"
+                },
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["unit", "amount"],
+                    "properties": {
+                        "unit": {
+                            "type": "string",
+                            "enum": ["seconds", "ticks"]
+                        },
+                        "amount": {
+                            "$ref": "./_common/_numbers.json#/$defs/positive_int"
+                        }
+                    }
+                }
+            ]
+        },
+        "predicates": {
+            "description": "A list of predicates that must be met to activate the attribute.",
+            "type": "array",
+            "items": {
+                "description": "A predicate.",
+                "$ref": "./predicate.schema.json"
+            }
+        }
+    }
+}

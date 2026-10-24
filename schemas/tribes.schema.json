@@ -1,0 +1,44 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+        "id",
+        "display_name",
+        "attributes",
+        "active_abilities",
+        "passive_abilities"
+    ],
+    "properties": {
+        "$schema": true,
+        "id": {
+            "description": "The tribe's ID. Must be a namespaced string.",
+            "$ref": "./_common/_strings.json#/$defs/namespace"
+        },
+        "display_name": {
+            "description": "The display name of the tribe.",
+            "$ref": "./_common/_strings.json#/$defs/natural_case"
+        },
+        "attributes": {
+            "description": "A list of the tribe's attributes.",
+            "type": "array",
+            "items": {
+                "$ref": "./attribute.schema.json"
+            }
+        },
+        "active_abilities": {
+            "description": "A list of the tribe's active abilities",
+            "type": "array",
+            "item": {
+                "$comment": "@TODO"
+            }
+        },
+        "passive_abilities": {
+            "description": "A list of the tribe's passive abilities",
+            "type": "array",
+            "item": {
+                "$comment": "@TODO"
+            }
+        }
+    }
+}

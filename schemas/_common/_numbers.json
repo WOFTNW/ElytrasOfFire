@@ -1,0 +1,85 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://github.com/Godzilla1005/azurite-vtt/globals/resources/facets/_schemas/_common/_numbers.json",
+    "anyOf": [{ "$ref": "#/$defs/_single" }, { "$ref": "#/$defs/_range" }],
+    "$defs": {
+        "positive_int": { "type": "integer", "minimum": 1 },
+        "nonzero_int": {
+            "anyOf": [
+                { "$ref": "#/$defs/positive_int" },
+                { "$ref": "#/$defs/negative_int" }
+            ]
+        },
+        "negative_int": { "type": "integer", "maximum": -1 },
+        "nonpositive_int": { "type": "integer", "maximum": 0 },
+        "nonnegative_int": { "type": "integer", "minimum": 0 },
+        "positive_to_positive": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["min", "max"],
+            "properties": {
+                "min": { "$ref": "#/$defs/positive_int" },
+                "max": { "$ref": "#/$defs/positive_int" }
+            }
+        },
+        "nonnegative_to_positive": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["min", "max"],
+            "properties": {
+                "min": { "$ref": "#/$defs/nonnegative_int" },
+                "max": { "$ref": "#/$defs/positive_int" }
+            }
+        },
+        "nonnegative_to_nonnegative": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["min", "max"],
+            "properties": {
+                "min": { "$ref": "#/$defs/nonnegative_int" },
+                "max": { "$ref": "#/$defs/nonnegative_int" }
+            }
+        },
+        "nonpositive_to_nonpositive": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["min", "max"],
+            "properties": {
+                "min": { "$ref": "#/$defs/nonpositive_int" },
+                "max": { "$ref": "#/$defs/nonpositive_int" }
+            }
+        },
+        "negative_to_nonpositive": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["min", "max"],
+            "properties": {
+                "min": { "$ref": "#/$defs/negative_int" },
+                "max": { "$ref": "#/$defs/nonpositive_int" }
+            }
+        },
+        "negative_to_negative": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["min", "max"],
+            "properties": {
+                "min": { "$ref": "#/$defs/negative_int" },
+                "max": { "$ref": "#/$defs/negative_int" }
+            }
+        },
+        "_single": {
+            "anyOf": [
+                { "$ref": "#/$defs/positive_int" },
+                { "$ref": "#/$defs/negative_int" },
+                { "$ref": "#/$defs/nonpositive_int" },
+                { "$ref": "#/$defs/nonnegative_int" }
+            ]
+        },
+        "_range": {
+            "anyOf": [
+                { "$ref": "#/$defs/positive_to_positive" },
+                { "$ref": "#/$defs/nonnegative_to_positive" }
+            ]
+        }
+    }
+}

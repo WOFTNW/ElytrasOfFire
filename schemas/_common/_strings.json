@@ -1,0 +1,22 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://github.com/Godzilla1005/azurite-vtt/globals/resources/facets/_schemas/_common/_strings.json",
+    "anyOf": [
+        { "$ref": "#/$defs/namespace" },
+        { "$ref": "#/$defs/natural_case" },
+        { "$ref": "#/$defs/snake_case" }
+    ],
+    "$defs": {
+        "natural_case": { "type": "string", "minLength": 1, "pattern": "^.+$" },
+        "namespace": {
+            "type": "string",
+            "minLength": 3,
+            "pattern": "^[^:0-9A-Z]+:[^:0-9A-Z]+$"
+        },
+        "snake_case": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-z0-9_]+$"
+        }
+    }
+}
