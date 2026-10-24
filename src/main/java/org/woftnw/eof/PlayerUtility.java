@@ -1,12 +1,15 @@
 package org.woftnw.eof;
 
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jspecify.annotations.Nullable;
 import org.jspecify.annotations.NonNull;
 import org.woftnw.eof.exception.NotEnoughAbilitySlotsException;
+
+import java.util.UUID;
 
 /**
  * Contains useful player utilities. This should only be created once on enable by this plugin.
@@ -23,6 +26,7 @@ public class PlayerUtility {
 	private final NamespacedKey TRIBE_KEY;
 	private final NamespacedKey ATTRIBUTES_ENABLED_KEY;
 	private final NamespacedKey ABILITIES_ENABLED_KEY;
+	private final NamespacedKey ATTACK_TARGET_KEY;
 
 	/**
 	 * Create a PlayerUtility.
@@ -34,6 +38,20 @@ public class PlayerUtility {
 		TRIBE_KEY = new NamespacedKey(plugin, "tribe");
 		ATTRIBUTES_ENABLED_KEY = new NamespacedKey(plugin, "attributes_enabled");
 		ABILITIES_ENABLED_KEY = new NamespacedKey(plugin, "abilities_enabled");
+		ATTACK_TARGET_KEY = new NamespacedKey(plugin, "attack_target");
+	}
+
+	public void setPlayerAttackTarget(@NonNull Player player, @NonNull LivingEntity target) {
+		PersistentDataContainer persistentDataContainer = player.getPersistentDataContainer();
+		persistentDataContainer.set(ATTACK_TARGET_KEY, PersistentDataType.STRING, target.getUniqueId().toString());
+	}
+
+	@Nullable
+	public UUID getPlayerAttackTarget(@NonNull Player player) {
+		PersistentDataContainer persistentDataContainer = player.getPersistentDataContainer();
+		String uuidString = persistentDataContainer.get(ATTACK_TARGET_KEY, PersistentDataType.STRING);
+		if (uuidString == null) return null;
+		return UUID.fromString(uuidString);
 	}
 
 	/**
