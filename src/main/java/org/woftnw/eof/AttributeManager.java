@@ -10,7 +10,7 @@ import java.util.*;
 /**
  * Manages when attributes should tick.
  */
-public class AttributeScheduler {
+public class AttributeManager {
 	private final static long TICK_DELAY = 20;
 	private final static long TICK_PERIOD = 20;
 
@@ -24,7 +24,7 @@ public class AttributeScheduler {
 	 *
 	 * @param plugin The plugin instance.
 	 */
-	public AttributeScheduler(@NonNull ElytrasOfFire plugin) {
+	public AttributeManager(@NonNull ElytrasOfFire plugin) {
 		PLUGIN = plugin;
 
 		task = plugin.getServer().getScheduler().runTaskTimer(plugin, this::tick, TICK_DELAY, TICK_PERIOD);
