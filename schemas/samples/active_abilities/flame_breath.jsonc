@@ -1,0 +1,17 @@
+{
+    "id": "eof:flame_breath",
+    "display_name": "Flame Breath",
+    "activation_inputs": ["sneak", "attack"],
+    "activation_type": "raycast",
+    "cooldown": 10,
+    "raycast_data": {
+        "range": 12,
+        "damage": 3.2,
+        "effects": [
+            {
+                "effect_type": "ignite",
+                "duration": 10
+            }
+        ]
+    }
+}

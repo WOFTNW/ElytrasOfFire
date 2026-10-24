@@ -1,0 +1,17 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["id", "display_name"],
+    "properties": {
+        "$schema": true,
+        "id": {
+            "description": "The passive ability's ID. Must be a namespaced string.",
+            "$ref": "./_common/_strings.json#/$defs/namespace"
+        },
+        "display_name": {
+            "description": "The display name of the passive ability.",
+            "$ref": "./_common/_strings.json#/$defs/natural_case"
+        }
+    }
+}

@@ -1,0 +1,52 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+        "id",
+        "display_name",
+        "activation_inputs",
+        "activation_type",
+        "cooldown"
+    ],
+    "allOf": [
+        {
+            "if": {
+                "properties": { "activation_type": { "const": "raycast" } }
+            },
+            "then": { "required": ["raycast_data"] },
+            "else": { "not": { "required": ["raycast_data"] } }
+        }
+    ],
+    "properties": {
+        "$schema": true,
+        "id": {
+            "description": "The active ability's ID. Must be a namespaced string.",
+            "$ref": "./_common/_strings.json#/$defs/namespace"
+        },
+        "display_name": {
+            "description": "The display name of the active ability.",
+            "$ref": "./_common/_strings.json#/$defs/natural_case"
+        },
+        "activation_inputs": {
+            "description": "The inputs required to activate the active ability.",
+            "type": "array",
+            "uniqueItems": true,
+            "items": { "$ref": "./predicate.schema.json#/$defs/action" }
+        },
+        "activation_type": {
+            "description": "The type of activation this ability emits.",
+            "type": "string",
+            "default": "self",
+            "enum": ["raycast", "aura", "self", "nearest"],
+            "$comment": "'raycast' is... a raycast and will require 'raycast_data'; 'aura' is a spherical emanation and will require 'radius' (or... i guess just 'range' since it represents the same idea); 'self' will only affect the user; and 'nearest' will require 'count', which represents targeting the x nearest valid entities with the ability."
+        },
+        "cooldown": {
+            "description": "The amount of time it takes for the ability to come off cooldown.",
+            "default": 10,
+            "type": "number",
+            "minimum": 0
+        },
+        "raycast_data": true
+    }
+}

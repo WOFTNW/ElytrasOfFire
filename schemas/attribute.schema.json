@@ -3,13 +3,7 @@
     "type": "object",
     "additionalProperties": false,
     "required": ["attribute_type"],
-    "if": {
-        "properties": {
-            "attribute_type": {
-                "pattern": "potion"
-            }
-        }
-    },
+    "if": { "properties": { "attribute_type": { "pattern": "potion" } } },
     "then": { "required": ["potion_effect", "amplifier"] },
     "else": { "not": { "required": ["potion_effect", "amplifier"] } },
     "properties": {
@@ -50,12 +44,8 @@
             ]
         },
         "predicates": {
-            "description": "A list of predicates that must be met to activate the attribute.",
-            "type": "array",
-            "items": {
-                "description": "A predicate.",
-                "$ref": "./predicate.schema.json"
-            }
+            "description": "A predicate or list of predicates that must be met to activate the attribute.",
+            "$ref": "./predicate.schema.json"
         }
     }
 }

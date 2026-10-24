@@ -30,7 +30,7 @@
             "description": "A list of the tribe's active abilities",
             "type": "array",
             "items": {
-                "$comment": "@TODO"
+                "description": "An active ability object."
             }
         },
         "passive_abilities": {

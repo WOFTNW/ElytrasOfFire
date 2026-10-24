@@ -1,6 +1,13 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$ref": "#/$defs/predicate",
+    "anyOf": [
+        { "$ref": "#/$defs/predicate" },
+        {
+            "type": "array",
+            "uniqueItems": true,
+            "items": { "$ref": "#/$defs/predicate" }
+        }
+    ],
     "$defs": {
         "predicate": {
             "type": "object",
@@ -35,62 +42,85 @@
                 }
             ],
             "properties": {
-                "predicate_type": {
-                    "type": "string",
-                    "enum": ["action", "location", "state", "time"]
-                },
-                "action": {
-                    "type": "string",
-                    "enum": [
-                        "attack",
-                        "climb",
-                        "fly",
-                        "glide",
-                        "sneak",
-                        "sprint",
-                        "swim",
-                        "use"
-                    ]
-                },
-                "location": {
-                    "type": "string",
-                    "enum": ["on_blocks", "in_blocks"]
-                },
-                "state": {
-                    "type": "string",
-                    "enum": [
-                        "is_falling",
-                        "is_flying",
-                        "is_gliding",
-                        "is_on_fire",
-                        "is_swimming"
-                    ]
-                },
-                "time": {
-                    "description": "",
-                    "anyOf": [
-                        {
-                            "type": "integer",
-                            "minimum": 0,
-                            "maximum": 23999
-                        },
-                        {
-                            "type": "string",
-                            "enum": [
-                                "dawn",
-                                "day",
-                                "midday",
-                                "dusk",
-                                "night",
-                                "midnight"
-                            ]
-                        }
-                    ]
-                },
-                "blocks": {
-                    "description": "A list of blocks or block tags."
-                }
+                "predicate_type": { "$ref": "#/$defs/predicate_type" },
+                "action": { "$ref": "#/$defs/action" },
+                "location": { "$ref": "#/$defs/location" },
+                "state": { "$ref": "#/$defs/state" },
+                "time": { "$ref": "#/$defs/time" },
+                "blocks": { "$ref": "#/$defs/blocks" }
             }
-        }
+        },
+        "predicate_type": {
+            "type": "string",
+            "enum": ["action", "location", "state", "time"]
+        },
+        "action": {
+            "description": "An action input.",
+            "type": "string",
+            "enum": [
+                "attack",
+                "climb",
+                "fly",
+                "glide",
+                "sneak",
+                "sprint",
+                "swim",
+                "use"
+            ]
+        },
+        "location": {
+            "description": "A location.",
+            "type": "string",
+            "enum": ["on_blocks", "in_blocks"]
+        },
+        "state": {
+            "description": "A state.",
+            "type": "string",
+            "enum": [
+                "is_falling",
+                "is_flying",
+                "is_gliding",
+                "is_on_fire",
+                "is_swimming"
+            ]
+        },
+        "time": {
+            "description": "A time of day. May be a single number or an object with a minimum and maximum time span.",
+            "anyOf": [
+                { "$ref": "#/$defs/time_single" },
+                { "$ref": "#/$defs/time_range" }
+            ]
+        },
+        "time_range": {
+            "$comment": "JUST BEING TRANSPARENT, this does NO validation on whether the 'min' value is actually smaller than the 'max' value",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["min", "max"],
+            "properties": {
+                "min": { "$ref": "#/$defs/time_single" },
+                "max": { "$ref": "#/$defs/time_single" }
+            }
+        },
+        "time_single": {
+            "anyOf": [
+                {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 23999
+                },
+                {
+                    "type": "string",
+                    "enum": [
+                        "dawn",
+                        "day",
+                        "midday",
+                        "dusk",
+                        "night",
+                        "midnight"
+                    ]
+                }
+            ]
+        },
+        "blocks": { "description": "A list of blocks or block tags." }
     }
 }

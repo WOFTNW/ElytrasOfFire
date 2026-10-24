@@ -1,0 +1,46 @@
+{
+    "$schema": "../../tribes.schema.json",
+    "id": "eof:mudwings",
+    // Would be real nice if this could be a JSON object/array too
+    "display_name": "MudWings",
+    "attributes": [
+        {
+            "attribute_type": "potion",
+            "potion_effect": "minecraft:strength",
+            "amplifier": 1
+        },
+        {
+            "attribute_type": "potion",
+            "potion_effect": "minecraft:speed",
+            "amplifier": 0,
+            "predicates": [
+                {
+                    "predicate_type": "state",
+                    "state": "is_swimming"
+                }
+            ]
+        },
+        {
+            "attribute_type": "potion",
+            "potion_effect": "minecraft:water_breathing",
+            "amplifier": 0,
+            "duration": {
+                "amount": 150,
+                "unit": "seconds"
+            },
+            "predicates": [
+                {
+                    "predicate_type": "state",
+                    "state": "is_swimming"
+                }
+            ]
+        }
+    ],
+    "active_abilities": [
+        {
+            "use": "eof:flame_breath",
+            "overrides": {}
+        }
+    ],
+    "passive_abilities": []
+}
