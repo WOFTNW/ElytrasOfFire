@@ -34,7 +34,7 @@ public class AbilityItemUtility {
 
 	private static Component activationComponent(@NonNull Activation activation) {
 		String[] keybinds = activation.getKeybinds();
-		Component message = text("").color(MessageUtility.INFO_TEXT_COLOR);
+		Component message = text("").color(MessageUtility.INFO_TEXT_COLOR).decoration(TextDecoration.ITALIC, false);
 		for (int i = 0; i < keybinds.length; i++) {
 			String activationKeybind = keybinds[i];
 			message = message.append(keybind(activationKeybind));
@@ -51,7 +51,7 @@ public class AbilityItemUtility {
 		if (negative) color = NEGATIVE_EFFECT_COLOR;
 
 		for (String effectDescriptor : effects.keySet()) {
-			TextComponent component = text(effectDescriptor).color(color);
+			TextComponent component = text(effectDescriptor).color(color).decoration(TextDecoration.ITALIC, false);
 			final Long EFFECT_LENGTH = effects.get(String.format("• %s", effectDescriptor));
 			if (EFFECT_LENGTH != 0) {
 				final long EFFECT_LENGTH_SECS = Math.round((float) EFFECT_LENGTH / 20);
@@ -90,14 +90,14 @@ public class AbilityItemUtility {
 		final ItemStack ITEM_STACK = new ItemStack(material, 1);
 
 		ItemMeta itemMeta = ITEM_STACK.getItemMeta();
-		itemMeta.customName(name);
+		itemMeta.customName(name.decoration(TextDecoration.ITALIC, false));
 
 		final List<Component> LORE = new ArrayList<>();
 
 		LORE.add(label("Tribe"));
-		LORE.add(text(tribe.getTribeName()).color(tribe.getTextColor()));
+		LORE.add(text(tribe.getTribeName()).color(tribe.getTextColor()).decoration(TextDecoration.ITALIC, false));
 		LORE.add(label("Archetype"));
-		LORE.add(text(archetype.getName()).color(MessageUtility.INFO_TEXT_COLOR));
+		LORE.add(text(archetype.getName()).color(MessageUtility.INFO_TEXT_COLOR).decoration(TextDecoration.ITALIC, false));
 		LORE.add(label("Activation"));
 		LORE.add(activationComponent(activation));
 		if (!negativeEffects.isEmpty() && !positiveEffects.isEmpty()) {
