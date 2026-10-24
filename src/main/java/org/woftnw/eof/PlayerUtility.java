@@ -9,6 +9,8 @@ import org.jspecify.annotations.Nullable;
 import org.jspecify.annotations.NonNull;
 import org.woftnw.eof.exception.NotEnoughAbilitySlotsException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -27,6 +29,7 @@ public class PlayerUtility {
 	private final NamespacedKey ATTRIBUTES_ENABLED_KEY;
 	private final NamespacedKey ABILITIES_ENABLED_KEY;
 	private final NamespacedKey ATTACK_TARGET_KEY;
+	private final NamespacedKey ABILITY_DATA_KEY;
 
 	/**
 	 * Create a PlayerUtility.
@@ -39,6 +42,7 @@ public class PlayerUtility {
 		ATTRIBUTES_ENABLED_KEY = new NamespacedKey(plugin, "attributes_enabled");
 		ABILITIES_ENABLED_KEY = new NamespacedKey(plugin, "abilities_enabled");
 		ATTACK_TARGET_KEY = new NamespacedKey(plugin, "attack_target");
+		ABILITY_DATA_KEY = new NamespacedKey(plugin, "ability_data");
 	}
 
 	public void setPlayerAttackTarget(@NonNull Player player, @NonNull LivingEntity target) {
@@ -140,5 +144,23 @@ public class PlayerUtility {
 		PersistentDataContainer persistentDataContainer = player.getPersistentDataContainer();
 		String tribeString = persistentDataContainer.get(TRIBE_KEY, PersistentDataType.STRING);
 		return PLUGIN.getTribeManager().getTribeFromPDCValue(tribeString);
+	}
+
+	public void setEntityAbilityData(@NonNull LivingEntity target, String dataString, boolean apply) {
+		PersistentDataContainer persistentDataContainer = target.getPersistentDataContainer();
+		List<String> strings = persistentDataContainer.get(ABILITY_DATA_KEY, PersistentDataType.LIST.strings());
+		boolean updated = false;
+
+		if (strings == null) strings = new ArrayList<>();
+
+		if (strings.contains(dataString) && !apply) {
+			updated = true;
+			strings.remove(dataString);
+		} else if (apply) {
+			updated = true;
+			strings.add(dataString);
+		}
+
+		if (updated) persistentDataContainer.set(ABILITY_DATA_KEY, PersistentDataType.LIST.strings(), strings);
 	}
 }
