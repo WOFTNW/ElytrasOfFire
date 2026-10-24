@@ -3,6 +3,7 @@ package org.woftnw.eof.ability.effect.target;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
@@ -46,8 +47,8 @@ public class RayCastTarget extends RangedTarget {
 
 	@Override
 	public Collection<LivingEntity> getTargets(@NonNull Player user) {
-		final Location ORIGIN = user.getLocation();
-		final Vector RAY_CAST_POINT_DELTA = ORIGIN.toVector().normalize().multiply(RAY_CAST_POINT_DISTANCE);
+		final Location ORIGIN = user.getEyeLocation();
+		final Vector RAY_CAST_POINT_DELTA = ORIGIN.getDirection().multiply(RAY_CAST_POINT_DISTANCE);
 
 		final ArrayList<LivingEntity> TARGETS = new ArrayList<>();
 
@@ -56,6 +57,8 @@ public class RayCastTarget extends RangedTarget {
 			final Collection<LivingEntity> FOUND_ENTITIES = ORIGIN.getNearbyLivingEntities(RAY_CAST_POINT_DETECTION_RADIUS);
 			TARGETS.addAll(FOUND_ENTITIES);
 		}
+
+		TARGETS.removeIf(o -> o == user);
 
 		return Set.copyOf(TARGETS);
 	}
