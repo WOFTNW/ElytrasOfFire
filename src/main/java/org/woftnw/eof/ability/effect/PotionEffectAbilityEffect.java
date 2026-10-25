@@ -39,7 +39,7 @@ public class PotionEffectAbilityEffect extends AbilityEffect {
 	public Component getDescription() {
 		Component description = translatable(POTION_EFFECT.getType().translationKey()).color(TARGET.getTextColor());
 		if (POTION_EFFECT.getAmplifier() > 0) {
-			description = description.append(text(String.format(" %s", POTION_EFFECT.getAmplifier() / 20)).color(TARGET.getTextColor()));
+			description = description.append(text(String.format(" %s", (POTION_EFFECT.getAmplifier() + 1) / 20)).color(TARGET.getTextColor()));
 		}
 		description = description.append(text(String.format(" (%ss)", POTION_EFFECT.getDuration() / 20)).color(TARGET.getTextColor()));
 		return description;
