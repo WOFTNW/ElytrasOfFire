@@ -1,5 +1,6 @@
 package org.woftnw.eof;
 
+import io.papermc.paper.datacomponent.item.UseCooldown;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -9,16 +10,16 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.components.UseCooldownComponent;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
-import org.woftnw.eof.ability.Ability;
 import org.woftnw.eof.ability.Activation;
 import org.woftnw.eof.ability.Archetype;
 import org.woftnw.eof.ability.effect.AbilityEffect;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static net.kyori.adventure.text.Component.keybind;
 import static net.kyori.adventure.text.Component.text;
@@ -63,6 +64,7 @@ public class AbilityItemUtility {
 	/**
 	 * Create an ItemStack for an ability item.
 	 *
+	 * @param plugin The origin plugin instance.
 	 * @param material The base material. This is shown if no resource pack is available.
 	 * @param name The name of the ability.
 	 * @param tribe The tribe this ability belongs to.
@@ -74,6 +76,7 @@ public class AbilityItemUtility {
 	 * @return The resulting ItemStack.
 	 */
 	public static @NonNull ItemStack createItem(
+			JavaPlugin plugin,
 			@Nullable Material material,
 			@NonNull TextComponent name,
 			@NonNull Tribe tribe,
@@ -110,6 +113,9 @@ public class AbilityItemUtility {
 		itemMeta.lore(LORE);
 		if (itemModel != null) itemMeta.setItemModel(NamespacedKey.fromString(itemModel));
 
+		UseCooldown.Builder cooldownBuilder = UseCooldown.useCooldown((float) cooldown / 20).cooldownGroup(NamespacedKey.fromString(name.content(), plugin));
+		itemMeta.setUseCooldown((UseCooldownComponent) cooldownBuilder.build());
+
 		ITEM_STACK.setItemMeta(itemMeta);
 
 		return ITEM_STACK;
@@ -118,6 +124,7 @@ public class AbilityItemUtility {
 	/**
 	 * Create an ItemStack for an ability item.
 	 *
+	 * @param plugin The origin plugin instance.
 	 * @param material The base material. This is shown if no resource pack is available.
 	 * @param name The name of the ability.
 	 * @param tribe The tribe this ability belongs to.
@@ -128,6 +135,7 @@ public class AbilityItemUtility {
 	 * @return The resulting ItemStack.
 	 */
 	public static @NonNull ItemStack createItem(
+			JavaPlugin plugin,
 			@Nullable Material material,
 			@NonNull TextComponent name,
 			@NonNull Tribe tribe,
@@ -136,6 +144,6 @@ public class AbilityItemUtility {
 			@NonNull AbilityEffect[] effects,
 			@Nullable String itemModel
 	) {
-		return createItem(material, name, tribe, archetype, activation, effects, itemModel, 0);
+		return createItem(plugin, material, name, tribe, archetype, activation, effects, itemModel, 0);
 	}
 }
