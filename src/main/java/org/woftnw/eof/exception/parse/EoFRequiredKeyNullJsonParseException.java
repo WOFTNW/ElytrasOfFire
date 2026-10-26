@@ -1,5 +1,8 @@
 package org.woftnw.eof.exception.parse;
 
+/**
+ * Thrown when a required property is not defined.
+ */
 public class EoFRequiredKeyNullJsonParseException extends EoFJsonParseException {
 	public EoFRequiredKeyNullJsonParseException() {
 		super();
