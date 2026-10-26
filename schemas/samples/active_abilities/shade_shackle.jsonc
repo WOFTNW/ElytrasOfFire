@@ -1,0 +1,40 @@
+{
+    "$schema": "../../active_ability.schema.json",
+    "id": "eof:shade_shackle",
+    "display_name": { "text": "Shade Shackle", "color": "gray" },
+    "item": "minecraft:gray_dye",
+    "cooldown": 24,
+    "data": {
+        "effects": {
+            "hold": [
+                {
+                    "effect_type": "potion",
+                    "potion_effect": "minecraft:blindness",
+                    "duration": 2,
+                    "target": "all",
+                    "range": { "min": 0, "max": 10 }
+                },
+                {
+                    "effect_type": "potion",
+                    "potion_effect": {
+                        "id": "minecraft:slowness",
+                        "amplifier": 2
+                    },
+                    "duration": 1,
+                    "target": "all",
+                    "range": { "min": 0, "max": 6 }
+                },
+                {
+                    "effect_type": "potion",
+                    "potion_effect": {
+                        "id": "minecraft:slowness",
+                        "amplifier": 1
+                    },
+                    "duration": 1,
+                    "target": "all",
+                    "range": { "min": 6, "max": 10 }
+                }
+            ]
+        }
+    }
+}

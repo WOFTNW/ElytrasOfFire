@@ -1,0 +1,31 @@
+{
+    "$schema": "../../active_ability.schema.json",
+    "id": "eof:oceans_blessing",
+    "display_name": { "text": "Ocean's Blessing", "color": "dark_aqua" },
+    "item": "minecraft:gray_dye",
+    "cooldown": 24,
+    "data": {
+        "duration": 3,
+        "target": "self",
+        "effects": {
+            "hold": [
+                {
+                    "effect_type": "potion",
+                    "potion_effect": {
+                        "id": "minecraft:speed",
+                        "amplifier": 1
+                    },
+                    "predicates": [{}]
+                },
+                {
+                    "effect_type": "potion",
+                    "potion_effect": {
+                        "id": "minecraft:speed",
+                        "amplifier": 3
+                    },
+                    "predicates": [{}]
+                }
+            ]
+        }
+    }
+}

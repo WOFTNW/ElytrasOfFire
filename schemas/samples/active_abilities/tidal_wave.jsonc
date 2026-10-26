@@ -2,34 +2,28 @@
     "$schema": "../../active_ability.schema.json",
     "id": "eof:tidal_wave",
     "display_name": { "text": "Tidal Wave", "color": "aqua" },
-    "ability_item": "minecraft:gray_dye",
-    "activation_inputs": ["sneak", "use"],
-    "activation_type": "raycast",
+    "item": "minecraft:gray_dye",
     "cooldown": 10,
-    "raycast_data": {
+    "data": {
         // count: integer >0 is deferred
         // spread: number >0 is deferred
         // arc: number >0 is deferred
+        "duration": 4,
         "range": 10,
-        "effects": [
-            {
-                "effect_type": "damage",
-                "damage": 2,
-                "target": "raycast"
-            },
-            {
-                "effect_type": "potion",
-                "potion_effect": { "id": "minecraft:mining_fatigue" },
-                "duration": { "unit": "ticks", "amount": 80 },
-                "target": "raycast"
-            },
-            {
-                "effect_type": "potion",
-                "potion_effect": { "id": "minecraft:slowness" },
-                "duration": { "unit": "ticks", "amount": 80 },
-                "target": "raycast"
-            }
-            // Torrent I and II apply Poison II for 3s and IV for 3s respectively, but that's a conditional i don't feel like writing.
-        ]
+        "target": "raycast",
+        "effects": {
+            "sneak_use": [
+                { "effect_type": "damage", "damage": 2 },
+                {
+                    "effect_type": "potion",
+                    "potion_effect": "minecraft:mining_fatigue"
+                },
+                {
+                    "effect_type": "potion",
+                    "potion_effect": "minecraft:slowness"
+                }
+                // Torrent I and II apply Poison II for 3s and IV for 3s respectively, but that's a conditional i don't feel like writing.
+            ]
+        }
     }
 }

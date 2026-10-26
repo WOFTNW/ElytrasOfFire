@@ -34,20 +34,40 @@
             "default": [],
             "items": { "$ref": "./attribute.schema.json" }
         },
-        "active_abilities": {
-            "description": "A list of the tribe's active abilities",
-            "type": "array",
-            "default": [],
-            "items": {
-                "description": "An active ability object.",
-                "$ref": "./active_ability.schema.json"
-            }
-        },
         "passive_abilities": {
             "description": "A list of the tribe's passive abilities",
             "type": "array",
             "default": [],
             "items": { "$comment": "@TODO" }
+        },
+        "active_abilities": {
+            "description": "A list of the tribe's active abilities.",
+            "$ref": "#/$defs/active_abilities"
+        }
+    },
+    "$defs": {
+        "active_abilities": {
+            "description": "A list of the tribe's active abilities.",
+            "type": "array",
+            "default": [],
+            "items": {
+                "description": "A full ability definition or a reference to one.",
+                "oneOf": [
+                    { "$ref": "./active_ability.schema.json" },
+                    { "$ref": "#/$defs/active_ability_reference" }
+                ]
+            }
+        },
+        "active_ability_reference": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["use"],
+            "properties": {
+                "use": {
+                    "description": "The ID of an active ability defined elsewhere.",
+                    "$ref": "./_common/_strings.json#/$defs/namespace"
+                }
+            }
         }
     }
 }

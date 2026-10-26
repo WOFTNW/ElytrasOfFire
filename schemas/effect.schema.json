@@ -5,7 +5,10 @@
         {
             "type": "array",
             "uniqueItems": true,
-            "items": { "$ref": "#/$defs/effect" }
+            "items": {
+                "description": "A single effect.",
+                "$ref": "#/$defs/effect"
+            }
         }
     ],
     "$defs": {
@@ -66,9 +69,16 @@
             ],
             "properties": {
                 "effect_type": {
+                    "description": "The type of effect this ability has.",
                     "type": "string",
-                    "$comment": "data requires one or both of 'apply_data' and 'remove_data'",
-                    "enum": ["ignite", "potion", "data", "damage"]
+                    "enum": [
+                        "ignite",
+                        "potion",
+                        "data",
+                        "damage",
+                        "switch_form",
+                        "toggle"
+                    ]
                 },
                 "duration": {
                     "description": "The amount of time the effect is applied for. If this is a number, it represents the amount of seconds.",
@@ -101,12 +111,17 @@
         "potion_effect": {
             "description": "A string or object representing a potion effect. If listed as a string, amplifier is assumed to be 0.",
             "anyOf": [
-                { "$ref": "#/$defs/potion_effect_string" },
-                { "$ref": "#/$defs/potion_effect_object" }
+                {
+                    "description": "A string representation of a potion effect. When used, amplifier is assumed to be 0.",
+                    "$ref": "#/$defs/potion_effect_string"
+                },
+                {
+                    "description": "An object representation of a potion effect.",
+                    "$ref": "#/$defs/potion_effect_object"
+                }
             ]
         },
         "potion_effect_string": {
-            "description": "A string representation of a potion effect. When used, amplifier is assumed to be 0.",
             "type": "string",
             "enum": [
                 "minecraft:absorption",
@@ -155,7 +170,6 @@
             "$ref": "./_common/_strings.json#/$defs/namespace"
         },
         "potion_effect_object": {
-            "description": "An object representation of a potion effect.",
             "type": "object",
             "additionalProperties": false,
             "required": ["id"],

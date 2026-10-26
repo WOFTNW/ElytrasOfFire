@@ -1,0 +1,37 @@
+{
+    "$schema": "../../active_ability.schema.json",
+    "id": "eof:terrashock",
+    "display_name": { "text": "Terrashock", "color": "gold" },
+    "item": "minecraft:gray_dye",
+    "cooldown": 24,
+    "data": {
+        "duration": 10,
+        "target": "self",
+        "effects": {
+            "use": [
+                {
+                    "effect_type": "potion",
+                    "potion_effect": "minecraft:slowness",
+                    "duration": 6,
+                    "target": "others",
+                    "range": 10
+                },
+                {
+                    "effect_type": "potion",
+                    "potion_effect": "minecraft:absorption"
+                },
+                {
+                    "effect_type": "potion",
+                    "potion_effect": "minecraft:resistance"
+                },
+                {
+                    "effect_type": "potion",
+                    "potion_effect": {
+                        "id": "minecraft:strength",
+                        "amplifier": 2
+                    }
+                }
+            ]
+        }
+    }
+}

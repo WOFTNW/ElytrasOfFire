@@ -16,6 +16,10 @@
                 { "pattern": "^[a-z_-]+:[a-z_-]+$" }
             ]
         },
+        "minecraft_namespace": {
+            "pattern": "^minecraft:[^:0-9A-Z\\s]+$",
+            "$ref": "#/$defs/namespace"
+        },
         "snake_case": {
             "type": "string",
             "minLength": 1,

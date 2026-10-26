@@ -2,29 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
     "additionalProperties": false,
-    "anyOf": [
-        {
-            "required": [
-                "id",
-                "display_name",
-                "activation_inputs",
-                "activation_type",
-                "cooldown"
-            ]
-        },
-        {
-            "required": ["use"]
-        }
-    ],
-    "allOf": [
-        {
-            "if": {
-                "properties": { "activation_type": { "const": "raycast" } }
-            },
-            "then": { "required": ["raycast_data"] },
-            "else": { "not": { "required": ["raycast_data"] } }
-        }
-    ],
+    "required": ["id", "display_name", "activation_inputs", "data", "cooldown"],
     "properties": {
         "$schema": true,
         "id": {
@@ -35,35 +13,27 @@
             "description": "The display name of the active ability.",
             "$ref": "#/$defs/display_name"
         },
-        "ability_item": {
+        "item": {
             "description": "The physical item used to represent the ability in players' inventories.",
-            "pattern": "^minecraft:[^:0-9A-Z\\s]+$",
-            "$ref": "./_common/_strings.json#/$defs/namespace"
+            "default": "minecraft:gray_dye",
+            "$ref": "./_common/_strings.json#/$defs/minecraft_namespace"
         },
         "activation_inputs": {
             "description": "The inputs required to activate the active ability.",
             "type": "array",
             "uniqueItems": true,
+            "default": ["sneak", "use"],
             "items": { "$ref": "./predicate.schema.json#/$defs/action" }
-        },
-        "activation_type": {
-            "description": "The type of activation this ability emits.",
-            "type": "string",
-            "default": "self",
-            "enum": ["raycast", "aura", "self", "target", "nearest"],
-            "$comment": "'raycast' is... a raycast and will require 'raycast_data'; 'aura' is a spherical emanation and will require 'radius' (or... i guess just 'range' since it represents the same idea); 'self' will only affect the user; and 'nearest' will require 'count', which represents targeting the x nearest valid entities with the ability."
         },
         "cooldown": {
             "description": "The amount of time it takes for the ability to come off cooldown.",
             "default": 10,
-            "type": "number",
-            "minimum": 0
+            "$ref": "./_common/ticks_or_seconds.json"
         },
-        "raycast_data": {
-            "description": "The raycast data.",
+        "data": {
+            "description": "The activation's data.",
             "type": "object",
             "additionalProperties": false,
-            "required": ["range"],
             "properties": {
                 "range": {
                     "description": "The distance the raycast will travel in blocks.",
@@ -73,12 +43,13 @@
                 },
                 "effects": {
                     "description": "An effect or array of effects to apply.",
-                    "$ref": "./effect.schema.json"
+                    "type": "object",
+                    "additionalProperties": false,
+                    "patternProperties": {
+                        "^attack|climb|fly|glide|sneak|sprint|swim|use$": {}
+                    }
                 }
             }
-        },
-        "use": {
-            "type": "string"
         }
     },
     "$defs": {

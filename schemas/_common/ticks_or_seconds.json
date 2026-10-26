@@ -1,0 +1,15 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "anyOf": [
+        { "$ref": "./_numbers.json#/$defs/positive_int" },
+        {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["unit", "amount"],
+            "properties": {
+                "unit": { "type": "string", "enum": ["seconds", "ticks"] },
+                "amount": { "$ref": "./_numbers.json#/$defs/positive_int" }
+            }
+        }
+    ]
+}

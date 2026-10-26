@@ -2,42 +2,39 @@
     "$schema": "../../active_ability.schema.json",
     "id": "eof:frost_breath",
     "display_name": { "text": "Frost Breath", "color": "red" },
-    "ability_item": "minecraft:gray_dye",
-    "activation_inputs": ["sneak", "use"],
-    "activation_type": "raycast",
+    "item": "minecraft:gray_dye",
     "cooldown": 10,
-    "raycast_data": {
+    "data": {
+        "duration": 5,
         "range": 13,
-        "effects": [
-            {
-                "effect_type": "damage",
-                "damage": 4
-            },
-            {
-                "effect_type": "potion",
-                "potion_effect": {
-                    "id": "minecraft:mining_fatigue",
-                    "amplifier": 1
+        "target": "raycast",
+        "effects": {
+            "sneak_use": [
+                { "effect_type": "damage", "damage": 4 },
+                {
+                    "effect_type": "potion",
+                    "potion_effect": {
+                        "id": "minecraft:mining_fatigue",
+                        "amplifier": 1
+                    }
                 },
-                "duration": { "unit": "ticks", "amount": 100 },
-                "target": "raycast"
-            },
-            {
-                "effect_type": "potion",
-                "potion_effect": { "id": "minecraft:slowness", "amplifier": 1 },
-                "duration": { "unit": "ticks", "amount": 100 },
-                "target": "raycast"
-            },
-            {
-                "effect_type": "potion",
-                "potion_effect": { "id": "minecraft:weakness" },
-                "duration": { "unit": "ticks", "amount": 100 },
-                "target": "raycast"
-            },
-            {
-                "effect_type": "data",
-                "apply_data": "eof:frostbite"
-            }
-        ]
+                {
+                    "effect_type": "potion",
+                    "potion_effect": {
+                        "id": "minecraft:slowness",
+                        "amplifier": 1
+                    }
+                },
+                {
+                    "effect_type": "potion",
+                    "potion_effect": { "id": "minecraft:weakness" }
+                },
+                {
+                    "effect_type": "data",
+                    "apply_data": "eof:frostbite",
+                    "duration": "infinite"
+                }
+            ]
+        }
     }
 }

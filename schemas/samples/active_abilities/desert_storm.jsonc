@@ -1,0 +1,31 @@
+{
+    "$schema": "../../active_ability.schema.json",
+    "id": "eof:desert_storm",
+    "display_name": { "text": "Desert Storm", "color": "yellow" },
+    "item": "minecraft:gray_dye",
+    "cooldown": 24,
+    "data": {
+        "duration": 10,
+        "target": "self",
+        "effects": {
+            "use": [
+                {
+                    "effect_type": "potion",
+                    "potion_effect": {
+                        "id": "minecraft:strength",
+                        "amplifier": 1
+                    }
+                },
+                {
+                    "effect_type": "potion",
+                    "potion_effect": { "id": "minecraft:speed", "amplifier": 2 }
+                },
+                {
+                    "effect_type": "potion",
+                    "potion_effect": "minecraft:blindness",
+                    "duration": 6
+                }
+            ]
+        }
+    }
+}

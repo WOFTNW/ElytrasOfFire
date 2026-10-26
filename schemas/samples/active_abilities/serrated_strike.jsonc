@@ -1,0 +1,32 @@
+{
+    "$schema": "../../active_ability.schema.json",
+    "id": "eof:serrated_strike",
+    "display_name": { "text": "Serrated Strike", "color": "gray" },
+    "item": "minecraft:gray_dye",
+    "cooldown": 24,
+    "data": {
+        "duration": 10,
+        "target": "self",
+        "effects": {
+            "use": [
+                {
+                    "effect_type": "potion",
+                    "potion_effect": {
+                        "id": "minecraft:strength",
+                        "amplifier": 1
+                    }
+                },
+                {
+                    "effect_type": "potion",
+                    "potion_effect": "minecraft:speed"
+                    // Yes, Serrated Strike gives Speed I even though IceWings have it innately; the level is supposed to ramp based off of their passive ability but I've not implemented that yet
+                },
+                {
+                    "effect_type": "data",
+                    "apply_data": "eof:frostbite",
+                    "duration": "infinite"
+                }
+            ]
+        }
+    }
+}

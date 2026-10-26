@@ -2,19 +2,22 @@
     "$schema": "../../active_ability.schema.json",
     "id": "eof:venom_shot",
     "display_name": { "text": "Venom Shot", "color": "white" },
-    "ability_item": "minecraft:gray_dye",
-    "activation_inputs": ["sneak", "use"],
-    "activation_type": "raycast",
+    "item": "minecraft:gray_dye",
     "cooldown": 10,
-    "raycast_data": {
+    "data": {
+        "duration": 3,
         "range": 12,
-        "effects": [
-            {
-                "effect_type": "potion",
-                "potion_effect": { "id": "minecraft:wither", "amplifier": 2 },
-                "duration": { "unit": "ticks", "amount": 60 },
-                "target": "raycast"
-            }
-        ]
+        "target": "raycast",
+        "effects": {
+            "sneak_use": [
+                {
+                    "effect_type": "potion",
+                    "potion_effect": {
+                        "id": "minecraft:wither",
+                        "amplifier": 2
+                    }
+                }
+            ]
+        }
     }
 }
