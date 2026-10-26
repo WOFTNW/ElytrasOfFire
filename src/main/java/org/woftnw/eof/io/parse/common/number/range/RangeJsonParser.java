@@ -10,9 +10,12 @@ import org.woftnw.eof.exception.parse.number.EoFNumberJsonParseException;
 import org.woftnw.eof.io.parse.JsonParser;
 import org.woftnw.eof.io.parse.common.number.NumberJsonParser;
 
+/**
+ * Parses a JSON range object.
+ */
 public abstract class RangeJsonParser implements JsonParser<int[]> {
 	@Override
-	public int[] parse(@NonNull JsonElement element, ElytrasOfFire plugin) throws EoFWrappedJsonParseException {
+	public int[] parse(@NonNull JsonElement element, ElytrasOfFire plugin) throws EoFWrappedJsonParseException, UnsupportedOperationException {
 		final JsonObject ROOT = element.getAsJsonObject();
 
 		String key = "min";
@@ -40,7 +43,26 @@ public abstract class RangeJsonParser implements JsonParser<int[]> {
 		return new int[]{min, max};
 	}
 
+	/**
+	 * Get the parser to use for the minimum number.
+	 *
+	 * @return The {@link NumberJsonParser} to use.
+	 * @see org.woftnw.eof.io.parse.common.number.PositiveIntJsonParser
+	 * @see org.woftnw.eof.io.parse.common.number.NegativeIntJsonParser
+	 * @see org.woftnw.eof.io.parse.common.number.NonnegativeIntJsonParser
+	 * @see org.woftnw.eof.io.parse.common.number.NonpositiveIntJsonParser
+	 */
 	protected abstract NumberJsonParser<Integer> getMinParser();
+
+	/**
+	 * Get the parser to use for the maximum number.
+	 *
+	 * @return The {@link NumberJsonParser} to use.
+	 * @see org.woftnw.eof.io.parse.common.number.PositiveIntJsonParser
+	 * @see org.woftnw.eof.io.parse.common.number.NegativeIntJsonParser
+	 * @see org.woftnw.eof.io.parse.common.number.NonnegativeIntJsonParser
+	 * @see org.woftnw.eof.io.parse.common.number.NonpositiveIntJsonParser
+	 */
 	protected abstract NumberJsonParser<Integer> getMaxParser();
 
 }

@@ -4,6 +4,9 @@ import org.woftnw.eof.io.parse.common.number.NumberJsonParser;
 import org.woftnw.eof.io.parse.common.number.NonnegativeIntJsonParser;
 import org.woftnw.eof.io.parse.common.number.NonpositiveIntJsonParser;
 
+/**
+ * Parses a nonpositive-to-nonnegative JSON range object.
+ */
 public class NonpositiveToNonnegativeJsonParser extends RangeJsonParser {
 
 	@Override

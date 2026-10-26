@@ -3,6 +3,9 @@ package org.woftnw.eof.io.parse.common.number.range;
 import org.woftnw.eof.io.parse.common.number.NumberJsonParser;
 import org.woftnw.eof.io.parse.common.number.PositiveIntJsonParser;
 
+/**
+ * Parses a positive-to-positive JSON range object.
+ */
 public class PositiveToPositiveJsonParser extends RangeJsonParser {
 
 	@Override
