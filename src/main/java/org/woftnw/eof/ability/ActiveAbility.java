@@ -2,20 +2,25 @@ package org.woftnw.eof.ability;
 
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import org.woftnw.eof.AbilityItemUtility;
 import org.woftnw.eof.Tribe;
 import org.woftnw.eof.ability.effect.AbilityEffect;
+import org.woftnw.eof.exception.AbilityActivationException;
+import org.woftnw.eof.exception.AbilityCooldownException;
 
 /**
- * Represents a {@link CooldownAbility} that is activated using an item.
+ * Represents a n{@link Ability} that is activated using an item.
  */
-public class ActiveAbility extends CooldownAbility {
+public class ActiveAbility extends Ability {
 	private final ItemStack ACTIVATION_ITEM;
 	private final Activation ACTIVATION_METHOD;
 	private final Archetype ARCHETYPE;
+	private final int COOLDOWN;
 
 	/**
 	 * Create a new ActiveAbility
@@ -31,7 +36,8 @@ public class ActiveAbility extends CooldownAbility {
 	 * @param cooldown               The time after activation before this ability can be activated again.
 	 */
 	public ActiveAbility(JavaPlugin plugin, TextComponent name, AbilityEffect[] effects, @Nullable Material activationItemMaterial, @Nullable String itemModel, Tribe tribe, Activation activationMethod, Archetype archetype, int cooldown) {
-		super(name, effects, cooldown);
+		super(name, effects);
+		COOLDOWN = cooldown;
 		ACTIVATION_ITEM = AbilityItemUtility.createItem(
 				plugin,
 				activationItemMaterial,
@@ -72,5 +78,15 @@ public class ActiveAbility extends CooldownAbility {
 	 */
 	public Archetype getArchetype() {
 		return ARCHETYPE;
+	}
+
+	@Override
+	public void activate(@NonNull Player user) throws AbilityActivationException {
+		int cooldown = user.getCooldown(ACTIVATION_ITEM);
+		if (cooldown > 0) {
+			throw new AbilityCooldownException(cooldown);
+		}
+		super.activate(user);
+		user.setCooldown(ACTIVATION_ITEM, this.COOLDOWN);
 	}
 }

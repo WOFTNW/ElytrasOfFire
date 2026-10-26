@@ -15,7 +15,6 @@ import org.woftnw.eof.exception.AbilityActivationException;
  * you should extend a subclass of Ability like {@link ActiveAbility}.
  * </p>
  *
- * @see CooldownAbility
  * @see ActiveAbility
  */
 public class Ability {

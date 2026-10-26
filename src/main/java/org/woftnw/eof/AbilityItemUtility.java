@@ -1,5 +1,9 @@
 package org.woftnw.eof;
 
+import io.papermc.paper.datacomponent.DataComponentType;
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.Consumable;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import io.papermc.paper.datacomponent.item.UseCooldown;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
@@ -20,6 +24,8 @@ import org.woftnw.eof.ability.effect.AbilityEffect;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 import static net.kyori.adventure.text.Component.keybind;
 import static net.kyori.adventure.text.Component.text;
@@ -87,10 +93,10 @@ public class AbilityItemUtility {
 			int cooldown
 	) {
 		if (material == null) material = DEFAULT_MATERIAL;
-		final ItemStack ITEM_STACK = new ItemStack(material, 1);
+		ItemStack itemStack = new ItemStack(material, 1);
 
-		ItemMeta itemMeta = ITEM_STACK.getItemMeta();
-		itemMeta.customName(name.decoration(TextDecoration.ITALIC, false));
+		final TextComponent CUSTOM_NAME = name.decoration(TextDecoration.ITALIC, false);
+		itemStack.setData(DataComponentTypes.CUSTOM_NAME, CUSTOM_NAME);
 
 		final List<Component> LORE = new ArrayList<>();
 
@@ -108,17 +114,18 @@ public class AbilityItemUtility {
 			LORE.add(label("Cooldown"));
 			final long COOLDOWN_SECS = Math.round((float) cooldown / 20);
 			LORE.add(text(String.format("%ss", COOLDOWN_SECS)).color(MessageUtility.INFO_TEXT_COLOR).decoration(TextDecoration.ITALIC, false));
+			NamespacedKey COOLDOWN_GROUP_KEY = new NamespacedKey(
+					plugin,
+					name.content().toLowerCase(Locale.ROOT).replace(" ", "_")
+			);
+			UseCooldown COOLDOWN = UseCooldown.useCooldown(COOLDOWN_SECS).cooldownGroup(COOLDOWN_GROUP_KEY).build();
+			itemStack.setData(DataComponentTypes.USE_COOLDOWN, COOLDOWN);
 		}
+		itemStack.setData(DataComponentTypes.LORE, ItemLore.lore().addLines(LORE).build());
 
-		itemMeta.lore(LORE);
-		if (itemModel != null) itemMeta.setItemModel(NamespacedKey.fromString(itemModel));
+		if (itemModel != null) itemStack.setData(DataComponentTypes.ITEM_MODEL, Objects.requireNonNull(NamespacedKey.fromString(itemModel)));
 
-		UseCooldown.Builder cooldownBuilder = UseCooldown.useCooldown((float) cooldown / 20).cooldownGroup(NamespacedKey.fromString(name.content(), plugin));
-		itemMeta.setUseCooldown((UseCooldownComponent) cooldownBuilder.build());
-
-		ITEM_STACK.setItemMeta(itemMeta);
-
-		return ITEM_STACK;
+		return itemStack;
 	}
 
 	/**
