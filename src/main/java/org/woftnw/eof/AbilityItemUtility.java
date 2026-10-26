@@ -1,8 +1,6 @@
 package org.woftnw.eof;
 
-import io.papermc.paper.datacomponent.DataComponentType;
 import io.papermc.paper.datacomponent.DataComponentTypes;
-import io.papermc.paper.datacomponent.item.Consumable;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import io.papermc.paper.datacomponent.item.UseCooldown;
 import net.kyori.adventure.text.Component;
@@ -13,13 +11,10 @@ import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.components.UseCooldownComponent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import org.woftnw.eof.ability.Activation;
-import org.woftnw.eof.ability.Archetype;
 import org.woftnw.eof.ability.effect.AbilityEffect;
 
 import java.util.ArrayList;
@@ -74,7 +69,6 @@ public class AbilityItemUtility {
 	 * @param material The base material. This is shown if no resource pack is available.
 	 * @param name The name of the ability.
 	 * @param tribe The tribe this ability belongs to.
-	 * @param archetype The archetype of the ability.
 	 * @param activation The activation type of the ability.
 	 * @param effects The AbilityEffects.
 	 * @param itemModel The path of the custom item model to use.
@@ -86,7 +80,6 @@ public class AbilityItemUtility {
 			@Nullable Material material,
 			@NonNull TextComponent name,
 			@NonNull Tribe tribe,
-			@NonNull Archetype archetype,
 			@NonNull Activation activation,
 			@NonNull AbilityEffect[] effects,
 			@Nullable String itemModel,
@@ -102,8 +95,6 @@ public class AbilityItemUtility {
 
 		LORE.add(label("Tribe"));
 		LORE.add(text(tribe.getTribeName()).color(tribe.getTextColor()).decoration(TextDecoration.ITALIC, false));
-		LORE.add(label("Archetype"));
-		LORE.add(text(archetype.getName()).color(MessageUtility.INFO_TEXT_COLOR).decoration(TextDecoration.ITALIC, false));
 		LORE.add(label("Activation"));
 		LORE.add(activationComponent(activation));
 		if (effects.length != 0) {
@@ -135,7 +126,6 @@ public class AbilityItemUtility {
 	 * @param material The base material. This is shown if no resource pack is available.
 	 * @param name The name of the ability.
 	 * @param tribe The tribe this ability belongs to.
-	 * @param archetype The archetype of the ability.
 	 * @param activation The activation type of the ability.
 	 * @param effects The AbilityEffects.
 	 * @param itemModel The path of the custom item model to use.
@@ -146,11 +136,10 @@ public class AbilityItemUtility {
 			@Nullable Material material,
 			@NonNull TextComponent name,
 			@NonNull Tribe tribe,
-			@NonNull Archetype archetype,
 			@NonNull Activation activation,
 			@NonNull AbilityEffect[] effects,
 			@Nullable String itemModel
 	) {
-		return createItem(plugin, material, name, tribe, archetype, activation, effects, itemModel, 0);
+		return createItem(plugin, material, name, tribe, activation, effects, itemModel, 0);
 	}
 }

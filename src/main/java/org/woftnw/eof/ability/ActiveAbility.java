@@ -22,7 +22,6 @@ import java.util.List;
 public class ActiveAbility extends Ability {
 	private final ItemStack ACTIVATION_ITEM;
 	private final Activation ACTIVATION_METHOD;
-	private final Archetype ARCHETYPE;
 	private final int COOLDOWN;
 	private final boolean TOGGLE;
 
@@ -38,11 +37,10 @@ public class ActiveAbility extends Ability {
 	 * @param itemModel              The item model key for the activation item or <code>null</code> if none.
 	 * @param tribe                  The tribe this ability is for.
 	 * @param activationMethod       The activation method.
-	 * @param archetype              The {@link Archetype} of this ability.
 	 * @param cooldown               The time after activation before this ability can be activated again.
 	 * @param toggle				 Whether this is a toggle ability. Toggle abilities activate every tick if the player is using them (hold + use). When the player presses use again or selects another item, the ability stops activating.
 	 */
-	public ActiveAbility(JavaPlugin plugin, TextComponent name, AbilityEffect[] effects, @Nullable Material activationItemMaterial, @Nullable String itemModel, Tribe tribe, Activation activationMethod, Archetype archetype, int cooldown, boolean toggle) {
+	public ActiveAbility(JavaPlugin plugin, TextComponent name, AbilityEffect[] effects, @Nullable Material activationItemMaterial, @Nullable String itemModel, Tribe tribe, Activation activationMethod, int cooldown, boolean toggle) {
 		super(name, effects);
 		COOLDOWN = cooldown;
 		TOGGLE = toggle;
@@ -51,14 +49,12 @@ public class ActiveAbility extends Ability {
 				activationItemMaterial,
 				name,
 				tribe,
-				archetype,
 				activationMethod,
 				effects,
 				itemModel,
 				cooldown
 		);
 		ACTIVATION_METHOD = activationMethod;
-		ARCHETYPE = archetype;
 
 		final long DELAY = 0;
 		final long PERIOD = 1;
@@ -91,11 +87,10 @@ public class ActiveAbility extends Ability {
 	 * @param itemModel              The item model key for the activation item or <code>null</code> if none.
 	 * @param tribe                  The tribe this ability is for.
 	 * @param activationMethod       The activation method.
-	 * @param archetype              The {@link Archetype} of this ability.
 	 * @param cooldown               The time after activation before this ability can be activated again.
 	 */
-	public ActiveAbility(JavaPlugin plugin, TextComponent name, AbilityEffect[] effects, @Nullable Material activationItemMaterial, @Nullable String itemModel, Tribe tribe, Activation activationMethod, Archetype archetype, int cooldown) {
-		this(plugin, name, effects, activationItemMaterial, itemModel, tribe, activationMethod, archetype, cooldown, false);
+	public ActiveAbility(JavaPlugin plugin, TextComponent name, AbilityEffect[] effects, @Nullable Material activationItemMaterial, @Nullable String itemModel, Tribe tribe, Activation activationMethod, int cooldown) {
+		this(plugin, name, effects, activationItemMaterial, itemModel, tribe, activationMethod, cooldown, false);
 	}
 
 	/**
@@ -114,15 +109,6 @@ public class ActiveAbility extends Ability {
 	 */
 	public Activation getActivationMethod() {
 		return ACTIVATION_METHOD;
-	}
-
-	/**
-	 * Get the archetype.
-	 *
-	 * @return The archetype for this ability.
-	 */
-	public Archetype getArchetype() {
-		return ARCHETYPE;
 	}
 
 	@Override
