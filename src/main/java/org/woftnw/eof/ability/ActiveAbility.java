@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents a n{@link Ability} that is activated using an item.
+ * Represents an {@link Ability} that is activated using an item.
  */
 public class ActiveAbility extends Ability {
 	private final ItemStack ACTIVATION_ITEM;
