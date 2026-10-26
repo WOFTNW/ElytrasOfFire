@@ -8,6 +8,10 @@
         },
         { "attribute_type": "potion", "potion_effect": "minecraft:strength" }
     ],
-    "active_abilities": [{ "use": "eof:tidal_wave" }],
+    "active_abilities": [
+        { "use": "eof:flame_breath" },
+        { "use": "eof:sky_surge" },
+        { "use": "eof:spark_punch" }
+    ],
     "passive_abilities": []
 }

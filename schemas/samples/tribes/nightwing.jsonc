@@ -10,6 +10,10 @@
         }
         // Predicate for attributes is missing; NightWings should get Invis while crouching at night
     ],
-    "active_abilities": [{ "use": "eof:flame_breath" }],
+    "active_abilities": [
+        { "use": "eof:flame_breath" },
+        { "use": "eof:shade_shackle" },
+        { "use": "eof:premonition" }
+    ],
     "passive_abilities": []
 }

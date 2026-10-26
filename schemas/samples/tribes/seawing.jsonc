@@ -7,6 +7,10 @@
             "potion_effect": "minecraft:night_vision"
         }
     ],
-    "active_abilities": [{ "use": "eof:tidal_wave" }],
+    "active_abilities": [
+        { "use": "eof:tidal_wave" },
+        { "use": "eof:oceans_blessing" },
+        { "use": "eof:tail_flail" }
+    ],
     "passive_abilities": []
 }

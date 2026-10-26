@@ -5,6 +5,10 @@
         { "attribute_type": "potion", "potion_effect": "minecraft:speed" },
         { "attribute_type": "potion", "potion_effect": "minecraft:strength" }
     ],
-    "active_abilities": [{ "use": "eof:flame_breath" }],
+    "active_abilities": [
+        { "use": "eof:flame_breath" },
+        { "use": "eof:desert_storm" },
+        { "use": "eof:toxin_slash" }
+    ],
     "passive_abilities": []
 }

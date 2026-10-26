@@ -28,10 +28,9 @@
         }
     ],
     "active_abilities": [
-        {
-            "use": "eof:flame_breath"
-            // "overrides": {}
-        }
+        { "use": "eof:flame_breath" },
+        { "use": "eof:terrashock" },
+        { "use": "eof:mud_swipe" }
     ],
     "passive_abilities": []
 }

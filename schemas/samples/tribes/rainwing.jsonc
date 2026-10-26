@@ -8,6 +8,10 @@
         }
         // Predicate for attributes is missing; RainWings should get Invis and Speed III while crouching and
     ],
-    "active_abilities": [{ "use": "eof:venom_shot" }],
+    "active_abilities": [
+        { "use": "eof:venom_shot" },
+        { "use": "eof:overgrowth" },
+        { "use": "eof:soul_sap" }
+    ],
     "passive_abilities": []
 }

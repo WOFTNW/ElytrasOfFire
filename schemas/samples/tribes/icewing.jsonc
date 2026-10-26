@@ -8,7 +8,11 @@
             "potion_effect": { "id": "minecraft:strength", "amplifier": 1 }
         }
     ],
-    "active_abilities": [{ "use": "eof:frost_breath" }],
+    "active_abilities": [
+        { "use": "eof:frost_breath" },
+        { "use": "eof:serrated_strike" },
+        { "use": "eof:icicle_incision" }
+    ],
     "passive_abilities": [
         // Passive schema not yet generated; IceWings should get Speed II on ice and Speed III on snow
     ]
