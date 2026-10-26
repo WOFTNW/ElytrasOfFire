@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.woftnw.eof.MessageUtility;
 import org.woftnw.eof.ability.effect.AbilityEffect;
 import org.woftnw.eof.exception.AbilityActivationException;
 
@@ -75,7 +76,7 @@ public class Ability {
 	 * @param player The player to notify.
 	 */
 	protected void notifyActivation(@NotNull Player player) {
-		player.sendActionBar(Component.text("Activated ").append(this.name));
+		player.sendActionBar(Component.text("Activated ").color(MessageUtility.INFO_TEXT_COLOR).append(this.name));
 	}
 
 	/**
