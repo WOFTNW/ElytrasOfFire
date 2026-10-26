@@ -1,5 +1,5 @@
 {
-    "id": "eof:skywing",
+    "id": "elytrasoffire:skywing",
     "display_name": "SkyWing",
     "attributes": [
         {
@@ -9,9 +9,9 @@
         { "attribute_type": "potion", "potion_effect": "minecraft:strength" }
     ],
     "active_abilities": [
-        { "use": "eof:flame_breath" },
-        { "use": "eof:sky_surge" },
-        { "use": "eof:spark_punch" }
+        { "use": "elytrasoffire:flame_breath" },
+        { "use": "elytrasoffire:sky_surge" },
+        { "use": "elytrasoffire:spark_punch" }
     ],
     "passive_abilities": []
 }

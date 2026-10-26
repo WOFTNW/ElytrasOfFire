@@ -1,5 +1,5 @@
 {
-    "id": "eof:seawing",
+    "id": "elytrasoffire:seawing",
     "display_name": "SeaWing",
     "attributes": [
         {
@@ -8,9 +8,9 @@
         }
     ],
     "active_abilities": [
-        { "use": "eof:tidal_wave" },
-        { "use": "eof:oceans_blessing" },
-        { "use": "eof:tail_flail" }
+        { "use": "elytrasoffire:tidal_wave" },
+        { "use": "elytrasoffire:oceans_blessing" },
+        { "use": "elytrasoffire:tail_flail" }
     ],
     "passive_abilities": []
 }
