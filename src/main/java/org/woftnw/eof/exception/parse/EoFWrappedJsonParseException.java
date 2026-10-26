@@ -7,7 +7,7 @@ public class EoFWrappedJsonParseException extends EoFJsonParseException {
 	/**
 	 * The exception that occurred while parsing or validating the property.
 	 */
-	private final EoFJsonParseException EXCEPTION;
+	private final Exception EXCEPTION;
 	/**
 	 * The key of the property that failed to parse or validate.
 	 */
@@ -19,7 +19,7 @@ public class EoFWrappedJsonParseException extends EoFJsonParseException {
 	 * @param key       The key of the property that failed to parse or validate.
 	 * @param exception The exception that occurred while parsing or validating the property.
 	 */
-	public EoFWrappedJsonParseException(String key, EoFJsonParseException exception) {
+	public EoFWrappedJsonParseException(String key, Exception exception) {
 		EXCEPTION = exception;
 		KEY = key;
 	}
@@ -29,7 +29,7 @@ public class EoFWrappedJsonParseException extends EoFJsonParseException {
 	 *
 	 * @return The exception that occurred while parsing or validating the property.
 	 */
-	public EoFJsonParseException getException() {
+	public Exception getException() {
 		return EXCEPTION;
 	}
 
