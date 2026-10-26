@@ -1,5 +1,5 @@
 {
-    "id": "eof:icewing",
+    "id": "elytrasoffire:icewing",
     "display_name": "IceWing",
     "attributes": [
         { "attribute_type": "potion", "potion_effect": "minecraft:speed" },
@@ -9,9 +9,9 @@
         }
     ],
     "active_abilities": [
-        { "use": "eof:frost_breath" },
-        { "use": "eof:serrated_strike" },
-        { "use": "eof:icicle_incision" }
+        { "use": "elytrasoffire:frost_breath" },
+        { "use": "elytrasoffire:serrated_strike" },
+        { "use": "elytrasoffire:icicle_incision" }
     ],
     "passive_abilities": [
         // Passive schema not yet generated; IceWings should get Speed II on ice and Speed III on snow

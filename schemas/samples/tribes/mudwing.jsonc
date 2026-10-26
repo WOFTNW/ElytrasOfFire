@@ -1,6 +1,6 @@
 {
     "$schema": "../../tribes.schema.json",
-    "id": "eof:mudwing",
+    "id": "elytrasoffire:mudwing",
     // Would be real nice if this could be a JSON object/array too
     "display_name": "MudWing",
     "attributes": [
@@ -28,9 +28,9 @@
         }
     ],
     "active_abilities": [
-        { "use": "eof:flame_breath" },
-        { "use": "eof:terrashock" },
-        { "use": "eof:mud_swipe" }
+        { "use": "elytrasoffire:flame_breath" },
+        { "use": "elytrasoffire:terrashock" },
+        { "use": "elytrasoffire:mud_swipe" }
     ],
     "passive_abilities": []
 }

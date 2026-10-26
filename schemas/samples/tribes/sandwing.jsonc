@@ -1,14 +1,14 @@
 {
-    "id": "eof:sandwing",
+    "id": "elytrasoffire:sandwing",
     "display_name": "SandWing",
     "attributes": [
         { "attribute_type": "potion", "potion_effect": "minecraft:speed" },
         { "attribute_type": "potion", "potion_effect": "minecraft:strength" }
     ],
     "active_abilities": [
-        { "use": "eof:flame_breath" },
-        { "use": "eof:desert_storm" },
-        { "use": "eof:toxin_slash" }
+        { "use": "elytrasoffire:flame_breath" },
+        { "use": "elytrasoffire:desert_storm" },
+        { "use": "elytrasoffire:toxin_slash" }
     ],
     "passive_abilities": []
 }
