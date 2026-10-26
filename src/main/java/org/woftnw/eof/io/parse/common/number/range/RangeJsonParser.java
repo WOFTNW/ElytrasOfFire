@@ -22,7 +22,7 @@ public abstract class RangeJsonParser implements JsonParser<int[]> {
 		int min;
 		try {
 			min = getMinParser().parse(MIN_ELEMENT, plugin);
-		} catch (EoFNumberJsonParseException e) {
+		} catch (EoFNumberJsonParseException | UnsupportedOperationException e) {
 			throw new EoFWrappedJsonParseException(key, e);
 		}
 
@@ -33,7 +33,7 @@ public abstract class RangeJsonParser implements JsonParser<int[]> {
 		int max;
 		try {
 			max = getMaxParser().parse(MIN_ELEMENT, plugin);
-		} catch (EoFNumberJsonParseException e) {
+		} catch (EoFNumberJsonParseException | UnsupportedOperationException e) {
 			throw new EoFWrappedJsonParseException(key, e);
 		}
 
