@@ -1,35 +1,48 @@
 package org.woftnw.eof.exception.parse.string;
 
 /**
- * Thrown when a string value does not match a required pattern.
+ * Thrown when a string value does not match any allowed patterns.
  */
 public class EoFStringPatternJsonParseException extends EoFStringJsonParseException {
 	/**
-	 * The required pattern.
+	 * The allowed patterns.
 	 */
-	private final String PATTERN;
+	private final String[] ALLOWED_PATTERNS;
 
 	/**
 	 * Create an EoFStringPatternJsonParseException.
 	 *
-	 * @param pattern The required pattern.
+	 * @param allowedPatterns The allowed patterns.
 	 */
-	public EoFStringPatternJsonParseException(String pattern) {
+	public EoFStringPatternJsonParseException(String[] allowedPatterns) {
 		super();
-		PATTERN = pattern;
+		ALLOWED_PATTERNS = allowedPatterns;
 	}
 
 	/**
-	 * Get the required pattern.
+	 * Create an EoFStringPatternJsonParseException.
 	 *
-	 * @return The required pattern.
+	 * @param allowedPattern The required pattern.
 	 */
-	public String getPattern() {
-		return PATTERN;
+	public EoFStringPatternJsonParseException(String allowedPattern) {
+		super();
+		ALLOWED_PATTERNS = new String[]{allowedPattern};
+	}
+
+	/**
+	 * Get the allowed patterns.
+	 *
+	 * @return The allowed patterns.
+	 */
+	public String[] getAllowedPatterns() {
+		return ALLOWED_PATTERNS;
 	}
 
 	@Override
 	public String getMessage() {
-		return String.format("Key does not match required pattern \"%s\".", PATTERN);
+		if (ALLOWED_PATTERNS.length == 1) {
+			return String.format("Key does not match required pattern \"%s\".", ALLOWED_PATTERNS[0]);
+		}
+		return String.format("Key does not match allowed patterns \"%s\".", String.join(", ", ALLOWED_PATTERNS));
 	}
 }

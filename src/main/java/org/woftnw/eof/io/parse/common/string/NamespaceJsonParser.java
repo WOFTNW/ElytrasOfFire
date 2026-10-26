@@ -5,28 +5,34 @@ import com.google.gson.JsonSyntaxException;
 import org.bukkit.NamespacedKey;
 import org.jspecify.annotations.NonNull;
 import org.woftnw.eof.ElytrasOfFire;
-import org.woftnw.eof.exception.parse.string.EoFStringLengthJsonParseException;
-import org.woftnw.eof.exception.parse.string.EoFStringPatternJsonParseException;
-import org.woftnw.eof.io.parse.JsonParser;
+import org.woftnw.eof.exception.parse.EoFJsonParseException;
 
-public class NamespaceJsonParser implements JsonParser<NamespacedKey> {
-	final int MIN_LENGTH = 3;
-	final String PATTERN_1 = "^[^:]+:[^:]+$";
-	final String PATTERN_2 = "^[a-z_-]+:[a-z_-]+$";
+/**
+ * Parses a JSON string to a {@link NamespacedKey}.
+ */
+public class NamespaceJsonParser extends StringJsonParser<NamespacedKey> {
+	private static final int MIN_LENGTH = 3;
+	private static final int MAX_LENGTH = DEFAULT_MAX_LENGTH;
+	private static final String[] ANY_OF_PATTERNS = new String[0];
+	private static final String[] ALL_OF_PATTERNS = new String[]{
+			"^[^:]+:[^:]+$",
+			"^[a-z_-]+:[a-z_-]+$"
+	};
+
+	/**
+	 * Create a NamespaceJsonParser.
+	 */
+	public NamespaceJsonParser() {
+		super(MIN_LENGTH, MAX_LENGTH, ANY_OF_PATTERNS, ALL_OF_PATTERNS);
+	}
 
 	@Override
-	public NamespacedKey parse(@NonNull JsonElement element, ElytrasOfFire plugin) throws EoFStringLengthJsonParseException, EoFStringPatternJsonParseException {
-		final String STRING = element.getAsString();
-		if (STRING.length() < MIN_LENGTH) {
-			throw new EoFStringLengthJsonParseException(MIN_LENGTH, null);
-		} else if (!STRING.matches(PATTERN_1)) {
-			throw new EoFStringPatternJsonParseException(PATTERN_1);
-		} else if (!STRING.matches(PATTERN_2)) {
-			throw new EoFStringPatternJsonParseException(PATTERN_2);
-		}
+	public NamespacedKey parse(@NonNull JsonElement element, ElytrasOfFire plugin) throws EoFJsonParseException {
+		final String STRING = new StringToStringJsonParser(MIN_LENGTH, MAX_LENGTH, ANY_OF_PATTERNS, ALL_OF_PATTERNS).parse(element, plugin);
 
 		final String[] SPLIT = STRING.split(":");
-		if (SPLIT.length < 2) throw new JsonSyntaxException("Key is not a namespace key. Use format \"namespace:key\".");
+		if (SPLIT.length < 2)
+			throw new JsonSyntaxException("Key is not a namespace key. Use format \"namespace:key\".");
 		final String NAMESPACE = SPLIT[0];
 		final String KEY = SPLIT[1];
 
