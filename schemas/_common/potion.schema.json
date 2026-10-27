@@ -1,0 +1,78 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$defs": {
+        "potion_effect": {
+            "description": "A string or object representing a potion effect. If listed as a string, amplifier is assumed to be 0.",
+            "anyOf": [
+                {
+                    "description": "A string representation of a potion effect. When used, amplifier is assumed to be 0.",
+                    "$ref": "#/$defs/potion_effect_string"
+                },
+                {
+                    "description": "An object representation of a potion effect.",
+                    "$ref": "#/$defs/potion_effect_object"
+                }
+            ]
+        },
+        "potion_effect_string": {
+            "type": "string",
+            "enum": [
+                "minecraft:absorption",
+                "minecraft:bad_omen",
+                "minecraft:blindness",
+                "minecraft:breath_of_the_nautilus",
+                "minecraft:conduit_power",
+                "minecraft:darkness",
+                "minecraft:dolphins_grace",
+                "minecraft:fire_resistance",
+                "minecraft:freezing",
+                "minecraft:glowing",
+                "minecraft:haste",
+                "minecraft:health_boost",
+                "minecraft:hero_of_the_village",
+                "minecraft:hunger",
+                "minecraft:infested",
+                "minecraft:instant_damage",
+                "minecraft:instant_health",
+                "minecraft:invisibility",
+                "minecraft:jump_boost",
+                "minecraft:levitation",
+                "minecraft:luck",
+                "minecraft:mining_fatigue",
+                "minecraft:nausea",
+                "minecraft:night_vision",
+                "minecraft:oozing",
+                "minecraft:poison",
+                "minecraft:raid_omen",
+                "minecraft:regeneration",
+                "minecraft:resistance",
+                "minecraft:saturation",
+                "minecraft:slow_falling",
+                "minecraft:slowness",
+                "minecraft:speed",
+                "minecraft:strength",
+                "minecraft:trial_omen",
+                "minecraft:unluck",
+                "minecraft:water_breathing",
+                "minecraft:weakness",
+                "minecraft:weaving",
+                "minecraft:wind_charged",
+                "minecraft:wither"
+            ],
+            "pattern": "^minecraft:[^:0-9A-Z\\s]+$",
+            "$ref": "./_common/_strings.json#/$defs/namespace"
+        },
+        "potion_effect_object": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id"],
+            "properties": {
+                "id": { "$ref": "#/$defs/potion_effect_string" },
+                "amplifier": {
+                    "description": "The amplifier of the potion effect.",
+                    "$ref": "./_common/_numbers.json#/$defs/nonnegative_int"
+                }
+            }
+        }
+    }
+}

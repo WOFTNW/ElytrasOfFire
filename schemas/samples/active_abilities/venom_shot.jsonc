@@ -11,7 +11,7 @@
         "effects": {
             "sneak_use": [
                 {
-                    "effect_type": "potion",
+                    "effect_type": "elytrasoffire:potion",
                     "potion_effect": {
                         "id": "minecraft:wither",
                         "amplifier": 2

@@ -10,11 +10,11 @@
         "target": "raycast",
         "effects": {
             "sneak_use": [
-                { "effect_type": "ignite", "duration": 10 },
-                { "effect_type": "damage", "damage": 2.5 },
-                { "effect_type": "data", "remove_data": "eof:frostbite" },
+                { "effect_type": "elytrasoffire:ignite", "duration": 10 },
+                { "effect_type": "elytrasoffire:damage", "damage": 2.5 },
+                { "effect_type": "elytrasoffire:data", "remove_data": "eof:frostbite" },
                 {
-                    "effect_type": "data",
+                    "effect_type": "elytrasoffire:data",
                     "remove_data": "eof:frostbite",
                     "target": "self"
                 }

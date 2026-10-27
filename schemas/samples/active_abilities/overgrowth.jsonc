@@ -8,7 +8,7 @@
         "effects": {
             "use": [
                 {
-                    "effect_type": "potion",
+                    "effect_type": "elytrasoffire:potion",
                     "potion_effect": {
                         "id": "minecraft:resistance",
                         "amplifier": 1
@@ -17,7 +17,7 @@
                     "target": "self"
                 },
                 {
-                    "effect_type": "potion",
+                    "effect_type": "elytrasoffire:potion",
                     "potion_effect": {
                         "id": "minecraft:slowness",
                         "amplifier": 1

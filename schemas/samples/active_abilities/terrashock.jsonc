@@ -10,22 +10,22 @@
         "effects": {
             "use": [
                 {
-                    "effect_type": "potion",
+                    "effect_type": "elytrasoffire:potion",
                     "potion_effect": "minecraft:slowness",
                     "duration": 6,
                     "target": "others",
                     "range": 10
                 },
                 {
-                    "effect_type": "potion",
+                    "effect_type": "elytrasoffire:potion",
                     "potion_effect": "minecraft:absorption"
                 },
                 {
-                    "effect_type": "potion",
+                    "effect_type": "elytrasoffire:potion",
                     "potion_effect": "minecraft:resistance"
                 },
                 {
-                    "effect_type": "potion",
+                    "effect_type": "elytrasoffire:potion",
                     "potion_effect": {
                         "id": "minecraft:strength",
                         "amplifier": 2

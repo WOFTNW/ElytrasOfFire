@@ -10,7 +10,7 @@
         "effects": {
             "hold": [
                 {
-                    "effect_type": "potion",
+                    "effect_type": "elytrasoffire:potion",
                     "potion_effect": {
                         "id": "minecraft:speed",
                         "amplifier": 1
@@ -18,7 +18,7 @@
                     "predicates": [{}]
                 },
                 {
-                    "effect_type": "potion",
+                    "effect_type": "elytrasoffire:potion",
                     "potion_effect": {
                         "id": "minecraft:speed",
                         "amplifier": 3

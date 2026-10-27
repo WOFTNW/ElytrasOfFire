@@ -10,18 +10,18 @@
         "effects": {
             "use": [
                 {
-                    "effect_type": "potion",
+                    "effect_type": "elytrasoffire:potion",
                     "potion_effect": {
                         "id": "minecraft:strength",
                         "amplifier": 1
                     }
                 },
                 {
-                    "effect_type": "potion",
+                    "effect_type": "elytrasoffire:potion",
                     "potion_effect": { "id": "minecraft:speed", "amplifier": 2 }
                 },
                 {
-                    "effect_type": "potion",
+                    "effect_type": "elytrasoffire:potion",
                     "potion_effect": "minecraft:blindness",
                     "duration": 6
                 }

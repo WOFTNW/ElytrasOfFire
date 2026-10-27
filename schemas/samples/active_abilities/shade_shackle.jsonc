@@ -8,14 +8,14 @@
         "effects": {
             "hold": [
                 {
-                    "effect_type": "potion",
+                    "effect_type": "elytrasoffire:potion",
                     "potion_effect": "minecraft:blindness",
                     "duration": 2,
                     "target": "all",
                     "range": { "min": 0, "max": 10 }
                 },
                 {
-                    "effect_type": "potion",
+                    "effect_type": "elytrasoffire:potion",
                     "potion_effect": {
                         "id": "minecraft:slowness",
                         "amplifier": 2
@@ -25,7 +25,7 @@
                     "range": { "min": 0, "max": 6 }
                 },
                 {
-                    "effect_type": "potion",
+                    "effect_type": "elytrasoffire:potion",
                     "potion_effect": {
                         "id": "minecraft:slowness",
                         "amplifier": 1

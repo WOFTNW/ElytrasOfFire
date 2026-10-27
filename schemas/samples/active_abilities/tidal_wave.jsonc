@@ -13,13 +13,13 @@
         "target": "raycast",
         "effects": {
             "sneak_use": [
-                { "effect_type": "damage", "damage": 2 },
+                { "effect_type": "elytrasoffire:damage", "damage": 2 },
                 {
-                    "effect_type": "potion",
+                    "effect_type": "elytrasoffire:potion",
                     "potion_effect": "minecraft:mining_fatigue"
                 },
                 {
-                    "effect_type": "potion",
+                    "effect_type": "elytrasoffire:potion",
                     "potion_effect": "minecraft:slowness"
                 }
                 // Torrent I and II apply Poison II for 3s and IV for 3s respectively, but that's a conditional i don't feel like writing.
