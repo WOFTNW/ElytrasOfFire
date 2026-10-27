@@ -12,6 +12,9 @@ import org.woftnw.eof.command.RootCommand;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The main ElytrasOfFire plugin class.
+ */
 public class ElytrasOfFire extends JavaPlugin {
 
 	/**
@@ -67,6 +70,11 @@ public class ElytrasOfFire extends JavaPlugin {
 		return Map.copyOf(abilityEffectTypes);
 	}
 
+	/**
+	 * Get the <code>TribeManager</code> instance.
+	 *
+	 * @return The <code>TribeManager</code> instance.
+	 */
 	public TribeManager getTribeManager() {
 		return tribeManager;
 	}
