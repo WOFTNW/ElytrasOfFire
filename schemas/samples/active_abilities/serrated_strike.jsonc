@@ -1,6 +1,6 @@
 {
     "$schema": "../../active_ability.schema.json",
-    "id": "eof:serrated_strike",
+    "id": "elytrasoffire:serrated_strike",
     "display_name": { "text": "Serrated Strike", "color": "gray" },
     "item": "minecraft:gray_dye",
     "cooldown": 24,
@@ -23,7 +23,7 @@
                 },
                 {
                     "effect_type": "elytrasoffire:data",
-                    "apply_data": "eof:frostbite",
+                    "apply_data": "elytrasoffire:frostbite",
                     "duration": "infinite"
                 }
             ]

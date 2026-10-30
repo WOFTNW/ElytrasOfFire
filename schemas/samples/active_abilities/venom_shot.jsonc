@@ -1,6 +1,6 @@
 {
     "$schema": "../../active_ability.schema.json",
-    "id": "eof:venom_shot",
+    "id": "elytrasoffire:venom_shot",
     "display_name": { "text": "Venom Shot", "color": "white" },
     "item": "minecraft:gray_dye",
     "cooldown": 10,

@@ -1,6 +1,6 @@
 {
     "$schema": "../../active_ability.schema.json",
-    "id": "eof:terrashock",
+    "id": "elytrasoffire:terrashock",
     "display_name": { "text": "Terrashock", "color": "gold" },
     "item": "minecraft:gray_dye",
     "cooldown": 24,

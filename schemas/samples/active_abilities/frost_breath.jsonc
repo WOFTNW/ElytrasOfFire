@@ -1,6 +1,6 @@
 {
     "$schema": "../../active_ability.schema.json",
-    "id": "eof:frost_breath",
+    "id": "elytrasoffire:frost_breath",
     "display_name": { "text": "Frost Breath", "color": "red" },
     "item": "minecraft:gray_dye",
     "cooldown": 10,

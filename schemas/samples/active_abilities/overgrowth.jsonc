@@ -1,6 +1,6 @@
 {
     "$schema": "../../active_ability.schema.json",
-    "id": "eof:desert_storm",
+    "id": "elytrasoffire:desert_storm",
     "display_name": { "text": "Desert Storm", "color": "yellow" },
     "item": "minecraft:gray_dye",
     "cooldown": 24,

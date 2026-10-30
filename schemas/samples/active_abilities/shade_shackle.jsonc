@@ -1,6 +1,6 @@
 {
     "$schema": "../../active_ability.schema.json",
-    "id": "eof:shade_shackle",
+    "id": "elytrasoffire:shade_shackle",
     "display_name": { "text": "Shade Shackle", "color": "gray" },
     "item": "minecraft:gray_dye",
     "cooldown": 24,

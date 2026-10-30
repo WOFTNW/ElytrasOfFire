@@ -1,6 +1,6 @@
 {
     "$schema": "../../active_ability.schema.json",
-    "id": "eof:flame_breath",
+    "id": "elytrasoffire:flame_breath",
     "display_name": { "text": "Flame Breath", "color": "red" },
     "item": "minecraft:gray_dye",
     "activation_inputs": ["sneak", "use"],

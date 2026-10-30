@@ -1,6 +1,6 @@
 {
     "$schema": "../../active_ability.schema.json",
-    "id": "eof:sky_surge",
+    "id": "elytrasoffire:sky_surge",
     "display_name": { "text": "Sky Surge", "color": "dark_red" },
     "item": "minecraft:gray_dye",
     "cooldown": 24,

@@ -1,6 +1,6 @@
 {
     "$schema": "../../active_ability.schema.json",
-    "id": "eof:tidal_wave",
+    "id": "elytrasoffire:tidal_wave",
     "display_name": { "text": "Tidal Wave", "color": "aqua" },
     "item": "minecraft:gray_dye",
     "cooldown": 10,
