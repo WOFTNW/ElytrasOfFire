@@ -17,6 +17,7 @@ public class RootCommand extends PluginCommand {
 		root.then(new TribeCommand(PLUGIN).getCommandData());
 		root.then(new AttributesCommand(PLUGIN).getCommandData());
 		root.then(new AbilitiesCommand(PLUGIN).getCommandData());
+		root.then(new SettingsCommand(PLUGIN).getCommandData());
 		return root;
 	}
 }
