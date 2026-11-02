@@ -5,8 +5,10 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.checkerframework.checker.units.qual.N;
 import org.jspecify.annotations.Nullable;
 import org.jspecify.annotations.NonNull;
+import org.woftnw.eof.ability.ActiveAbility;
 import org.woftnw.eof.exception.NoTribeException;
 import org.woftnw.eof.exception.NotEnoughAbilitySlotsException;
 
@@ -31,6 +33,7 @@ public class PlayerUtility {
 	private final NamespacedKey ABILITIES_ENABLED_KEY;
 	private final NamespacedKey ATTACK_TARGET_KEY;
 	private final NamespacedKey ABILITY_DATA_KEY;
+	private final NamespacedKey ABILITY_SLOT_CONFIG_KEY;
 
 	/**
 	 * Create a PlayerUtility.
@@ -44,6 +47,7 @@ public class PlayerUtility {
 		ABILITIES_ENABLED_KEY = new NamespacedKey(plugin, "abilities_enabled");
 		ATTACK_TARGET_KEY = new NamespacedKey(plugin, "attack_target");
 		ABILITY_DATA_KEY = new NamespacedKey(plugin, "ability_data");
+		ABILITY_SLOT_CONFIG_KEY = new NamespacedKey(plugin, "ability_slot_config");
 	}
 
 	public void setPlayerAttackTarget(@NonNull Player player, @NonNull LivingEntity target) {
@@ -170,5 +174,31 @@ public class PlayerUtility {
 		}
 
 		if (updated) persistentDataContainer.set(ABILITY_DATA_KEY, PersistentDataType.LIST.strings(), strings);
+	}
+
+	public void setPlayerAbilitySlot(@NonNull Player player, @NonNull NamespacedKey abilityId, int slotId) {
+		final PersistentDataContainer PERSISTENT_DATA_CONTAINER = player.getPersistentDataContainer();
+		final PersistentDataContainer EMPTY_CONTAINER = PERSISTENT_DATA_CONTAINER.getAdapterContext().newPersistentDataContainer();
+		final PersistentDataContainer DATA_CONTAINER = PERSISTENT_DATA_CONTAINER.getOrDefault(ABILITY_SLOT_CONFIG_KEY, PersistentDataType.TAG_CONTAINER, EMPTY_CONTAINER);
+
+		DATA_CONTAINER.set(abilityId, PersistentDataType.INTEGER, slotId);
+
+		PERSISTENT_DATA_CONTAINER.set(ABILITY_SLOT_CONFIG_KEY, PersistentDataType.TAG_CONTAINER, DATA_CONTAINER);
+	}
+
+	public void setPlayerAbilitySlot(@NonNull Player player, @NonNull ActiveAbility ability, int slotId) {
+		setPlayerAbilitySlot(player, ability.getId(), slotId);
+	}
+
+	public Integer getPlayerAbilitySlot(@NonNull Player player, @NonNull NamespacedKey abilityId) {
+		final PersistentDataContainer PERSISTENT_DATA_CONTAINER = player.getPersistentDataContainer();
+		final PersistentDataContainer EMPTY_CONTAINER = PERSISTENT_DATA_CONTAINER.getAdapterContext().newPersistentDataContainer();
+		final PersistentDataContainer DATA_CONTAINER = PERSISTENT_DATA_CONTAINER.getOrDefault(ABILITY_SLOT_CONFIG_KEY, PersistentDataType.TAG_CONTAINER, EMPTY_CONTAINER);
+
+		return DATA_CONTAINER.get(abilityId, PersistentDataType.INTEGER);
+	}
+
+	public Integer getPlayerAbilitySlot(@NonNull Player player, @NonNull ActiveAbility ability) {
+		return getPlayerAbilitySlot(player, ability.getId());
 	}
 }
