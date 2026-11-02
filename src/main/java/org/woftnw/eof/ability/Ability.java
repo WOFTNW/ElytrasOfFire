@@ -2,6 +2,7 @@ package org.woftnw.eof.ability;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.woftnw.eof.MessageUtility;
@@ -20,6 +21,7 @@ import org.woftnw.eof.exception.AbilityActivationException;
 public class Ability {
 	protected final static AbilityEffect[] DEFAULT_EFFECTS = new AbilityEffect[0];
 
+	protected final NamespacedKey ID;
 	/**
 	 * The display name of this ability.
 	 */
@@ -35,10 +37,12 @@ public class Ability {
 	 * You probably want to use a subclass like {@link ActiveAbility}. A generic Ability will not be of much use.
 	 * </p>
 	 *
+	 * @param id      The unique ID of this ability.
 	 * @param name    The display name of this ability.
 	 * @param effects The effects to apply on activation. May be empty.
 	 */
-	public Ability(TextComponent name, AbilityEffect[] effects) {
+	public Ability(NamespacedKey id, TextComponent name, AbilityEffect[] effects) {
+		this.ID = id;
 		this.name = name;
 		this.effects = effects;
 	}
@@ -49,9 +53,11 @@ public class Ability {
 	 * You probably want to use a subclass like {@link ActiveAbility}. A generic Ability will not be of much use.
 	 * </p>
 	 *
+	 * @param id   The unique ID of this ability.
 	 * @param name The display name of this ability.
 	 */
-	public Ability(TextComponent name) {
+	public Ability(NamespacedKey id, TextComponent name) {
+		this.ID = id;
 		this.name = name;
 		this.effects = DEFAULT_EFFECTS;
 	}
@@ -76,6 +82,10 @@ public class Ability {
 	 */
 	protected void notifyActivation(@NotNull Player player) {
 		player.sendActionBar(Component.text("Activated ").color(MessageUtility.INFO_TEXT_COLOR).append(this.name));
+	}
+
+	public NamespacedKey getId() {
+		return ID;
 	}
 
 	/**

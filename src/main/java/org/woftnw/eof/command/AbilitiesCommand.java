@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 import org.jspecify.annotations.NonNull;
 import org.woftnw.eof.ElytrasOfFire;
 import org.woftnw.eof.PlayerUtility;
-import org.woftnw.eof.exception.NotEnoughAbilitySlotsException;
+import org.woftnw.eof.exception.NoTribeException;
 
 public class AbilitiesCommand extends PluginCommand {
 
@@ -40,8 +40,8 @@ public class AbilitiesCommand extends PluginCommand {
 
 		try {
 			playerUtility.setPlayerAbilitiesEnabled(player, newState);
-		} catch (NotEnoughAbilitySlotsException e) {
-			respondError(context, "Your ability slots are not clear. Empty your hotbar and try again.");
+		} catch (NoTribeException e) {
+			respondError(context, "You must join a tribe first.");
 			return 0;
 		}
 

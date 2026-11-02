@@ -2,6 +2,7 @@ package org.woftnw.eof.ability;
 
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -31,6 +32,7 @@ public class ActiveAbility extends Ability {
 	 * Create a new ActiveAbility
 	 *
 	 * @param plugin                 The origin plugin instance.
+	 * @param id                     The unique ID of this ability.
 	 * @param name                   The name of the ability.
 	 * @param effects                The effects to apply on activation. May be empty.
 	 * @param activationItemMaterial The material for the activation item or <code>null</code> for the default.
@@ -40,8 +42,8 @@ public class ActiveAbility extends Ability {
 	 * @param cooldown               The time after activation before this ability can be activated again.
 	 * @param toggle				 Whether this is a toggle ability. Toggle abilities activate every tick if the player is using them (hold + use). When the player presses use again or selects another item, the ability stops activating.
 	 */
-	public ActiveAbility(JavaPlugin plugin, TextComponent name, AbilityEffect[] effects, @Nullable Material activationItemMaterial, @Nullable String itemModel, Tribe tribe, Activation activationMethod, int cooldown, boolean toggle) {
-		super(name, effects);
+	public ActiveAbility(JavaPlugin plugin, NamespacedKey id, TextComponent name, AbilityEffect[] effects, @Nullable Material activationItemMaterial, @Nullable String itemModel, Tribe tribe, Activation activationMethod, int cooldown, boolean toggle) {
+		super(id, name, effects);
 		COOLDOWN = cooldown;
 		TOGGLE = toggle;
 		ACTIVATION_ITEM = AbilityItemUtility.createItem(
@@ -81,6 +83,7 @@ public class ActiveAbility extends Ability {
 	 * Create a new ActiveAbility
 	 *
 	 * @param plugin                 The origin plugin instance.
+	 * @param id                     The unique ID of this ability.
 	 * @param name                   The name of the ability.
 	 * @param effects                The effects to apply on activation. May be empty.
 	 * @param activationItemMaterial The material for the activation item or <code>null</code> for the default.
@@ -89,8 +92,8 @@ public class ActiveAbility extends Ability {
 	 * @param activationMethod       The activation method.
 	 * @param cooldown               The time after activation before this ability can be activated again.
 	 */
-	public ActiveAbility(JavaPlugin plugin, TextComponent name, AbilityEffect[] effects, @Nullable Material activationItemMaterial, @Nullable String itemModel, Tribe tribe, Activation activationMethod, int cooldown) {
-		this(plugin, name, effects, activationItemMaterial, itemModel, tribe, activationMethod, cooldown, false);
+	public ActiveAbility(JavaPlugin plugin, NamespacedKey id, TextComponent name, AbilityEffect[] effects, @Nullable Material activationItemMaterial, @Nullable String itemModel, Tribe tribe, Activation activationMethod, int cooldown) {
+		this(plugin, id, name, effects, activationItemMaterial, itemModel, tribe, activationMethod, cooldown, false);
 	}
 
 	/**
