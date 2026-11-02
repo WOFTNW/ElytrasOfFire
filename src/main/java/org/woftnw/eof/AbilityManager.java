@@ -18,7 +18,6 @@ import org.woftnw.eof.ability.Activation;
 import org.woftnw.eof.ability.ActiveAbility;
 import org.woftnw.eof.exception.AbilityActivationException;
 import org.woftnw.eof.exception.NoTribeException;
-import org.woftnw.eof.exception.NotEnoughAbilitySlotsException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,9 +43,8 @@ public class AbilityManager implements Listener {
 	 * Give a player their active ability items.
 	 *
 	 * @param player The player to give abilities to.
-	 * @throws NotEnoughAbilitySlotsException If the player doesn't have enough slots for their abilities.
 	 */
-	public void givePlayerAbilities(@NonNull Player player) throws NotEnoughAbilitySlotsException, NoTribeException {
+	public void givePlayerAbilities(@NonNull Player player) throws NoTribeException {
 		final PlayerInventory INVENTORY = player.getInventory();
 		putAbilityItemsInInventory(player, INVENTORY);
 	}
@@ -184,7 +182,7 @@ public class AbilityManager implements Listener {
 				removeAbilitiesFromInventory(Objects.requireNonNull(event.getClickedInventory()));
 				try {
 					givePlayerAbilities(PLAYER);
-				} catch (NotEnoughAbilitySlotsException | NoTribeException e) {
+				} catch (NoTribeException e) {
 					// This should not happen.
 					PLUGIN.getLogger().warning("Failed to reset player abilities after inventory click: " + e.getMessage());
 					PLUGIN.getPlayerUtility().disablePlayerAbilities(PLAYER);

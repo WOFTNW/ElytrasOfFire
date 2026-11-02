@@ -11,9 +11,6 @@ import io.papermc.paper.registry.data.dialog.input.DialogInput;
 import io.papermc.paper.registry.data.dialog.type.DialogType;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.event.HoverEvent;
-import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.NamespacedKey;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,9 +23,7 @@ import org.jetbrains.annotations.Nullable;
 import org.jspecify.annotations.NonNull;
 import org.woftnw.eof.ability.ActiveAbility;
 import org.woftnw.eof.exception.NoTribeException;
-import org.woftnw.eof.exception.NotEnoughAbilitySlotsException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static net.kyori.adventure.text.Component.text;
@@ -179,8 +174,6 @@ public class DialogManager implements Listener {
 		if (ENABLE_ABILITIES != null) {
 			try {
 				PLAYER_UTILITY.setPlayerAbilitiesEnabled(player, ENABLE_ABILITIES);
-			} catch (NotEnoughAbilitySlotsException e) {
-				player.sendMessage(MessageUtility.buildErrorMessage("Your ability slots are not clear, so your abilities cannot be enabled."));
 			} catch (NoTribeException e) {
 				player.sendMessage(MessageUtility.buildErrorMessage("You must join a tribe first."));
 			}

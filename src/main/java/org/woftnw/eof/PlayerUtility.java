@@ -5,12 +5,10 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.checkerframework.checker.units.qual.N;
 import org.jspecify.annotations.Nullable;
 import org.jspecify.annotations.NonNull;
 import org.woftnw.eof.ability.ActiveAbility;
 import org.woftnw.eof.exception.NoTribeException;
-import org.woftnw.eof.exception.NotEnoughAbilitySlotsException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,7 +96,7 @@ public class PlayerUtility {
 	 * @param player The player whose state to change.
 	 * @param enabled Whether to enable abilities.
 	 */
-	public void setPlayerAbilitiesEnabled(@NonNull Player player, boolean enabled) throws NotEnoughAbilitySlotsException, NoTribeException {
+	public void setPlayerAbilitiesEnabled(@NonNull Player player, boolean enabled) throws NoTribeException {
 		AbilityManager abilityManager = PLUGIN.getTribeManager().getAbilityManager();
 		if (enabled) {
 			abilityManager.givePlayerAbilities(player);
