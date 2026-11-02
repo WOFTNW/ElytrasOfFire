@@ -133,6 +133,15 @@ public class DialogManager implements Listener {
 			}
 		}
 
+		if (PLAYER_UTILITY.arePlayerPlayerAbilitiesEnabled(PLAYER)) {
+			PLAYER_UTILITY.disablePlayerAbilities(PLAYER);
+			try {
+				PLAYER_UTILITY.setPlayerAbilitiesEnabled(PLAYER, true);
+			} catch (NoTribeException e) {
+				// Do nothing; not re-enabling the abilities is acceptable behavior.
+			}
+		}
+
 		PLAYER.sendMessage(MessageUtility.buildMessage("Saved ability item slots."));
 	}
 
