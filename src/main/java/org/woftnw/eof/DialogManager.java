@@ -11,20 +11,26 @@ import io.papermc.paper.registry.data.dialog.input.DialogInput;
 import io.papermc.paper.registry.data.dialog.type.DialogType;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.event.HoverEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MenuType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jspecify.annotations.NonNull;
+import org.woftnw.eof.ability.Ability;
 import org.woftnw.eof.ability.ActiveAbility;
 import org.woftnw.eof.exception.NoTribeException;
 
 import java.util.List;
+import java.util.Objects;
 
 import static net.kyori.adventure.text.Component.text;
 
@@ -105,6 +111,28 @@ public class DialogManager implements Listener {
 	public static boolean isAbilitySlotMenu(@NonNull InventoryView inventoryView) {
 		final HoverEvent<?> HOVER_EVENT = inventoryView.title().hoverEvent();
 		return HOVER_EVENT != null && !ABILITY_SLOT_MENU_HOVER_TEXT.equals(HOVER_EVENT.toString());
+	}
+
+	@EventHandler
+	public void onInventoryClick(@NonNull InventoryClickEvent event) {
+		final InventoryView VIEW = event.getView();
+		if (!DialogManager.isAbilitySlotMenu(VIEW)) return;
+
+		if (!(event.getWhoClicked() instanceof final Player PLAYER)) return;
+		final Tribe TRIBE = PLUGIN.getPlayerUtility().getPlayerTribe(PLAYER);
+		if (TRIBE == null) return;
+		Inventory CLICKED_INVENTORY = event.getClickedInventory();
+
+		if (CLICKED_INVENTORY != null && Objects.equals(CLICKED_INVENTORY, event.getView().getBottomInventory())) {
+			event.setCancelled(true);
+			PLAYER.updateInventory();
+			return;
+		}
+
+		if (event.getAction().equals(InventoryAction.HOTBAR_SWAP) || event.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
+			event.setCancelled(true);
+			PLAYER.updateInventory();
+		}
 	}
 
 	@EventHandler
