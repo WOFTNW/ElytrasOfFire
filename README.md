@@ -2,7 +2,7 @@
 
 ## About
 
-Elytras of Fire is a Minecraft plugin designed for [Wings Of Fire: The New World](https://woftnw.org/).
+Elytras of Fire is a PaperMC plugin designed for [Wings Of Fire: The New World](https://woftnw.org/).
 
 ## Build
 
