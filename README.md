@@ -6,6 +6,5 @@ Elytras of Fire is a PaperMC plugin designed for [Wings Of Fire: The New World](
 
 ## Build
 
-1. Clone the repository
-2. Build the repository using `./gradlew build`
-3. Move the built file to your `/plugins` folder in the server's directory.
+1. Clone the repository with `git clone https://github.com/WOFTNW/ElytrasOfFire`.
+2. Build the repository with `./gradlew build`.
