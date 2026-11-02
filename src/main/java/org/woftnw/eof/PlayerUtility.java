@@ -98,7 +98,7 @@ public class PlayerUtility {
 	 * @param player The player whose state to change.
 	 * @param enabled Whether to enable abilities.
 	 */
-	public void setPlayerAbilitiesEnabled(@NonNull Player player, boolean enabled) throws NotEnoughAbilitySlotsException {
+	public void setPlayerAbilitiesEnabled(@NonNull Player player, boolean enabled) throws NotEnoughAbilitySlotsException, NoTribeException {
 		AbilityManager abilityManager = PLUGIN.getTribeManager().getAbilityManager();
 		if (enabled) {
 			abilityManager.givePlayerAbilities(player);
@@ -190,6 +190,7 @@ public class PlayerUtility {
 		setPlayerAbilitySlot(player, ability.getId(), slotId);
 	}
 
+	@Nullable
 	public Integer getPlayerAbilitySlot(@NonNull Player player, @NonNull NamespacedKey abilityId) {
 		final PersistentDataContainer PERSISTENT_DATA_CONTAINER = player.getPersistentDataContainer();
 		final PersistentDataContainer EMPTY_CONTAINER = PERSISTENT_DATA_CONTAINER.getAdapterContext().newPersistentDataContainer();
@@ -198,6 +199,7 @@ public class PlayerUtility {
 		return DATA_CONTAINER.get(abilityId, PersistentDataType.INTEGER);
 	}
 
+	@Nullable
 	public Integer getPlayerAbilitySlot(@NonNull Player player, @NonNull ActiveAbility ability) {
 		return getPlayerAbilitySlot(player, ability.getId());
 	}
