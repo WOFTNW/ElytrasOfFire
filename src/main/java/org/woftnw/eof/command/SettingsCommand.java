@@ -13,6 +13,9 @@ import org.woftnw.eof.MessageUtility;
 
 import java.util.Objects;
 
+/**
+ * The settings command.
+ */
 public class SettingsCommand extends PluginCommand {
 
 	public SettingsCommand(ElytrasOfFire plugin) {

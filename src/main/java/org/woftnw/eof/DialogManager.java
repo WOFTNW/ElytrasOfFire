@@ -22,14 +22,32 @@ import java.util.List;
 
 import static net.kyori.adventure.text.Component.text;
 
+/**
+ * Manages Dialogs.
+ */
 public class DialogManager implements Listener {
-	final ElytrasOfFire PLUGIN;
 
+	/**
+	 * The ElytrasOfFire plugin instance.
+	 */
+	private final ElytrasOfFire PLUGIN;
+
+	/**
+	 * Create a new DialogManager. There should only be one instance that belongs to the ElytrasOfFire plugin.
+	 *
+	 * @param plugin The ElytrasOfFire plugin instance.
+	 */
 	public DialogManager(@NonNull ElytrasOfFire plugin) {
 		PLUGIN = plugin;
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 
+	/**
+	 * Get the user settings dialog for a given <code>Player</code>.
+	 *
+	 * @param player The player whose user settings dialog to get.
+	 * @return The user settings Dialog for the player.
+	 */
 	public @NonNull Dialog getUserSettingsDialog(Player player) {
 		final PlayerUtility PLAYER_UTILITY = PLUGIN.getPlayerUtility();
 
@@ -60,6 +78,7 @@ public class DialogManager implements Listener {
 				))
 		);
 	}
+
 
 	@EventHandler
 	void onDialogSubmit(@NonNull PlayerCustomClickEvent event) {

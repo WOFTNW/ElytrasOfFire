@@ -83,7 +83,7 @@ public class ElytrasOfFire extends JavaPlugin {
 	}
 
 	/**
-	 * Get the <code>TribeManager</code> instance.
+	 * Get the {@link TribeManager} instance.
 	 *
 	 * @return The <code>TribeManager</code> instance.
 	 */
@@ -97,14 +97,19 @@ public class ElytrasOfFire extends JavaPlugin {
 	}
 
 	/**
-	 * Get the PlayerUtility.
+	 * Get the {@link PlayerUtility} instance.
 	 *
-	 * @return The PlayerUtility instance.
+	 * @return The <code>PlayerUtility</code> instance.
 	 */
 	public PlayerUtility getPlayerUtility() {
 		return playerUtility;
 	}
 
+	/**
+	 * Get the {@link DialogManager} instance.
+	 *
+	 * @return The <code>DialogManager</code> instance.
+	 */
 	public DialogManager getDialogManager() {
 		return dialogManager;
 	}
