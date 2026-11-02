@@ -1,5 +1,7 @@
 # Elytras Of Fire
 
+Introduce the world of Wings of Fire to Minecraft!
+
 ## About
 
 Elytras of Fire is a PaperMC plugin designed for [Wings Of Fire: The New World](https://woftnw.org/).
