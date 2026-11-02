@@ -25,8 +25,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class AbilityManager implements Listener {
-	private static final int ABILITY_LIMIT = 3;
-
 	private final ElytrasOfFire PLUGIN;
 	private final List<Ability> ABILITIES;
 	private final PlayerUtility PLAYER_UTILITY;
