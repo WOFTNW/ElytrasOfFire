@@ -11,11 +11,13 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.jspecify.annotations.NonNull;
 import org.woftnw.eof.ability.Ability;
 import org.woftnw.eof.ability.Activation;
 import org.woftnw.eof.ability.ActiveAbility;
 import org.woftnw.eof.exception.AbilityActivationException;
+import org.woftnw.eof.exception.NoTribeException;
 import org.woftnw.eof.exception.NotEnoughAbilitySlotsException;
 
 import java.util.ArrayList;
@@ -46,19 +48,56 @@ public class AbilityManager implements Listener {
 	 * @param player The player to give abilities to.
 	 * @throws NotEnoughAbilitySlotsException If the player doesn't have enough slots for their abilities.
 	 */
-	public void givePlayerAbilities(Player player) throws NotEnoughAbilitySlotsException {
+	public void givePlayerAbilities(@NonNull Player player) throws NotEnoughAbilitySlotsException, NoTribeException {
+		final PlayerInventory INVENTORY = player.getInventory();
+		putAbilityItemsInInventory(player, INVENTORY);
+	}
+
+	public void putAbilityItemsInInventory(Player player, Inventory inventory) throws NoTribeException {
 		final Tribe TRIBE = PLAYER_UTILITY.getPlayerTribe(player);
-		if (TRIBE == null) {
-			throw new NullPointerException();
+		if (TRIBE == null) throw new NoTribeException();
+
+		final List<ActiveAbility> ACTIVE_ABILITIES = TRIBE.getActiveAbilities();
+
+		final List<ActiveAbility> UNASSIGNED_ABILITIES = new ArrayList<>();
+		final List<ItemStack> ITEMS_TO_MOVE = new ArrayList<>();
+
+		// For abilities with assigned slot, put them in assigned slot
+		for (ActiveAbility ABILITY : ACTIVE_ABILITIES) {
+			final Integer SLOT_ID = PLAYER_UTILITY.getPlayerAbilitySlot(player, ABILITY);
+			if (SLOT_ID == null) {
+				UNASSIGNED_ABILITIES.add(ABILITY);
+			} else {
+				ItemStack EXISTING_ITEM = inventory.getItem(SLOT_ID);
+				if (EXISTING_ITEM != null && !EXISTING_ITEM.isEmpty()) {
+					ITEMS_TO_MOVE.add(EXISTING_ITEM);
+				}
+				inventory.setItem(SLOT_ID, ABILITY.getActivationItem());
+			}
 		}
-		final List<ActiveAbility> TRIBE_ACTIVE_ABILITIES = TRIBE.getActiveAbilities();
 
-		int slotsNeeded = Math.min(ABILITY_LIMIT, TRIBE_ACTIVE_ABILITIES.size());
-		if (!arePlayerAbilitySlotsClear(player, slotsNeeded)) throw new NotEnoughAbilitySlotsException();
+		// For unassigned abilities, put them in rightmost slots not already taken by abilities.
+		for (int slotId = 8; slotId >= 0; slotId--) {
+			if (UNASSIGNED_ABILITIES.isEmpty()) break;
+			final ItemStack EXISTING_ITEM = inventory.getItem(slotId);
+			if (EXISTING_ITEM != null && !EXISTING_ITEM.isEmpty()) {
+				boolean canPutHere = true;
+				for (final ActiveAbility ABILITY : ACTIVE_ABILITIES) {
+					if (EXISTING_ITEM.isSimilar(ABILITY.getActivationItem())) {
+						canPutHere = false;
+						break;
+					}
+				}
+				if (!canPutHere) continue;
+				ITEMS_TO_MOVE.add(EXISTING_ITEM);
+			};
+			inventory.setItem(slotId, UNASSIGNED_ABILITIES.getLast().getActivationItem());
+			UNASSIGNED_ABILITIES.removeLast();
+		}
 
-		for (int i = 0; i < slotsNeeded; i++) {
-			final ActiveAbility ABILITY = TRIBE_ACTIVE_ABILITIES.get(i);
-			player.getInventory().setItem(9 - slotsNeeded + i, ABILITY.getActivationItem());
+		// Give back items that were in the way
+		for (final ItemStack ITEM : ITEMS_TO_MOVE) {
+			player.give(ITEM);
 		}
 	}
 
@@ -133,6 +172,11 @@ public class AbilityManager implements Listener {
 		final ItemStack ITEM = event.getCurrentItem();
 		if (!(event.getWhoClicked() instanceof final Player PLAYER)) return;
 
+		// If this is the ability slot configuration menu, don't do anything.
+		// TODO: Movement within the config inventory is fine, but movement between player inventory and config
+		//  inventory is not.
+		if (DialogManager.isAbilitySlotMenu(event.getView())) return;
+
 		for (final Ability ABILITY : ABILITIES) {
 			if (!(ABILITY instanceof ActiveAbility ability)) continue;
 			if (!ability.getActivationItem().equals(ITEM)) continue;
@@ -142,9 +186,9 @@ public class AbilityManager implements Listener {
 				removeAbilitiesFromInventory(Objects.requireNonNull(event.getClickedInventory()));
 				try {
 					givePlayerAbilities(PLAYER);
-				} catch (NotEnoughAbilitySlotsException e) {
+				} catch (NotEnoughAbilitySlotsException | NoTribeException e) {
 					// This should not happen.
-					PLUGIN.getLogger().warning("Failed to reset player abilities after inventory click.");
+					PLUGIN.getLogger().warning("Failed to reset player abilities after inventory click: " + e.getMessage());
 					PLUGIN.getPlayerUtility().disablePlayerAbilities(PLAYER);
 				}
 			});

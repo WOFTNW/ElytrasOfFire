@@ -37,7 +37,7 @@ import static net.kyori.adventure.text.Component.text;
  * Manages Dialogs.
  */
 public class DialogManager implements Listener {
-	private final static String ABILITY_SLOT_MENU_HOVER_TEXT = "configure_ability_slots";
+	public final static String ABILITY_SLOT_MENU_HOVER_TEXT = "configure_ability_slots";
 
 	/**
 	 * The ElytrasOfFire plugin instance.
@@ -102,33 +102,14 @@ public class DialogManager implements Listener {
 				.title(text("Move Ability Items").hoverEvent(HoverEvent.showText(text(ABILITY_SLOT_MENU_HOVER_TEXT))))
 				.build(player);
 
-		PlayerUtility PLAYER_UTILITY = PLUGIN.getPlayerUtility();
-
-		final Tribe TRIBE = PLAYER_UTILITY.getPlayerTribe(player);
-		if (TRIBE == null) throw new NoTribeException();
-		final List<ActiveAbility> ACTIVE_ABILITIES = TRIBE.getActiveAbilities();
-
-		List<ActiveAbility> unassignedAbilities = new ArrayList<>();
-
-		for (ActiveAbility ABILITY : ACTIVE_ABILITIES) {
-			final Integer SLOT_ID = PLAYER_UTILITY.getPlayerAbilitySlot(player, ABILITY);
-			if (SLOT_ID == null) {
-				unassignedAbilities.add(ABILITY);
-			} else {
-				inventory.setItem(SLOT_ID, ABILITY.getActivationItem());
-			}
-		}
-
-		unassignedAbilities = unassignedAbilities.reversed();
-
-		for (int i = 8; i >= 0; i--) {
-			if (unassignedAbilities.isEmpty()) break;
-			if (inventory.getItem(i) == null) continue;
-			inventory.setItem(i, unassignedAbilities.getFirst().getActivationItem());
-			unassignedAbilities.removeFirst();
-		}
+		PLUGIN.getTribeManager().getAbilityManager().putAbilityItemsInInventory(player, inventory.getTopInventory());
 
 		return inventory;
+	}
+
+	public static boolean isAbilitySlotMenu(@NonNull InventoryView inventoryView) {
+		final HoverEvent<?> HOVER_EVENT = inventoryView.title().hoverEvent();
+		return HOVER_EVENT != null && !ABILITY_SLOT_MENU_HOVER_TEXT.equals(HOVER_EVENT.toString());
 	}
 
 	@EventHandler
@@ -136,9 +117,7 @@ public class DialogManager implements Listener {
 		final Player PLAYER = (Player) event.getPlayer();
 		final InventoryView VIEW = event.getView();
 
-		final HoverEvent<?> HOVER_EVENT = VIEW.title().hoverEvent();
-		final boolean IS_ABILITY_SLOT_MENU = HOVER_EVENT != null && !ABILITY_SLOT_MENU_HOVER_TEXT.equals(HOVER_EVENT.toString());
-		if (!IS_ABILITY_SLOT_MENU) return;
+		if (!isAbilitySlotMenu(VIEW)) return;
 
 		final PlayerUtility PLAYER_UTILITY = PLUGIN.getPlayerUtility();
 		final Tribe TRIBE = PLAYER_UTILITY.getPlayerTribe(PLAYER);
@@ -202,6 +181,8 @@ public class DialogManager implements Listener {
 				PLAYER_UTILITY.setPlayerAbilitiesEnabled(player, ENABLE_ABILITIES);
 			} catch (NotEnoughAbilitySlotsException e) {
 				player.sendMessage(MessageUtility.buildErrorMessage("Your ability slots are not clear, so your abilities cannot be enabled."));
+			} catch (NoTribeException e) {
+				player.sendMessage(MessageUtility.buildErrorMessage("You must join a tribe first."));
 			}
 		}
 		if (ENABLE_ATTRIBUTES != null) {
