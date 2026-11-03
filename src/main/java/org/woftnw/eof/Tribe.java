@@ -19,7 +19,7 @@ public class Tribe {
 	private final ArrayList<Attribute> ATTRIBUTES;
 	private final ArrayList<Ability> ABILITIES;
 
-	Tribe(String tribeName, String simpleName, TextColor color) {
+	public Tribe(String tribeName, String simpleName, TextColor color) {
 		TRIBE_NAME = tribeName;
 		SIMPLE_NAME = simpleName;
 		COLOR = color;
