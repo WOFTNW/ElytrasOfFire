@@ -54,7 +54,7 @@ public class ElytrasOfFire extends JavaPlugin {
 	 * For example:
 	 * <pre>
 	 * // Get the ElytrasOfFire plugin.
-	 * RegisteredServiceProvider<ElytrasOfFire> provider = Bukkit.getServicesManager().getRegistration(ElytrasOfFire.class);
+	 * RegisteredServiceProvider&lt;ElytrasOfFire&gt; provider = Bukkit.getServicesManager().getRegistration(ElytrasOfFire.class);
 	 * if (provider != null) {
 	 *     ElytrasOfFire eof = provider.getProvider();
 	 *     // Create a key for the effect type.
