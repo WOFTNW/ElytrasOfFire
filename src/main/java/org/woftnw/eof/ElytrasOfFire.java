@@ -18,6 +18,12 @@ import org.woftnw.eof.ability.effect.AbilityEffect;
 import org.woftnw.eof.attribute.Attribute;
 import org.woftnw.eof.attribute.PotionEffectAttribute;
 import org.woftnw.eof.command.RootCommand;
+import org.woftnw.eof.InitFlags;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.protection.flags.Flag;
+import com.sk89q.worldguard.protection.flags.StateFlag;
+import com.sk89q.worldguard.protection.flags.registry.FlagConflictException;
+import com.sk89q.worldguard.protection.flags.registry.FlagRegistry;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,6 +53,12 @@ public class ElytrasOfFire extends JavaPlugin {
 			LiteralCommandNode<CommandSourceStack> rootCommand = new RootCommand(this).getCommandData().build();
 			event.registrar().register(rootCommand);
 		});
+	}
+
+	@Override
+	public void onLoad() {
+		// Load flags
+		new	InitFlags().LoadFlags();
 	}
 
 	/**
