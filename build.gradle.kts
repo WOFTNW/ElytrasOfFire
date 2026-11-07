@@ -10,6 +10,7 @@ repositories {
     maven(url = "https://repo.papermc.io/repository/maven-public/") {
         name = "papermc"
     }
+    maven(url = "https://maven.enginehub.org/repo/")
 }
 
 dependencies {
@@ -17,6 +18,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     compileOnly("io.papermc.paper:paper-api:26.3.build.+")
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.21")
 }
 
 tasks.test {

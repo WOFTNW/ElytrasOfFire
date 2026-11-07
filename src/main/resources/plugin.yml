@@ -7,6 +7,7 @@ contributors: [BogTheMudWing, iHeron, MerrCraft]
 website: https://woftnw.org
 api-version: '26.3'
 load: POSTWORLD
+depend: [WorldGuard]
 
 permissions:
   eof.tribe.set:
