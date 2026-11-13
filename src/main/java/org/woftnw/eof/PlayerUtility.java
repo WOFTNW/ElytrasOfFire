@@ -65,7 +65,7 @@ public class PlayerUtility {
 	 * @param value  The value to write.
 	 * @param <C>    The retrieved object type when applying this tag type.
 	 */
-	public static <C, P> void setPlayerData(@NonNull LivingEntity entity, @NonNull PersistentDataKey<C> key, C value) {
+	public static <C> void setPlayerData(@NonNull LivingEntity entity, @NonNull PersistentDataKey<C> key, C value) {
 		setPlayerData(entity, key.key(), key.dataType(), value);
 	}
 
@@ -84,7 +84,7 @@ public class PlayerUtility {
 		return persistentDataContainer.get(key, type);
 	}
 
-	public static <C, P> C getPlayerData(@NonNull LivingEntity entity, @NonNull PersistentDataKey<C> key) {
+	public static <C> C getPlayerData(@NonNull LivingEntity entity, @NonNull PersistentDataKey<C> key) {
 		return getPlayerData(entity, key.key(), key.dataType());
 	}
 
@@ -95,11 +95,11 @@ public class PlayerUtility {
 		else return value;
 	}
 
-	public static <C, P> C getPlayerDataOrDefault(@NonNull LivingEntity entity, @NonNull PersistentDataKey<C> key, C defaultValue) {
+	public static <C> C getPlayerDataOrDefault(@NonNull LivingEntity entity, @NonNull PersistentDataKey<C> key, C defaultValue) {
 		return getPlayerDataOrDefault(entity, key.key(), key.dataType(), defaultValue);
 	}
 
-	public static <C, P> void setItemItemInList(@NonNull LivingEntity target, PersistentDataKey<List<C>> key, C item, boolean include) {
+	public static <C> void setItemItemInList(@NonNull LivingEntity target, PersistentDataKey<List<C>> key, C item, boolean include) {
 		List<C> items = getPlayerData(target, key);
 		boolean updated = false;
 
@@ -116,7 +116,7 @@ public class PlayerUtility {
 		if (updated) setPlayerData(target, key, items);
 	}
 
-	public static <C, P> boolean isItemItemInList(@NonNull LivingEntity target, PersistentDataKey<List<C>> key, C item) {
+	public static <C> boolean isItemItemInList(@NonNull LivingEntity target, PersistentDataKey<List<C>> key, C item) {
 		List<C> items = getPlayerData(target, key);
 		boolean updated = false;
 
@@ -169,10 +169,9 @@ public class PlayerUtility {
 	 */
 	public static void setPlayerAbilitiesEnabled(@NonNull Player player, boolean enabled) throws NoTribeException, TribeNotFoundException {
 		AbilityManager abilityManager = PLUGIN.getTribeManager().getAbilityManager();
+		abilityManager.removeAbilitiesFromInventory(player.getInventory());
 		if (enabled) {
 			abilityManager.givePlayerAbilities(player);
-		} else {
-			abilityManager.removeAbilitiesFromInventory(player.getInventory());
 		}
 
 		setPlayerData(player, EoFPersistentDataKeys.ABILITIES_ENABLED_KEY, enabled);
