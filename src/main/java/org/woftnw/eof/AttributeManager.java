@@ -64,7 +64,7 @@ public class AttributeManager {
 		if (TRIBE == null) {
 			throw new NoTribeException();
 		}
-		final List<Attribute> TRIBE_ATTRIBUTES = attributes.get(TRIBE);
+		final List<Attribute> TRIBE_ATTRIBUTES = attributes.getOrDefault(TRIBE, new ArrayList<>());
 		for (int i = 0; i < TRIBE_ATTRIBUTES.size(); i++) {
 			Attribute ATTRIBUTE = TRIBE_ATTRIBUTES.get(i);
 			try {
@@ -76,7 +76,7 @@ public class AttributeManager {
 	}
 
 	public void unapply(@NonNull Player player) {
-		final List<Attribute> TRIBE_ATTRIBUTES = attributes.get(PlayerUtility.getPlayerTribe(player));
+		final List<Attribute> TRIBE_ATTRIBUTES = attributes.getOrDefault(PlayerUtility.getPlayerTribe(player), new ArrayList<>());
 		for (final Attribute ATTRIBUTE : TRIBE_ATTRIBUTES) {
 			ATTRIBUTE.unapply(player);
 		}
