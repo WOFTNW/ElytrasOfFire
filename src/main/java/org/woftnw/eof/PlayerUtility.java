@@ -311,10 +311,10 @@ public class PlayerUtility {
 	 *
 	 * @param target    The player to act upon.
 	 * @param abilityId The <code>NamespacedKey</code> of the <code>ActiveAbility</code>.
-	 * @param disabled  <code>true</code> to enable, <code>false</code> to disable.
+	 * @param enabled  <code>true</code> to enable, <code>false</code> to disable.
 	 */
-	public static void setAbilityDisabled(@NonNull LivingEntity target, @NonNull NamespacedKey abilityId, boolean disabled) {
-		setItemItemInList(target, EoFPersistentDataKeys.DISABLED_ABILITIES_KEY, abilityId.asString(), disabled);
+	public static void setAbilityEnabled(@NonNull LivingEntity target, @NonNull NamespacedKey abilityId, boolean enabled) {
+		setItemItemInList(target, EoFPersistentDataKeys.DISABLED_ABILITIES_KEY, abilityId.asString(), !enabled);
 	}
 
 	/**
@@ -322,10 +322,10 @@ public class PlayerUtility {
 	 *
 	 * @param target   The player to act upon.
 	 * @param ability  The <code>ActiveAbility</code>.
-	 * @param disabled <code>true</code> to enable, <code>false</code> to disable.
+	 * @param enabled <code>true</code> to enable, <code>false</code> to disable.
 	 */
-	public static void setAbilityDisabled(@NonNull LivingEntity target, @NonNull ActiveAbility ability, boolean disabled) {
-		setAbilityDisabled(target, ability.getId(), disabled);
+	public static void setAbilityEnabled(@NonNull LivingEntity target, @NonNull ActiveAbility ability, boolean enabled) {
+		setAbilityEnabled(target, ability.getId(), enabled);
 	}
 
 	/**
@@ -333,10 +333,10 @@ public class PlayerUtility {
 	 *
 	 * @param target    The player to act upon.
 	 * @param abilityId The <code>NamespacedKey</code> of the <code>ActiveAbility</code>.
-	 * @return <code>true</code> to enable, <code>false</code> to disable.
+	 * @return <code>true</code> if enabled, <code>false</code> if disabled.
 	 */
-	public static boolean isAbilityDisabled(@NonNull LivingEntity target, @NonNull NamespacedKey abilityId) {
-		return isItemItemInList(target, EoFPersistentDataKeys.DISABLED_ABILITIES_KEY, abilityId.asString());
+	public static boolean isAbilityEnabled(@NonNull LivingEntity target, @NonNull NamespacedKey abilityId) {
+		return !isItemItemInList(target, EoFPersistentDataKeys.DISABLED_ABILITIES_KEY, abilityId.asString());
 	}
 
 	/**
@@ -344,9 +344,9 @@ public class PlayerUtility {
 	 *
 	 * @param target  The player to act upon.
 	 * @param ability The <code>ActiveAbility</code>.
-	 * @return <code>true</code> to enable, <code>false</code> to disable.
+	 * @return <code>true</code> if enabled, <code>false</code> if disabled.
 	 */
-	public static boolean isAbilityDisabled(@NonNull LivingEntity target, @NonNull ActiveAbility ability) {
-		return isAbilityDisabled(target, ability.getId());
+	public static boolean isAbilityEnabled(@NonNull LivingEntity target, @NonNull ActiveAbility ability) {
+		return isAbilityEnabled(target, ability.getId());
 	}
 }
