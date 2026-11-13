@@ -58,6 +58,8 @@ public class AbilityManager implements Listener {
 
 		// For abilities with assigned slot, put them in assigned slot
 		for (ActiveAbility ABILITY : ACTIVE_ABILITIES) {
+			if (!PlayerUtility.isAbilityEnabled(player, ABILITY)) continue;
+
 			final Integer SLOT_ID = PlayerUtility.getPlayerAbilitySlot(player, ABILITY);
 			if (SLOT_ID == null) {
 				UNASSIGNED_ABILITIES.add(ABILITY);

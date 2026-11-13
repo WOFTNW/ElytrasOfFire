@@ -3,9 +3,14 @@ package org.woftnw.eof;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jspecify.annotations.NonNull;
+import org.woftnw.eof.ability.Activation;
+import org.woftnw.eof.ability.ActiveAbility;
 import org.woftnw.eof.ability.effect.AbilityEffect;
 import org.woftnw.eof.command.RootCommand;
 
@@ -29,6 +34,41 @@ public class ElytrasOfFire extends JavaPlugin {
 	public void onEnable() {
 		tribeManager = new TribeManager();
 		dialogManager = new DialogManager();
+
+		Tribe tribe1 = new Tribe(
+				"Tribe1",
+				"Tribe1",
+				NamedTextColor.GRAY
+		);
+
+		ActiveAbility ability1 = new ActiveAbility(
+				this,
+				new NamespacedKey(this, "ability1"),
+				Component.text("Ability 1"),
+				new AbilityEffect[0],
+				Material.WHITE_DYE,
+				null,
+				tribe1,
+				Activation.USE,
+				0
+		);
+
+		ActiveAbility ability2 = new ActiveAbility(
+				this,
+				new NamespacedKey(this, "ability2"),
+				Component.text("Ability 2"),
+				new AbilityEffect[0],
+				Material.GRAY_DYE,
+				null,
+				tribe1,
+				Activation.MELEE,
+				0
+		);
+
+		tribe1.addAbility(ability1);
+		tribe1.addAbility(ability2);
+
+		tribeManager.register(tribe1);
 
 		// Register commands
 		this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, event -> {

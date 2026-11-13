@@ -11,6 +11,7 @@ import io.papermc.paper.registry.data.dialog.input.BooleanDialogInput;
 import io.papermc.paper.registry.data.dialog.input.DialogInput;
 import io.papermc.paper.registry.data.dialog.type.DialogType;
 import net.kyori.adventure.key.Key;
+import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -41,6 +42,9 @@ import static net.kyori.adventure.text.Component.text;
 public class DialogManager implements Listener {
 	public final static String ABILITY_SLOT_MENU_HOVER_TEXT = "configure_ability_slots";
 
+	private final static String SAVE_PLAYER_SETTINGS_BUTTON_KEY = "save_player_settings";
+	private final static String CONFIGURE_ABILITY_SLOTS_BUTTON_KEY = "configure_ability_slots";
+
 	/**
 	 * Create a new DialogManager. There should only be one instance that belongs to the ElytrasOfFire plugin.
 	 */
@@ -59,40 +63,46 @@ public class DialogManager implements Listener {
 		final boolean ATTRIBUTES_ENABLED = PlayerUtility.arePlayerPlayerAttributesEnabled(player);
 		final boolean ABILITIES_ENABLED = PlayerUtility.arePlayerPlayerAbilitiesEnabled(player);
 
-		return Dialog.create(builder -> builder.empty()
-				.base(
-						DialogBase.builder(text("Elytras of Fire Player Settings"))
-								.canCloseWithEscape(true)
-								.inputs(List.of(
-										DialogInput.bool("enable_attributes", text("Enable Attributes"))
-												.initial(ATTRIBUTES_ENABLED)
-												.build(),
-										DialogInput.bool("enable_abilities", text("Enable Abilities"))
-												.initial(ABILITIES_ENABLED)
+		return Dialog.create(builder -> {
+					try {
+						builder.empty()
+								.base(
+										DialogBase.builder(text("Elytras of Fire Player Settings"))
+												.canCloseWithEscape(true)
+												.inputs(List.of(
+														DialogInput.bool("enable_attributes", text("Enable Attributes"))
+																.initial(ATTRIBUTES_ENABLED)
+																.build(),
+														DialogInput.bool("enable_abilities", text("Enable Abilities"))
+																.initial(ABILITIES_ENABLED)
+																.build()
+												))
 												.build()
-								))
-								.build()
-				)
-				.type(DialogType.multiAction(
-						List.of(
-								ActionButton.create(
-										text("Configure Ability Item Slots"),
-										text("Change the hotbar slots that your abilities are placed in."),
-										256,
-										DialogAction.customClick(Key.key("elytrasoffire:configure_ability_slots"), null)
-								),
-								ActionButton.create(
-										text("Configure Available Abilities"),
-										text("Choose which abilities are shown."),
-										256,
-										DialogAction.customClick(Key.key("elytrasoffire:configure_ability_availability"), null)
 								)
-						),
-						ActionButton.builder(text("Save and Apply"))
-								.action(DialogAction.customClick(Key.key("elytrasoffire:save_player_settings"), null))
-								.build(),
-						1
-				))
+								.type(DialogType.multiAction(
+										List.of(
+												ActionButton.create(
+														text("Configure Ability Item Slots"),
+														text("Change the hotbar slots that your abilities are placed in."),
+														256,
+														DialogAction.customClick(Key.key(ElytrasOfFire.getPlugin(), CONFIGURE_ABILITY_SLOTS_BUTTON_KEY), null)
+												),
+												ActionButton.create(
+														text("Configure Available Abilities"),
+														text("Choose which abilities are shown."),
+														256,
+														DialogAction.staticAction(ClickEvent.showDialog(getUserDisableAbilitiesDialog(player)))
+												)
+										),
+										ActionButton.builder(text("Save and Apply"))
+												.action(DialogAction.customClick(Key.key(ElytrasOfFire.getPlugin(), SAVE_PLAYER_SETTINGS_BUTTON_KEY), null))
+												.build(),
+										1
+								));
+					} catch (NoTribeException e) {
+						player.sendMessage(MessageUtility.buildErrorMessage("You need to join a tribe first."));
+					}
+				}
 		);
 	}
 
@@ -103,10 +113,11 @@ public class DialogManager implements Listener {
 
 		final List<BooleanDialogInput> ABILITY_CHECKBOXES = new ArrayList<>();
 
-		for (final ActiveAbility ABILITY : ACTIVE_ABILITIES) {
+		for (int i = 0; i < ACTIVE_ABILITIES.size(); i++) {
+			ActiveAbility ABILITY = ACTIVE_ABILITIES.get(i);
 			final boolean ENABLED = PlayerUtility.isAbilityEnabled(player, ABILITY);
 
-			final BooleanDialogInput CHECKBOX = DialogInput.bool(ABILITY.getId().asString(), ABILITY.getName())
+			final BooleanDialogInput CHECKBOX = DialogInput.bool(getAbilityVisibilityKey(i), ABILITY.getName())
 					.initial(ENABLED)
 					.build();
 
@@ -120,12 +131,10 @@ public class DialogManager implements Listener {
 								.inputs(ABILITY_CHECKBOXES)
 								.build()
 				)
-				.type(DialogType.multiAction(
-						List.of(),
+				.type(DialogType.notice(
 						ActionButton.builder(text("Save and Apply"))
-								.action(DialogAction.customClick(Key.key("elytrasoffire:save_player_settings"), null))
-								.build(),
-						1
+								.action(DialogAction.customClick(Key.key(SAVE_PLAYER_SETTINGS_BUTTON_KEY), null))
+								.build()
 				))
 		);
 	}
@@ -219,16 +228,15 @@ public class DialogManager implements Listener {
 		Key key = event.getIdentifier();
 
 		try {
-			switch (key.asString()) {
-				case "elytrasoffire:save_player_settings":
+			switch (key.value()) {
+				case SAVE_PLAYER_SETTINGS_BUTTON_KEY:
 					savePlayerSettings(VIEW, PLAYER);
 					break;
-				case "elytrasoffire:configure_ability_slots":
+				case CONFIGURE_ABILITY_SLOTS_BUTTON_KEY:
 					getAbilitySlotMenu(PLAYER).open();
 					break;
-				case "elytrasoffire:configure_ability_availability":
-					PLAYER.showDialog(getUserDisableAbilitiesDialog(PLAYER));
-					break;
+				default:
+					PLAYER.sendMessage(MessageUtility.buildErrorMessage("Dialog " + key.asString() + " is not known by Elytras of Fire!"));
 			}
 		} catch (NoTribeException e) {
 			PLAYER.sendMessage(MessageUtility.buildErrorMessage("You must join a tribe first."));
@@ -263,11 +271,25 @@ public class DialogManager implements Listener {
 			return;
 		}
 		final List<ActiveAbility> ACTIVE_ABILITIES = TRIBE.getActiveAbilities();
-		for (final ActiveAbility ABILITY : ACTIVE_ABILITIES) {
-			final Boolean ENABLE_ABILITY = view.getBoolean(ABILITY.getId().asString());
+		for (int i = 0; i < ACTIVE_ABILITIES.size(); i++) {
+			ActiveAbility ABILITY = ACTIVE_ABILITIES.get(i);
+			final Boolean ENABLE_ABILITY = view.getBoolean(getAbilityVisibilityKey(i));
 			if (ENABLE_ABILITY != null) {
 				PlayerUtility.setAbilityEnabled(player, ABILITY, ENABLE_ABILITY);
 			}
 		}
+
+		// Refresh abilities
+		try {
+			PlayerUtility.setPlayerAbilitiesEnabled(player, PlayerUtility.arePlayerPlayerAbilitiesEnabled(player));
+		} catch (NoTribeException e) {
+			player.sendMessage(MessageUtility.buildErrorMessage("You are not in a tribe, so your attributes cannot be enabled."));
+		}
+
+		player.sendMessage(MessageUtility.buildMessage("Saved settings."));
+	}
+
+	private static @NonNull String getAbilityVisibilityKey(int index) {
+		return "ability_visibility_" + index;
 	}
 }
