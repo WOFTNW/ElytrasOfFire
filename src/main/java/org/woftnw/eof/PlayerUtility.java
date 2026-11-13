@@ -104,11 +104,12 @@ public class PlayerUtility {
 		boolean updated = false;
 
 		if (items == null) items = new ArrayList<>();
+		else items = new ArrayList<>(items);
 
 		if (items.contains(item) && !include) {
 			updated = true;
 			items.remove(item);
-		} else if (include) {
+		} else if (!items.contains(item) && include) {
 			updated = true;
 			items.add(item);
 		}
@@ -118,7 +119,6 @@ public class PlayerUtility {
 
 	public static <C> boolean isItemItemInList(@NonNull LivingEntity target, PersistentDataKey<List<C>> key, C item) {
 		List<C> items = getPlayerData(target, key);
-		boolean updated = false;
 
 		if (items == null) items = new ArrayList<>();
 
