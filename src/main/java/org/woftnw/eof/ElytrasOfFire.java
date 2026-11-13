@@ -27,14 +27,18 @@ public class ElytrasOfFire extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		tribeManager = new TribeManager(this);
-		dialogManager = new DialogManager(this);
+		tribeManager = new TribeManager();
+		dialogManager = new DialogManager();
 
 		// Register commands
 		this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, event -> {
-			LiteralCommandNode<CommandSourceStack> rootCommand = new RootCommand(this).getCommandData().build();
+			LiteralCommandNode<CommandSourceStack> rootCommand = new RootCommand().getCommandData().build();
 			event.registrar().register(rootCommand);
 		});
+	}
+
+	public static @NonNull ElytrasOfFire getPlugin() {
+		return ElytrasOfFire.getPlugin(ElytrasOfFire.class);
 	}
 
 	/**

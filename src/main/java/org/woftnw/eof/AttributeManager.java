@@ -15,20 +15,15 @@ public class AttributeManager {
 	private final static long TICK_DELAY = 20;
 	private final static long TICK_PERIOD = 20;
 
-	private final ElytrasOfFire PLUGIN;
-
 	private final Map<Tribe, List<Attribute>> attributes = new HashMap<>();
 	private final BukkitTask task;
 
 	/**
 	 * Create an attribute scheduler.
-	 *
-	 * @param plugin The plugin instance.
 	 */
-	public AttributeManager(@NonNull ElytrasOfFire plugin) {
-		PLUGIN = plugin;
-
-		task = plugin.getServer().getScheduler().runTaskTimer(plugin, this::tick, TICK_DELAY, TICK_PERIOD);
+	public AttributeManager() {
+		final ElytrasOfFire PLUGIN = ElytrasOfFire.getPlugin();
+		task = PLUGIN.getServer().getScheduler().runTaskTimer(PLUGIN, this::tick, TICK_DELAY, TICK_PERIOD);
 	}
 
 	/**
@@ -52,7 +47,7 @@ public class AttributeManager {
 
 	private void tick() {
 		for (Tribe tribe : attributes.keySet()) {
-			ArrayList<Player> players = new ArrayList<>(List.copyOf(PLUGIN.getServer().getOnlinePlayers()));
+			ArrayList<Player> players = new ArrayList<>(List.copyOf(ElytrasOfFire.getPlugin().getServer().getOnlinePlayers()));
 			players.removeIf(player -> PlayerUtility.getPlayerTribe(player) != tribe);
 
 			for (Attribute attribute : attributes.getOrDefault(tribe, new ArrayList<>())) {
@@ -74,7 +69,7 @@ public class AttributeManager {
 			try {
 				ATTRIBUTE.apply(player);
 			} catch (IllegalArgumentException e) {
-				PLUGIN.getLogger().warning(String.format("Tried to apply attribute %s of tribe %s, but the target already has it.", i, TRIBE.getPDCValue()));
+				ElytrasOfFire.getPlugin().getLogger().warning(String.format("Tried to apply attribute %s of tribe %s, but the target already has it.", i, TRIBE.getPDCValue()));
 			}
 		}
 	}

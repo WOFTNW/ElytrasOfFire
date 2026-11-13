@@ -24,13 +24,12 @@ import java.util.List;
 import java.util.Objects;
 
 public class AbilityManager implements Listener {
-	private final ElytrasOfFire PLUGIN;
 	private final List<Ability> ABILITIES;
 
-	public AbilityManager(@NonNull ElytrasOfFire plugin) {
-		PLUGIN = plugin;
+	public AbilityManager() {
 		ABILITIES = new ArrayList<>();
-		plugin.getServer().getPluginManager().registerEvents(this, plugin);
+		final ElytrasOfFire PLUGIN = ElytrasOfFire.getPlugin();
+		PLUGIN.getServer().getPluginManager().registerEvents(this, PLUGIN);
 	}
 
 	public void registerAbility(Ability ability) {
@@ -176,6 +175,7 @@ public class AbilityManager implements Listener {
 			if (!ability.getActivationItem().equals(ITEM)) continue;
 			event.setCancelled(true);
 
+			final ElytrasOfFire PLUGIN = ElytrasOfFire.getPlugin();
 			Bukkit.getScheduler().runTask(PLUGIN, () -> {
 				removeAbilitiesFromInventory(Objects.requireNonNull(event.getClickedInventory()));
 				try {

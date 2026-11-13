@@ -7,7 +7,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.jspecify.annotations.NonNull;
-import org.woftnw.eof.ElytrasOfFire;
 import org.woftnw.eof.PlayerUtility;
 
 import java.util.Collection;
@@ -18,11 +17,6 @@ import java.util.UUID;
  * Targets the LivingEntity attacked by the user.
  */
 public class MeleeTarget implements Target {
-	protected final ElytrasOfFire PLUGIN;
-
-	public MeleeTarget(ElytrasOfFire plugin) {
-		PLUGIN = plugin;
-	}
 
 	@Override
 	public Collection<LivingEntity> getTargets(@NonNull Player user) {

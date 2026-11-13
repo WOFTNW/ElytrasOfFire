@@ -18,10 +18,6 @@ import java.util.Objects;
  */
 public class SettingsCommand extends PluginCommand {
 
-	public SettingsCommand(ElytrasOfFire plugin) {
-		super(plugin);
-	}
-
 	@Override
 	LiteralArgumentBuilder<CommandSourceStack> getCommandData() {
 		LiteralArgumentBuilder<CommandSourceStack> settingsCommand = Commands.literal("settings");
@@ -33,7 +29,7 @@ public class SettingsCommand extends PluginCommand {
 
 	private int execute(@NonNull CommandContext<CommandSourceStack> context) {
 		if (context.getSource().getExecutor() instanceof final Player PLAYER) {
-			Dialog dialog = PLUGIN.getDialogManager().getUserSettingsDialog(PLAYER);
+			Dialog dialog = ElytrasOfFire.getPlugin().getDialogManager().getUserSettingsDialog(PLAYER);
 			Objects.requireNonNull(context.getSource().getExecutor()).showDialog(dialog);
 		} else {
 			context.getSource().getSender().sendMessage(MessageUtility.buildErrorMessage("Only players may execute this command."));

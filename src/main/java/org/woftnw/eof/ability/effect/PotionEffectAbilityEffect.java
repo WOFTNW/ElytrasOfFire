@@ -4,7 +4,6 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
-import org.woftnw.eof.ElytrasOfFire;
 import org.woftnw.eof.ability.effect.target.Target;
 
 import java.util.Collection;
@@ -21,8 +20,8 @@ public class PotionEffectAbilityEffect extends AbilityEffect {
 	 * @param target       The target of the effect.
 	 * @param potionEffect The potion effect.
 	 */
-	public PotionEffectAbilityEffect(ElytrasOfFire plugin, Target target, PotionEffect potionEffect) {
-		super(plugin, target);
+	public PotionEffectAbilityEffect(Target target, PotionEffect potionEffect) {
+		super(target);
 		POTION_EFFECT = potionEffect;
 	}
 

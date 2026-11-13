@@ -41,18 +41,11 @@ public class DialogManager implements Listener {
 	public final static String ABILITY_SLOT_MENU_HOVER_TEXT = "configure_ability_slots";
 
 	/**
-	 * The ElytrasOfFire plugin instance.
-	 */
-	private final ElytrasOfFire PLUGIN;
-
-	/**
 	 * Create a new DialogManager. There should only be one instance that belongs to the ElytrasOfFire plugin.
-	 *
-	 * @param plugin The ElytrasOfFire plugin instance.
 	 */
-	public DialogManager(@NonNull ElytrasOfFire plugin) {
-		PLUGIN = plugin;
-		plugin.getServer().getPluginManager().registerEvents(this, plugin);
+	public DialogManager() {
+		final ElytrasOfFire PLUGIN = ElytrasOfFire.getPlugin();
+		PLUGIN.getServer().getPluginManager().registerEvents(this, PLUGIN);
 	}
 
 	/**
@@ -101,7 +94,7 @@ public class DialogManager implements Listener {
 				.title(text("Move Ability Items").hoverEvent(HoverEvent.showText(text(ABILITY_SLOT_MENU_HOVER_TEXT))))
 				.build(player);
 
-		PLUGIN.getTribeManager().getAbilityManager().putAbilityItemsInInventory(player, inventory.getTopInventory());
+		ElytrasOfFire.getPlugin().getTribeManager().getAbilityManager().putAbilityItemsInInventory(player, inventory.getTopInventory());
 
 		return inventory;
 	}

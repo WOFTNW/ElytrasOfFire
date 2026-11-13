@@ -3,7 +3,6 @@ package org.woftnw.eof.ability.effect;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.woftnw.eof.ElytrasOfFire;
 import org.woftnw.eof.PlayerUtility;
 import org.woftnw.eof.ability.effect.target.Target;
 
@@ -19,8 +18,8 @@ public class DataAbilityEffect extends AbilityEffect {
 	 * @param target     The target of the effect.
 	 * @param dataString The String to store.
 	 */
-	public DataAbilityEffect(ElytrasOfFire plugin, Target target, String dataString, boolean apply) {
-		super(plugin, target);
+	public DataAbilityEffect(Target target, String dataString, boolean apply) {
+		super(target);
 		DATA_STRING = dataString;
 		APPLY = apply;
 	}

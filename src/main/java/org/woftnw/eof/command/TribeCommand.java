@@ -24,10 +24,6 @@ import static net.kyori.adventure.text.Component.text;
 
 public class TribeCommand extends PluginCommand {
 
-	public TribeCommand(ElytrasOfFire plugin) {
-		super(plugin);
-	}
-
 	@Override
 	public LiteralArgumentBuilder<CommandSourceStack> getCommandData() {
 		LiteralArgumentBuilder<CommandSourceStack> tribeCommand = Commands.literal("tribe");
@@ -35,7 +31,7 @@ public class TribeCommand extends PluginCommand {
 		LiteralArgumentBuilder<CommandSourceStack> joinSubcommand = Commands.literal("join");
 		joinSubcommand.requires(source -> source.getSender().hasPermission("eof.tribe.set"));
 		joinSubcommand.then(
-				Commands.argument("tribe", new TribeArgument(PLUGIN))
+				Commands.argument("tribe", new TribeArgument())
 						.executes(this::executeJoin)
 						.then(
 								Commands.argument("targets", ArgumentTypes.players())

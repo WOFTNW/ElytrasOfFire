@@ -14,10 +14,6 @@ import org.woftnw.eof.exception.NoTribeException;
 
 public class AttributesCommand extends PluginCommand {
 
-	public AttributesCommand(ElytrasOfFire plugin) {
-		super(plugin);
-	}
-
 	@Override
 	LiteralArgumentBuilder<CommandSourceStack> getCommandData() {
 		LiteralArgumentBuilder<CommandSourceStack> attributesCommand = Commands.literal("attributes");
