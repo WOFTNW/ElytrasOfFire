@@ -1,5 +1,6 @@
 package org.woftnw.eof;
 
+import io.papermc.paper.persistence.PersistentDataKey;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -9,6 +10,7 @@ import org.jspecify.annotations.Nullable;
 import org.jspecify.annotations.NonNull;
 import org.woftnw.eof.ability.ActiveAbility;
 import org.woftnw.eof.exception.NoTribeException;
+import org.woftnw.eof.exception.TribeNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +28,6 @@ public class PlayerUtility {
 	private static final boolean ABILITIES_ENABLED_DEFAULT = false;
 
 	private final ElytrasOfFire PLUGIN;
-	private final NamespacedKey TRIBE_KEY;
-	private final NamespacedKey ATTRIBUTES_ENABLED_KEY;
-	private final NamespacedKey ABILITIES_ENABLED_KEY;
-	private final NamespacedKey ATTACK_TARGET_KEY;
-	private final NamespacedKey ABILITY_DATA_KEY;
-	private final NamespacedKey ABILITY_SLOT_CONFIG_KEY;
 
 	/**
 	 * Create a PlayerUtility.
@@ -40,36 +36,121 @@ public class PlayerUtility {
 	 */
 	public PlayerUtility(ElytrasOfFire plugin) {
 		PLUGIN = plugin;
-		TRIBE_KEY = new NamespacedKey(plugin, "tribe");
-		ATTRIBUTES_ENABLED_KEY = new NamespacedKey(plugin, "attributes_enabled");
-		ABILITIES_ENABLED_KEY = new NamespacedKey(plugin, "abilities_enabled");
-		ATTACK_TARGET_KEY = new NamespacedKey(plugin, "attack_target");
-		ABILITY_DATA_KEY = new NamespacedKey(plugin, "ability_data");
-		ABILITY_SLOT_CONFIG_KEY = new NamespacedKey(plugin, "ability_slot_config");
 	}
 
-	public void setPlayerAttackTarget(@NonNull Player player, @NonNull LivingEntity target) {
-		PersistentDataContainer persistentDataContainer = player.getPersistentDataContainer();
-		persistentDataContainer.set(ATTACK_TARGET_KEY, PersistentDataType.STRING, target.getUniqueId().toString());
+	/**
+	 * Set the data of a {@link LivingEntity}'s {@link PersistentDataContainer} using a {@link NamespacedKey} and {@link PersistentDataType}.
+	 * <p>
+	 * It is easier to use a {@link PersistentDataKey}, which stores both the <code>NamespacedKey</code> and <code>PersistentDataType</code>. The <code>PersistentDataKey</code>s used by Elytras of Fire can be found in the {@link EoFPersistentDataKeys} class.
+	 * </p>
+	 * <p>
+	 * You can create your own like this:
+	 * </p>
+	 * <pre>{@code
+	 * public static final PersistentDataKey<String> TRACKED_VALUE io.papermc.paper.persistence.PersistentDataType.of(
+	 *     new NamespacedKey(ExamplePlugin.getPlugin(ExamplePlugin), "my_config_value"),
+	 *     PersistentDataType.STRING
+	 * )
+	 * }</pre>
+	 *
+	 * @param entity The entity to act upon.
+	 * @param key    The <code>NamespacedKey</code> to write to.
+	 * @param type   The <code>PersistentDataType</code>.
+	 * @param value  The value to write.
+	 * @param <C>    The retrieved object type when applying this tag type.
+	 * @param <P>    The primary object type that is stored in the given tag.
+	 * @see PersistentDataKey
+	 */
+	public <C, P> void setPlayerData(@NonNull LivingEntity entity, @NonNull NamespacedKey key, PersistentDataType<P, C> type, C value) {
+		PersistentDataContainer persistentDataContainer = entity.getPersistentDataContainer();
+		persistentDataContainer.set(key, type, value);
+	}
+
+	/**
+	 * Set the data of a {@link LivingEntity}'s {@link PersistentDataContainer} use a {@link PersistentDataKey}.
+	 *
+	 * @param entity The entity to act upon.
+	 * @param key    The <code>PersistentDataKey</code> to write to.
+	 * @param value  The value to write.
+	 * @param <C>    The retrieved object type when applying this tag type.
+	 */
+	public <C, P> void setPlayerData(@NonNull LivingEntity entity, @NonNull PersistentDataKey<C> key, C value) {
+		setPlayerData(entity, key.key(), key.dataType(), value);
+	}
+
+	/**
+	 * Get the data of a {@link LivingEntity}'s {@link PersistentDataContainer} using a {@link NamespacedKey} and {@link PersistentDataType}.
+	 *
+	 * @param entity The entity to act upon.
+	 * @param key    The <code>NamespacedKey</code> to write to.
+	 * @param type   The <code>PersistentDataType</code>.
+	 * @param <C>    The retrieved object type when applying this tag type.
+	 * @param <P>    The primary object type that is stored in the given tag.
+	 * @return The possibly-<code>null</code> value currently stored.
+	 */
+	public <C, P> C getPlayerData(@NonNull LivingEntity entity, @NonNull NamespacedKey key, PersistentDataType<P, C> type) {
+		PersistentDataContainer persistentDataContainer = entity.getPersistentDataContainer();
+		return persistentDataContainer.get(key, type);
+	}
+
+	public <C, P> C getPlayerData(@NonNull LivingEntity entity, @NonNull PersistentDataKey<C> key) {
+		return getPlayerData(entity, key.key(), key.dataType());
+	}
+
+	public <C, P> C getPlayerDataOrDefault(@NonNull LivingEntity entity, @NonNull NamespacedKey key, PersistentDataType<P, C> type, C defaultValue) {
+		PersistentDataContainer persistentDataContainer = entity.getPersistentDataContainer();
+		C value = persistentDataContainer.get(key, type);
+		if (value == null) return defaultValue;
+		else return value;
+	}
+
+	public <C, P> C getPlayerDataOrDefault(@NonNull LivingEntity entity, @NonNull PersistentDataKey<C> key, C defaultValue) {
+		return getPlayerDataOrDefault(entity, key.key(), key.dataType(), defaultValue);
+	}
+
+	public <C, P> void setItemItemInList(@NonNull LivingEntity target, PersistentDataKey<List<C>> key, C item, boolean include) {
+		List<C> items = getPlayerData(target, key);
+		boolean updated = false;
+
+		if (items == null) items = new ArrayList<>();
+
+		if (items.contains(item) && !include) {
+			updated = true;
+			items.remove(item);
+		} else if (include) {
+			updated = true;
+			items.add(item);
+		}
+
+		if (updated) setPlayerData(target, key, items);
+	}
+
+	public <C, P> boolean isItemItemInList(@NonNull LivingEntity target, PersistentDataKey<List<C>> key, C item) {
+		List<C> items = getPlayerData(target, key);
+		boolean updated = false;
+
+		if (items == null) items = new ArrayList<>();
+
+		return items.contains(item);
+	}
+
+	public void setPlayerAttackTarget(@NonNull LivingEntity entity, @NonNull LivingEntity target) {
+		setPlayerData(entity, EoFPersistentDataKeys.ATTACK_TARGET_KEY, target.getUniqueId());
 	}
 
 	@Nullable
 	public UUID getPlayerAttackTarget(@NonNull Player player) {
-		PersistentDataContainer persistentDataContainer = player.getPersistentDataContainer();
-		String uuidString = persistentDataContainer.get(ATTACK_TARGET_KEY, PersistentDataType.STRING);
-		if (uuidString == null) return null;
-		return UUID.fromString(uuidString);
+		return getPlayerData(player, EoFPersistentDataKeys.ATTACK_TARGET_KEY);
 	}
 
 	/**
 	 * Enable or disable a player's tribal attributes.
 	 *
-	 * @param player The player whose state to change.
+	 * @param player  The player whose state to change.
 	 * @param enabled Whether to enable attributes.
 	 */
 	public void setPlayerAttributesEnabled(@NonNull Player player, boolean enabled) throws NoTribeException {
-		final PersistentDataContainer PDC = player.getPersistentDataContainer();
-		PDC.set(ATTRIBUTES_ENABLED_KEY, PersistentDataType.BOOLEAN, enabled);
+		setPlayerData(player, EoFPersistentDataKeys.ATTRIBUTES_ENABLED_KEY, enabled);
 
 		final AttributeManager ATTRIBUTE_MANAGER = PLUGIN.getTribeManager().getAttributeManager();
 		if (enabled) {
@@ -86,14 +167,13 @@ public class PlayerUtility {
 	 * @return Whether attributes are enabled or disabled.
 	 */
 	public boolean arePlayerPlayerAttributesEnabled(@NonNull Player player) {
-		PersistentDataContainer persistentDataContainer = player.getPersistentDataContainer();
-		return persistentDataContainer.getOrDefault(ATTRIBUTES_ENABLED_KEY, PersistentDataType.BOOLEAN, ATTRIBUTES_ENABLED_DEFAULT);
+		return getPlayerDataOrDefault(player, EoFPersistentDataKeys.ATTRIBUTES_ENABLED_KEY, ATTRIBUTES_ENABLED_DEFAULT);
 	}
 
 	/**
 	 * Enable or disable a player's tribal abilities.
 	 *
-	 * @param player The player whose state to change.
+	 * @param player  The player whose state to change.
 	 * @param enabled Whether to enable abilities.
 	 */
 	public void setPlayerAbilitiesEnabled(@NonNull Player player, boolean enabled) throws NoTribeException {
@@ -104,8 +184,7 @@ public class PlayerUtility {
 			abilityManager.removeAbilitiesFromInventory(player.getInventory());
 		}
 
-		PersistentDataContainer persistentDataContainer = player.getPersistentDataContainer();
-		persistentDataContainer.set(ABILITIES_ENABLED_KEY, PersistentDataType.BOOLEAN, enabled);
+		setPlayerData(player, EoFPersistentDataKeys.ABILITIES_ENABLED_KEY, enabled);
 	}
 
 	/**
@@ -117,8 +196,7 @@ public class PlayerUtility {
 		AbilityManager abilityManager = PLUGIN.getTribeManager().getAbilityManager();
 		abilityManager.removeAbilitiesFromInventory(player.getInventory());
 
-		PersistentDataContainer persistentDataContainer = player.getPersistentDataContainer();
-		persistentDataContainer.set(ABILITIES_ENABLED_KEY, PersistentDataType.BOOLEAN, false);
+		setPlayerData(player, EoFPersistentDataKeys.ABILITIES_ENABLED_KEY, false);
 	}
 
 	/**
@@ -128,19 +206,17 @@ public class PlayerUtility {
 	 * @return Whether abilities are enabled or disabled.
 	 */
 	public boolean arePlayerPlayerAbilitiesEnabled(@NonNull Player player) {
-		PersistentDataContainer persistentDataContainer = player.getPersistentDataContainer();
-		return persistentDataContainer.getOrDefault(ABILITIES_ENABLED_KEY, PersistentDataType.BOOLEAN, ABILITIES_ENABLED_DEFAULT);
+		return getPlayerDataOrDefault(player, EoFPersistentDataKeys.ABILITIES_ENABLED_KEY, ABILITIES_ENABLED_DEFAULT);
 	}
 
 	/**
 	 * Set a player's tribe.
 	 *
 	 * @param player The player whose tribe to change.
-	 * @param tribe The tribe to change to.
+	 * @param tribe  The tribe to change to.
 	 */
 	public void setPlayerTribe(@NonNull Player player, @NonNull Tribe tribe) {
-		PersistentDataContainer persistentDataContainer = player.getPersistentDataContainer();
-		persistentDataContainer.set(TRIBE_KEY, PersistentDataType.STRING, tribe.getPDCValue());
+		setPlayerData(player, EoFPersistentDataKeys.TRIBE_KEY, tribe);
 	}
 
 	/**
@@ -150,55 +226,136 @@ public class PlayerUtility {
 	 * @return The tribe of the player, or null if nonexistent or unrecognized.
 	 */
 	@Nullable
-	public Tribe getPlayerTribe(@NonNull Player player) {
-		PersistentDataContainer persistentDataContainer = player.getPersistentDataContainer();
-		String tribeString = persistentDataContainer.get(TRIBE_KEY, PersistentDataType.STRING);
-		return PLUGIN.getTribeManager().getTribeFromPDCValue(tribeString);
+	public Tribe getPlayerTribe(@NonNull Player player) throws TribeNotFoundException {
+		return getPlayerData(player, EoFPersistentDataKeys.TRIBE_KEY);
 	}
 
+	/**
+	 * Apply or remove an ability data string on a {@link LivingEntity}.
+	 *
+	 * @param target     The target to act upon.
+	 * @param dataString The data string.
+	 * @param apply      <code>true</code> to apply it, <code>false</code> to remove it.
+	 */
 	public void setEntityAbilityData(@NonNull LivingEntity target, String dataString, boolean apply) {
-		PersistentDataContainer persistentDataContainer = target.getPersistentDataContainer();
-		List<String> strings = persistentDataContainer.get(ABILITY_DATA_KEY, PersistentDataType.LIST.strings());
-		boolean updated = false;
-
-		if (strings == null) strings = new ArrayList<>();
-
-		if (strings.contains(dataString) && !apply) {
-			updated = true;
-			strings.remove(dataString);
-		} else if (apply) {
-			updated = true;
-			strings.add(dataString);
-		}
-
-		if (updated) persistentDataContainer.set(ABILITY_DATA_KEY, PersistentDataType.LIST.strings(), strings);
+		setItemItemInList(target, EoFPersistentDataKeys.ABILITY_DATA_KEY, dataString, apply);
 	}
 
+	/**
+	 * Check if an entity has a given ability data string.
+	 *
+	 * @param target     The target to check.
+	 * @param dataString The ability data string to check.
+	 */
+	public void isEntityAbilityData(@NonNull LivingEntity target, String dataString) {
+		isItemItemInList(target, EoFPersistentDataKeys.ABILITY_DATA_KEY, dataString);
+	}
+
+	/**
+	 * Set the slot that a specific ability should use for a given player.
+	 *
+	 * @param player    The player to act upon.
+	 * @param abilityId The <code>NamespacedKey</code> of the {@link ActiveAbility}.
+	 * @param slotId    The numeric ID of the slot this ability should use.
+	 */
 	public void setPlayerAbilitySlot(@NonNull Player player, @NonNull NamespacedKey abilityId, int slotId) {
-		final PersistentDataContainer PERSISTENT_DATA_CONTAINER = player.getPersistentDataContainer();
-		final PersistentDataContainer EMPTY_CONTAINER = PERSISTENT_DATA_CONTAINER.getAdapterContext().newPersistentDataContainer();
-		final PersistentDataContainer DATA_CONTAINER = PERSISTENT_DATA_CONTAINER.getOrDefault(ABILITY_SLOT_CONFIG_KEY, PersistentDataType.TAG_CONTAINER, EMPTY_CONTAINER);
+		final PersistentDataContainer EMPTY_CONTAINER = getEmptyContainer(player);
+		final PersistentDataContainer DATA_CONTAINER = getPlayerDataOrDefault(player, EoFPersistentDataKeys.ABILITY_SLOT_CONFIG_KEY, EMPTY_CONTAINER);
 
 		DATA_CONTAINER.set(abilityId, PersistentDataType.INTEGER, slotId);
 
-		PERSISTENT_DATA_CONTAINER.set(ABILITY_SLOT_CONFIG_KEY, PersistentDataType.TAG_CONTAINER, DATA_CONTAINER);
+		setPlayerData(player, EoFPersistentDataKeys.ABILITY_SLOT_CONFIG_KEY, DATA_CONTAINER);
 	}
 
+	/**
+	 * Get an empty {@link PersistentDataContainer}.
+	 *
+	 * @param player The player to use the context of.
+	 * @return An empty Persistent Data Container.
+	 */
+	private static @NonNull PersistentDataContainer getEmptyContainer(@NonNull Player player) {
+		return player.getPersistentDataContainer().getAdapterContext().newPersistentDataContainer();
+	}
+
+	/**
+	 * Set the slot that a specific ability should use for a given player.
+	 *
+	 * @param player  The player to act upon.
+	 * @param ability The <code>ActiveAbility</code>.
+	 * @param slotId  The numeric ID of the slot this ability should use.
+	 */
 	public void setPlayerAbilitySlot(@NonNull Player player, @NonNull ActiveAbility ability, int slotId) {
 		setPlayerAbilitySlot(player, ability.getId(), slotId);
 	}
 
+	/**
+	 * Get the slot ID of the ability for a given player.
+	 *
+	 * @param player    The player to act upon.
+	 * @param abilityId The <code>NamespacedKey</code> of the {@link ActiveAbility}.
+	 * @return The numeric ID of the slot this ability uses.
+	 */
 	@Nullable
 	public Integer getPlayerAbilitySlot(@NonNull Player player, @NonNull NamespacedKey abilityId) {
-		final PersistentDataContainer PERSISTENT_DATA_CONTAINER = player.getPersistentDataContainer();
-		final PersistentDataContainer EMPTY_CONTAINER = PERSISTENT_DATA_CONTAINER.getAdapterContext().newPersistentDataContainer();
-		final PersistentDataContainer DATA_CONTAINER = PERSISTENT_DATA_CONTAINER.getOrDefault(ABILITY_SLOT_CONFIG_KEY, PersistentDataType.TAG_CONTAINER, EMPTY_CONTAINER);
+		final PersistentDataContainer EMPTY_CONTAINER = getEmptyContainer(player);
+		final PersistentDataContainer DATA_CONTAINER = getPlayerDataOrDefault(player, EoFPersistentDataKeys.ABILITY_SLOT_CONFIG_KEY, EMPTY_CONTAINER);
 
 		return DATA_CONTAINER.get(abilityId, PersistentDataType.INTEGER);
 	}
 
+	/**
+	 * Get the slot ID of the ability for a given player.
+	 *
+	 * @param player  The player to act upon.
+	 * @param ability The <code>NamespacedKey</code> of the {@link ActiveAbility}.
+	 * @return The numeric ID of the slot this ability uses.
+	 */
 	@Nullable
 	public Integer getPlayerAbilitySlot(@NonNull Player player, @NonNull ActiveAbility ability) {
 		return getPlayerAbilitySlot(player, ability.getId());
+	}
+
+	/**
+	 * Set a player's {@link ActiveAbility} as enabled or disabled.
+	 *
+	 * @param target    The player to act upon.
+	 * @param abilityId The <code>NamespacedKey</code> of the <code>ActiveAbility</code>.
+	 * @param disabled  <code>true</code> to enable, <code>false</code> to disable.
+	 */
+	public void setAbilityDisabled(@NonNull LivingEntity target, @NonNull NamespacedKey abilityId, boolean disabled) {
+		setItemItemInList(target, EoFPersistentDataKeys.DISABLED_ABILITIES_KEY, abilityId.asString(), disabled);
+	}
+
+	/**
+	 * Set a player's {@link ActiveAbility} as enabled or disabled.
+	 *
+	 * @param target   The player to act upon.
+	 * @param ability  The <code>ActiveAbility</code>.
+	 * @param disabled <code>true</code> to enable, <code>false</code> to disable.
+	 */
+	public void setAbilityDisabled(@NonNull LivingEntity target, @NonNull ActiveAbility ability, boolean disabled) {
+		setAbilityDisabled(target, ability.getId(), disabled);
+	}
+
+	/**
+	 * Check if a player's {@link ActiveAbility} is enabled or disabled.
+	 *
+	 * @param target    The player to act upon.
+	 * @param abilityId The <code>NamespacedKey</code> of the <code>ActiveAbility</code>.
+	 * @return <code>true</code> to enable, <code>false</code> to disable.
+	 */
+	public boolean isAbilityDisabled(@NonNull LivingEntity target, @NonNull NamespacedKey abilityId) {
+		return isItemItemInList(target, EoFPersistentDataKeys.DISABLED_ABILITIES_KEY, abilityId.asString());
+	}
+
+	/**
+	 * Check if a player's {@link ActiveAbility} is enabled or disabled.
+	 *
+	 * @param target  The player to act upon.
+	 * @param ability The <code>ActiveAbility</code>.
+	 * @return <code>true</code> to enable, <code>false</code> to disable.
+	 */
+	public boolean isAbilityDisabled(@NonNull LivingEntity target, @NonNull ActiveAbility ability) {
+		return isAbilityDisabled(target, ability.getId());
 	}
 }
