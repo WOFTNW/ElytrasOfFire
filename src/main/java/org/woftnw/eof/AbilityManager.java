@@ -18,6 +18,7 @@ import org.woftnw.eof.ability.Activation;
 import org.woftnw.eof.ability.ActiveAbility;
 import org.woftnw.eof.exception.AbilityActivationException;
 import org.woftnw.eof.exception.NoTribeException;
+import org.woftnw.eof.exception.TribeNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,12 +42,12 @@ public class AbilityManager implements Listener {
 	 *
 	 * @param player The player to give abilities to.
 	 */
-	public void givePlayerAbilities(@NonNull Player player) throws NoTribeException {
+	public void givePlayerAbilities(@NonNull Player player) throws NoTribeException, TribeNotFoundException {
 		final PlayerInventory INVENTORY = player.getInventory();
 		putAbilityItemsInInventory(player, INVENTORY);
 	}
 
-	public void putAbilityItemsInInventory(Player player, Inventory inventory) throws NoTribeException {
+	public void putAbilityItemsInInventory(Player player, Inventory inventory) throws NoTribeException, TribeNotFoundException {
 		final Tribe TRIBE = PlayerUtility.getPlayerTribe(player);
 		if (TRIBE == null) throw new NoTribeException();
 

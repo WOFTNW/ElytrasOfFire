@@ -11,6 +11,7 @@ import org.jspecify.annotations.NonNull;
 import org.woftnw.eof.ElytrasOfFire;
 import org.woftnw.eof.PlayerUtility;
 import org.woftnw.eof.exception.NoTribeException;
+import org.woftnw.eof.exception.TribeNotFoundException;
 
 public class AttributesCommand extends PluginCommand {
 
@@ -36,6 +37,9 @@ public class AttributesCommand extends PluginCommand {
 			PlayerUtility.setPlayerAttributesEnabled(player, newState);
 		} catch (NoTribeException e) {
 			respondError(context, "You are not part of a tribe.");
+			return 0;
+		} catch (TribeNotFoundException e) {
+			respondError(context, e.getMessage());
 			return 0;
 		}
 

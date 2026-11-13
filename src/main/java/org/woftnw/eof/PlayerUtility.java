@@ -140,7 +140,7 @@ public class PlayerUtility {
 	 * @param player  The player whose state to change.
 	 * @param enabled Whether to enable attributes.
 	 */
-	public static void setPlayerAttributesEnabled(@NonNull Player player, boolean enabled) throws NoTribeException {
+	public static void setPlayerAttributesEnabled(@NonNull Player player, boolean enabled) throws NoTribeException, TribeNotFoundException {
 		setPlayerData(player, EoFPersistentDataKeys.ATTRIBUTES_ENABLED_KEY, enabled);
 
 		final AttributeManager ATTRIBUTE_MANAGER = PLUGIN.getTribeManager().getAttributeManager();
@@ -167,7 +167,7 @@ public class PlayerUtility {
 	 * @param player  The player whose state to change.
 	 * @param enabled Whether to enable abilities.
 	 */
-	public static void setPlayerAbilitiesEnabled(@NonNull Player player, boolean enabled) throws NoTribeException {
+	public static void setPlayerAbilitiesEnabled(@NonNull Player player, boolean enabled) throws NoTribeException, TribeNotFoundException {
 		AbilityManager abilityManager = PLUGIN.getTribeManager().getAbilityManager();
 		if (enabled) {
 			abilityManager.givePlayerAbilities(player);

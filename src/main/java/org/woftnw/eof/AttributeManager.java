@@ -5,6 +5,7 @@ import org.bukkit.scheduler.BukkitTask;
 import org.jspecify.annotations.NonNull;
 import org.woftnw.eof.attribute.Attribute;
 import org.woftnw.eof.exception.NoTribeException;
+import org.woftnw.eof.exception.TribeNotFoundException;
 
 import java.util.*;
 
@@ -58,7 +59,7 @@ public class AttributeManager {
 		}
 	}
 
-	public void apply(@NonNull Player player) throws NoTribeException {
+	public void apply(@NonNull Player player) throws NoTribeException, TribeNotFoundException {
 		final Tribe TRIBE = PlayerUtility.getPlayerTribe(player);
 		if (TRIBE == null) {
 			throw new NoTribeException();

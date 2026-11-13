@@ -12,7 +12,6 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.jspecify.annotations.NonNull;
-import org.woftnw.eof.ElytrasOfFire;
 import org.woftnw.eof.MessageUtility;
 import org.woftnw.eof.PlayerUtility;
 import org.woftnw.eof.Tribe;
