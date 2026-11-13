@@ -10,7 +10,7 @@ import org.woftnw.eof.exception.parse.number.EoFNumberValueJsonParseException;
  */
 public class NonnegativeIntJsonParser implements NumberJsonParser<Integer> {
 	@Override
-	public Integer parse(@NonNull JsonElement element, ElytrasOfFire plugin) throws EoFNumberValueJsonParseException, UnsupportedOperationException {
+	public Integer parse(@NonNull JsonElement element) throws EoFNumberValueJsonParseException, UnsupportedOperationException {
 		final int INTEGER = element.getAsInt();
 		if (INTEGER < 0) throw new EoFNumberValueJsonParseException(0, Integer.MAX_VALUE);
 		return INTEGER;

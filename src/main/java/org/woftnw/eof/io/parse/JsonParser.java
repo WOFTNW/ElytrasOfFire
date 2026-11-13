@@ -19,9 +19,8 @@ public interface JsonParser<T> {
 	 * Parse a given {@link JsonElement}.
 	 *
 	 * @param element The element to parse and validate.
-	 * @param plugin The Elytras of Fire plugin instance.
 	 * @return The parsed and validated object.
 	 * @throws EoFJsonParseException If something goes wrong while parsing or validating.
 	 */
-	T parse(@NonNull JsonElement element, ElytrasOfFire plugin) throws EoFJsonParseException;
+	T parse(@NonNull JsonElement element) throws EoFJsonParseException;
 }

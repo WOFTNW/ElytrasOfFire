@@ -2,21 +2,16 @@ package org.woftnw.eof;
 
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
-import io.papermc.paper.dialog.Dialog;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.jspecify.annotations.NonNull;
-import org.woftnw.eof.ability.Ability;
 import org.woftnw.eof.ability.Activation;
 import org.woftnw.eof.ability.ActiveAbility;
 import org.woftnw.eof.ability.effect.AbilityEffect;
-import org.woftnw.eof.attribute.Attribute;
-import org.woftnw.eof.attribute.PotionEffectAttribute;
 import org.woftnw.eof.command.RootCommand;
 
 import java.util.HashMap;
@@ -32,21 +27,58 @@ public class ElytrasOfFire extends JavaPlugin {
 	 * You can register one with <code>registerAbilityEffect()</code>.
 	 */
 	private final Map<NamespacedKey, Class<? extends AbilityEffect>> abilityEffectTypes = new HashMap<>();
-	private PlayerUtility playerUtility;
 	private TribeManager tribeManager;
 	private DialogManager dialogManager;
 
 	@Override
 	public void onEnable() {
-		playerUtility = new PlayerUtility(this);
-		tribeManager = new TribeManager(this);
-		dialogManager = new DialogManager(this);
+		tribeManager = new TribeManager();
+		dialogManager = new DialogManager();
+
+		Tribe tribe1 = new Tribe(
+				"Tribe1",
+				"Tribe1",
+				NamedTextColor.GRAY
+		);
+
+		ActiveAbility ability1 = new ActiveAbility(
+				this,
+				new NamespacedKey(this, "ability1"),
+				Component.text("Ability 1"),
+				new AbilityEffect[0],
+				Material.WHITE_DYE,
+				null,
+				tribe1,
+				Activation.USE,
+				0
+		);
+
+		ActiveAbility ability2 = new ActiveAbility(
+				this,
+				new NamespacedKey(this, "ability2"),
+				Component.text("Ability 2"),
+				new AbilityEffect[0],
+				Material.GRAY_DYE,
+				null,
+				tribe1,
+				Activation.MELEE,
+				0
+		);
+
+		tribe1.addAbility(ability1);
+		tribe1.addAbility(ability2);
+
+		tribeManager.register(tribe1);
 
 		// Register commands
 		this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, event -> {
-			LiteralCommandNode<CommandSourceStack> rootCommand = new RootCommand(this).getCommandData().build();
+			LiteralCommandNode<CommandSourceStack> rootCommand = new RootCommand().getCommandData().build();
 			event.registrar().register(rootCommand);
 		});
+	}
+
+	public static @NonNull ElytrasOfFire getPlugin() {
+		return ElytrasOfFire.getPlugin(ElytrasOfFire.class);
 	}
 
 	/**
@@ -94,15 +126,6 @@ public class ElytrasOfFire extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		tribeManager.disable();
-	}
-
-	/**
-	 * Get the {@link PlayerUtility} instance.
-	 *
-	 * @return The <code>PlayerUtility</code> instance.
-	 */
-	public PlayerUtility getPlayerUtility() {
-		return playerUtility;
 	}
 
 	/**

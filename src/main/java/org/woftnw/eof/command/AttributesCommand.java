@@ -11,12 +11,9 @@ import org.jspecify.annotations.NonNull;
 import org.woftnw.eof.ElytrasOfFire;
 import org.woftnw.eof.PlayerUtility;
 import org.woftnw.eof.exception.NoTribeException;
+import org.woftnw.eof.exception.TribeNotFoundException;
 
 public class AttributesCommand extends PluginCommand {
-
-	public AttributesCommand(ElytrasOfFire plugin) {
-		super(plugin);
-	}
 
 	@Override
 	LiteralArgumentBuilder<CommandSourceStack> getCommandData() {
@@ -34,13 +31,15 @@ public class AttributesCommand extends PluginCommand {
 			return 0;
 		}
 
-		PlayerUtility playerUtility = PLUGIN.getPlayerUtility();
-		boolean currentlyEnabled = playerUtility.arePlayerPlayerAttributesEnabled(player);
+		boolean currentlyEnabled = PlayerUtility.arePlayerPlayerAttributesEnabled(player);
 		boolean newState = !currentlyEnabled;
 		try {
-			playerUtility.setPlayerAttributesEnabled(player, newState);
+			PlayerUtility.setPlayerAttributesEnabled(player, newState);
 		} catch (NoTribeException e) {
 			respondError(context, "You are not part of a tribe.");
+			return 0;
+		} catch (TribeNotFoundException e) {
+			respondError(context, e.getMessage());
 			return 0;
 		}
 

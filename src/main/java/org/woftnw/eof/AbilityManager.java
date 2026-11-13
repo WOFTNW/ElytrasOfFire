@@ -18,21 +18,19 @@ import org.woftnw.eof.ability.Activation;
 import org.woftnw.eof.ability.ActiveAbility;
 import org.woftnw.eof.exception.AbilityActivationException;
 import org.woftnw.eof.exception.NoTribeException;
+import org.woftnw.eof.exception.TribeNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class AbilityManager implements Listener {
-	private final ElytrasOfFire PLUGIN;
 	private final List<Ability> ABILITIES;
-	private final PlayerUtility PLAYER_UTILITY;
 
-	public AbilityManager(@NonNull ElytrasOfFire plugin) {
-		PLUGIN = plugin;
+	public AbilityManager() {
 		ABILITIES = new ArrayList<>();
-		PLAYER_UTILITY = plugin.getPlayerUtility();
-		plugin.getServer().getPluginManager().registerEvents(this, plugin);
+		final ElytrasOfFire PLUGIN = ElytrasOfFire.getPlugin();
+		PLUGIN.getServer().getPluginManager().registerEvents(this, PLUGIN);
 	}
 
 	public void registerAbility(Ability ability) {
@@ -44,13 +42,13 @@ public class AbilityManager implements Listener {
 	 *
 	 * @param player The player to give abilities to.
 	 */
-	public void givePlayerAbilities(@NonNull Player player) throws NoTribeException {
+	public void givePlayerAbilities(@NonNull Player player) throws NoTribeException, TribeNotFoundException {
 		final PlayerInventory INVENTORY = player.getInventory();
 		putAbilityItemsInInventory(player, INVENTORY);
 	}
 
-	public void putAbilityItemsInInventory(Player player, Inventory inventory) throws NoTribeException {
-		final Tribe TRIBE = PLAYER_UTILITY.getPlayerTribe(player);
+	public void putAbilityItemsInInventory(Player player, Inventory inventory) throws NoTribeException, TribeNotFoundException {
+		final Tribe TRIBE = PlayerUtility.getPlayerTribe(player);
 		if (TRIBE == null) throw new NoTribeException();
 
 		final List<ActiveAbility> ACTIVE_ABILITIES = TRIBE.getActiveAbilities();
@@ -60,7 +58,9 @@ public class AbilityManager implements Listener {
 
 		// For abilities with assigned slot, put them in assigned slot
 		for (ActiveAbility ABILITY : ACTIVE_ABILITIES) {
-			final Integer SLOT_ID = PLAYER_UTILITY.getPlayerAbilitySlot(player, ABILITY);
+			if (!PlayerUtility.isAbilityEnabled(player, ABILITY)) continue;
+
+			final Integer SLOT_ID = PlayerUtility.getPlayerAbilitySlot(player, ABILITY);
 			if (SLOT_ID == null) {
 				UNASSIGNED_ABILITIES.add(ABILITY);
 			} else {
@@ -149,7 +149,7 @@ public class AbilityManager implements Listener {
 		if (!event.getDamageSource().getDamageType().equals(DamageType.PLAYER_ATTACK)) return;
 
 		if (!(event.getEntity() instanceof final LivingEntity ENTITY)) return;
-		PLUGIN.getPlayerUtility().setPlayerAttackTarget(PLAYER, ENTITY);
+		PlayerUtility.setPlayerAttackTarget(PLAYER, ENTITY);
 
 		for (final Ability ABILITY : ABILITIES) {
 			if (!(ABILITY instanceof ActiveAbility ability)) continue;
@@ -178,6 +178,7 @@ public class AbilityManager implements Listener {
 			if (!ability.getActivationItem().equals(ITEM)) continue;
 			event.setCancelled(true);
 
+			final ElytrasOfFire PLUGIN = ElytrasOfFire.getPlugin();
 			Bukkit.getScheduler().runTask(PLUGIN, () -> {
 				removeAbilitiesFromInventory(Objects.requireNonNull(event.getClickedInventory()));
 				try {
@@ -185,7 +186,7 @@ public class AbilityManager implements Listener {
 				} catch (NoTribeException e) {
 					// This should not happen.
 					PLUGIN.getLogger().warning("Failed to reset player abilities after inventory click: " + e.getMessage());
-					PLUGIN.getPlayerUtility().disablePlayerAbilities(PLAYER);
+					PlayerUtility.disablePlayerAbilities(PLAYER);
 				}
 			});
 		}
