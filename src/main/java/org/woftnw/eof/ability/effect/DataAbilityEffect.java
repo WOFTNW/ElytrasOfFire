@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.woftnw.eof.ElytrasOfFire;
+import org.woftnw.eof.PlayerUtility;
 import org.woftnw.eof.ability.effect.target.Target;
 
 import java.util.Collection;
@@ -37,7 +38,7 @@ public class DataAbilityEffect extends AbilityEffect {
 	public void apply(Player user) {
 		final Collection<LivingEntity> TARGETS = TARGET.getTargets(user);
 		for (final LivingEntity TARGET : TARGETS) {
-			PLUGIN.getPlayerUtility().setEntityAbilityData(TARGET, DATA_STRING, APPLY);
+			PlayerUtility.setEntityAbilityData(TARGET, DATA_STRING, APPLY);
 		}
 	}
 }

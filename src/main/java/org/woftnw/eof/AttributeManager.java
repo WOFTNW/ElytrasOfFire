@@ -51,24 +51,20 @@ public class AttributeManager {
 	}
 
 	private void tick() {
-		PlayerUtility playerUtility = PLUGIN.getPlayerUtility();
-
 		for (Tribe tribe : attributes.keySet()) {
 			ArrayList<Player> players = new ArrayList<>(List.copyOf(PLUGIN.getServer().getOnlinePlayers()));
-			players.removeIf(player -> playerUtility.getPlayerTribe(player) != tribe);
+			players.removeIf(player -> PlayerUtility.getPlayerTribe(player) != tribe);
 
 			for (Attribute attribute : attributes.getOrDefault(tribe, new ArrayList<>())) {
 				for (Player player : players) {
-					if (playerUtility.arePlayerPlayerAttributesEnabled(player)) attribute.tick(player);
+					if (PlayerUtility.arePlayerPlayerAttributesEnabled(player)) attribute.tick(player);
 				}
 			}
 		}
 	}
 
 	public void apply(@NonNull Player player) throws NoTribeException {
-		PlayerUtility playerUtility = PLUGIN.getPlayerUtility();
-
-		final Tribe TRIBE = playerUtility.getPlayerTribe(player);
+		final Tribe TRIBE = PlayerUtility.getPlayerTribe(player);
 		if (TRIBE == null) {
 			throw new NoTribeException();
 		}
@@ -84,9 +80,7 @@ public class AttributeManager {
 	}
 
 	public void unapply(@NonNull Player player) {
-		PlayerUtility playerUtility = PLUGIN.getPlayerUtility();
-
-		final List<Attribute> TRIBE_ATTRIBUTES = attributes.get(playerUtility.getPlayerTribe(player));
+		final List<Attribute> TRIBE_ATTRIBUTES = attributes.get(PlayerUtility.getPlayerTribe(player));
 		for (final Attribute ATTRIBUTE : TRIBE_ATTRIBUTES) {
 			ATTRIBUTE.unapply(player);
 		}

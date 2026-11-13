@@ -34,12 +34,11 @@ public class AbilitiesCommand extends PluginCommand {
 			return 0;
 		}
 
-		PlayerUtility playerUtility = PLUGIN.getPlayerUtility();
-		boolean currentlyEnabled = playerUtility.arePlayerPlayerAbilitiesEnabled(player);
+		boolean currentlyEnabled = PlayerUtility.arePlayerPlayerAbilitiesEnabled(player);
 		boolean newState = !currentlyEnabled;
 
 		try {
-			playerUtility.setPlayerAbilitiesEnabled(player, newState);
+			PlayerUtility.setPlayerAbilitiesEnabled(player, newState);
 		} catch (NoTribeException e) {
 			respondError(context, "You must join a tribe first.");
 			return 0;

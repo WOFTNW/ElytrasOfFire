@@ -2,21 +2,11 @@ package org.woftnw.eof;
 
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
-import io.papermc.paper.dialog.Dialog;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.jspecify.annotations.NonNull;
-import org.woftnw.eof.ability.Ability;
-import org.woftnw.eof.ability.Activation;
-import org.woftnw.eof.ability.ActiveAbility;
 import org.woftnw.eof.ability.effect.AbilityEffect;
-import org.woftnw.eof.attribute.Attribute;
-import org.woftnw.eof.attribute.PotionEffectAttribute;
 import org.woftnw.eof.command.RootCommand;
 
 import java.util.HashMap;
@@ -32,13 +22,11 @@ public class ElytrasOfFire extends JavaPlugin {
 	 * You can register one with <code>registerAbilityEffect()</code>.
 	 */
 	private final Map<NamespacedKey, Class<? extends AbilityEffect>> abilityEffectTypes = new HashMap<>();
-	private PlayerUtility playerUtility;
 	private TribeManager tribeManager;
 	private DialogManager dialogManager;
 
 	@Override
 	public void onEnable() {
-		playerUtility = new PlayerUtility(this);
 		tribeManager = new TribeManager(this);
 		dialogManager = new DialogManager(this);
 
@@ -94,15 +82,6 @@ public class ElytrasOfFire extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		tribeManager.disable();
-	}
-
-	/**
-	 * Get the {@link PlayerUtility} instance.
-	 *
-	 * @return The <code>PlayerUtility</code> instance.
-	 */
-	public PlayerUtility getPlayerUtility() {
-		return playerUtility;
 	}
 
 	/**

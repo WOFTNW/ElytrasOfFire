@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.jspecify.annotations.NonNull;
 import org.woftnw.eof.ElytrasOfFire;
 import org.woftnw.eof.MessageUtility;
+import org.woftnw.eof.PlayerUtility;
 import org.woftnw.eof.Tribe;
 import org.woftnw.eof.command.argument.TribeArgument;
 
@@ -57,7 +58,7 @@ public class TribeCommand extends PluginCommand {
 			return 0;
 		}
 
-		PLUGIN.getPlayerUtility().setPlayerTribe(player, TRIBE);
+		PlayerUtility.setPlayerTribe(player, TRIBE);
 
 		final Component MESSAGE = text("You have joined tribe ").color(MessageUtility.INFO_TEXT_COLOR)
 				.append(text(TRIBE.getTribeName()).color(TRIBE.getTextColor()));
@@ -72,7 +73,7 @@ public class TribeCommand extends PluginCommand {
 		final List<Player> TARGETS = RESOLVER.resolve(context.getSource());
 
 		for (final Player PLAYER : TARGETS) {
-			PLUGIN.getPlayerUtility().setPlayerTribe(PLAYER, TRIBE);
+			PlayerUtility.setPlayerTribe(PLAYER, TRIBE);
 		}
 
 		final int TARGET_COUNT = TARGETS.size();

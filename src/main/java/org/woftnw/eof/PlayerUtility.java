@@ -27,16 +27,7 @@ public class PlayerUtility {
 	private static final boolean ATTRIBUTES_ENABLED_DEFAULT = false;
 	private static final boolean ABILITIES_ENABLED_DEFAULT = false;
 
-	private final ElytrasOfFire PLUGIN;
-
-	/**
-	 * Create a PlayerUtility.
-	 *
-	 * @param plugin The plugin instance.
-	 */
-	public PlayerUtility(ElytrasOfFire plugin) {
-		PLUGIN = plugin;
-	}
+	private static final ElytrasOfFire PLUGIN = ElytrasOfFire.getPlugin(ElytrasOfFire.class);
 
 	/**
 	 * Set the data of a {@link LivingEntity}'s {@link PersistentDataContainer} using a {@link NamespacedKey} and {@link PersistentDataType}.
@@ -61,7 +52,7 @@ public class PlayerUtility {
 	 * @param <P>    The primary object type that is stored in the given tag.
 	 * @see PersistentDataKey
 	 */
-	public <C, P> void setPlayerData(@NonNull LivingEntity entity, @NonNull NamespacedKey key, PersistentDataType<P, C> type, C value) {
+	public static <C, P> void setPlayerData(@NonNull LivingEntity entity, @NonNull NamespacedKey key, PersistentDataType<P, C> type, C value) {
 		PersistentDataContainer persistentDataContainer = entity.getPersistentDataContainer();
 		persistentDataContainer.set(key, type, value);
 	}
@@ -74,7 +65,7 @@ public class PlayerUtility {
 	 * @param value  The value to write.
 	 * @param <C>    The retrieved object type when applying this tag type.
 	 */
-	public <C, P> void setPlayerData(@NonNull LivingEntity entity, @NonNull PersistentDataKey<C> key, C value) {
+	public static <C, P> void setPlayerData(@NonNull LivingEntity entity, @NonNull PersistentDataKey<C> key, C value) {
 		setPlayerData(entity, key.key(), key.dataType(), value);
 	}
 
@@ -88,27 +79,27 @@ public class PlayerUtility {
 	 * @param <P>    The primary object type that is stored in the given tag.
 	 * @return The possibly-<code>null</code> value currently stored.
 	 */
-	public <C, P> C getPlayerData(@NonNull LivingEntity entity, @NonNull NamespacedKey key, PersistentDataType<P, C> type) {
+	public static <C, P> C getPlayerData(@NonNull LivingEntity entity, @NonNull NamespacedKey key, PersistentDataType<P, C> type) {
 		PersistentDataContainer persistentDataContainer = entity.getPersistentDataContainer();
 		return persistentDataContainer.get(key, type);
 	}
 
-	public <C, P> C getPlayerData(@NonNull LivingEntity entity, @NonNull PersistentDataKey<C> key) {
+	public static <C, P> C getPlayerData(@NonNull LivingEntity entity, @NonNull PersistentDataKey<C> key) {
 		return getPlayerData(entity, key.key(), key.dataType());
 	}
 
-	public <C, P> C getPlayerDataOrDefault(@NonNull LivingEntity entity, @NonNull NamespacedKey key, PersistentDataType<P, C> type, C defaultValue) {
+	public static <C, P> C getPlayerDataOrDefault(@NonNull LivingEntity entity, @NonNull NamespacedKey key, PersistentDataType<P, C> type, C defaultValue) {
 		PersistentDataContainer persistentDataContainer = entity.getPersistentDataContainer();
 		C value = persistentDataContainer.get(key, type);
 		if (value == null) return defaultValue;
 		else return value;
 	}
 
-	public <C, P> C getPlayerDataOrDefault(@NonNull LivingEntity entity, @NonNull PersistentDataKey<C> key, C defaultValue) {
+	public static <C, P> C getPlayerDataOrDefault(@NonNull LivingEntity entity, @NonNull PersistentDataKey<C> key, C defaultValue) {
 		return getPlayerDataOrDefault(entity, key.key(), key.dataType(), defaultValue);
 	}
 
-	public <C, P> void setItemItemInList(@NonNull LivingEntity target, PersistentDataKey<List<C>> key, C item, boolean include) {
+	public static <C, P> void setItemItemInList(@NonNull LivingEntity target, PersistentDataKey<List<C>> key, C item, boolean include) {
 		List<C> items = getPlayerData(target, key);
 		boolean updated = false;
 
@@ -125,7 +116,7 @@ public class PlayerUtility {
 		if (updated) setPlayerData(target, key, items);
 	}
 
-	public <C, P> boolean isItemItemInList(@NonNull LivingEntity target, PersistentDataKey<List<C>> key, C item) {
+	public static <C, P> boolean isItemItemInList(@NonNull LivingEntity target, PersistentDataKey<List<C>> key, C item) {
 		List<C> items = getPlayerData(target, key);
 		boolean updated = false;
 
@@ -134,12 +125,12 @@ public class PlayerUtility {
 		return items.contains(item);
 	}
 
-	public void setPlayerAttackTarget(@NonNull LivingEntity entity, @NonNull LivingEntity target) {
+	public static void setPlayerAttackTarget(@NonNull LivingEntity entity, @NonNull LivingEntity target) {
 		setPlayerData(entity, EoFPersistentDataKeys.ATTACK_TARGET_KEY, target.getUniqueId());
 	}
 
 	@Nullable
-	public UUID getPlayerAttackTarget(@NonNull Player player) {
+	public static UUID getPlayerAttackTarget(@NonNull Player player) {
 		return getPlayerData(player, EoFPersistentDataKeys.ATTACK_TARGET_KEY);
 	}
 
@@ -149,7 +140,7 @@ public class PlayerUtility {
 	 * @param player  The player whose state to change.
 	 * @param enabled Whether to enable attributes.
 	 */
-	public void setPlayerAttributesEnabled(@NonNull Player player, boolean enabled) throws NoTribeException {
+	public static void setPlayerAttributesEnabled(@NonNull Player player, boolean enabled) throws NoTribeException {
 		setPlayerData(player, EoFPersistentDataKeys.ATTRIBUTES_ENABLED_KEY, enabled);
 
 		final AttributeManager ATTRIBUTE_MANAGER = PLUGIN.getTribeManager().getAttributeManager();
@@ -166,7 +157,7 @@ public class PlayerUtility {
 	 * @param player The player whose state to get.
 	 * @return Whether attributes are enabled or disabled.
 	 */
-	public boolean arePlayerPlayerAttributesEnabled(@NonNull Player player) {
+	public static boolean arePlayerPlayerAttributesEnabled(@NonNull Player player) {
 		return getPlayerDataOrDefault(player, EoFPersistentDataKeys.ATTRIBUTES_ENABLED_KEY, ATTRIBUTES_ENABLED_DEFAULT);
 	}
 
@@ -176,7 +167,7 @@ public class PlayerUtility {
 	 * @param player  The player whose state to change.
 	 * @param enabled Whether to enable abilities.
 	 */
-	public void setPlayerAbilitiesEnabled(@NonNull Player player, boolean enabled) throws NoTribeException {
+	public static void setPlayerAbilitiesEnabled(@NonNull Player player, boolean enabled) throws NoTribeException {
 		AbilityManager abilityManager = PLUGIN.getTribeManager().getAbilityManager();
 		if (enabled) {
 			abilityManager.givePlayerAbilities(player);
@@ -192,7 +183,7 @@ public class PlayerUtility {
 	 *
 	 * @param player The player whose state to change.
 	 */
-	public void disablePlayerAbilities(@NonNull Player player) {
+	public static void disablePlayerAbilities(@NonNull Player player) {
 		AbilityManager abilityManager = PLUGIN.getTribeManager().getAbilityManager();
 		abilityManager.removeAbilitiesFromInventory(player.getInventory());
 
@@ -205,7 +196,7 @@ public class PlayerUtility {
 	 * @param player The player whose state to get.
 	 * @return Whether abilities are enabled or disabled.
 	 */
-	public boolean arePlayerPlayerAbilitiesEnabled(@NonNull Player player) {
+	public static boolean arePlayerPlayerAbilitiesEnabled(@NonNull Player player) {
 		return getPlayerDataOrDefault(player, EoFPersistentDataKeys.ABILITIES_ENABLED_KEY, ABILITIES_ENABLED_DEFAULT);
 	}
 
@@ -215,7 +206,7 @@ public class PlayerUtility {
 	 * @param player The player whose tribe to change.
 	 * @param tribe  The tribe to change to.
 	 */
-	public void setPlayerTribe(@NonNull Player player, @NonNull Tribe tribe) {
+	public static void setPlayerTribe(@NonNull Player player, @NonNull Tribe tribe) {
 		setPlayerData(player, EoFPersistentDataKeys.TRIBE_KEY, tribe);
 	}
 
@@ -226,7 +217,7 @@ public class PlayerUtility {
 	 * @return The tribe of the player, or null if nonexistent or unrecognized.
 	 */
 	@Nullable
-	public Tribe getPlayerTribe(@NonNull Player player) throws TribeNotFoundException {
+	public static Tribe getPlayerTribe(@NonNull Player player) throws TribeNotFoundException {
 		return getPlayerData(player, EoFPersistentDataKeys.TRIBE_KEY);
 	}
 
@@ -237,7 +228,7 @@ public class PlayerUtility {
 	 * @param dataString The data string.
 	 * @param apply      <code>true</code> to apply it, <code>false</code> to remove it.
 	 */
-	public void setEntityAbilityData(@NonNull LivingEntity target, String dataString, boolean apply) {
+	public static void setEntityAbilityData(@NonNull LivingEntity target, String dataString, boolean apply) {
 		setItemItemInList(target, EoFPersistentDataKeys.ABILITY_DATA_KEY, dataString, apply);
 	}
 
@@ -247,7 +238,7 @@ public class PlayerUtility {
 	 * @param target     The target to check.
 	 * @param dataString The ability data string to check.
 	 */
-	public void isEntityAbilityData(@NonNull LivingEntity target, String dataString) {
+	public static void isEntityAbilityData(@NonNull LivingEntity target, String dataString) {
 		isItemItemInList(target, EoFPersistentDataKeys.ABILITY_DATA_KEY, dataString);
 	}
 
@@ -258,7 +249,7 @@ public class PlayerUtility {
 	 * @param abilityId The <code>NamespacedKey</code> of the {@link ActiveAbility}.
 	 * @param slotId    The numeric ID of the slot this ability should use.
 	 */
-	public void setPlayerAbilitySlot(@NonNull Player player, @NonNull NamespacedKey abilityId, int slotId) {
+	public static void setPlayerAbilitySlot(@NonNull Player player, @NonNull NamespacedKey abilityId, int slotId) {
 		final PersistentDataContainer EMPTY_CONTAINER = getEmptyContainer(player);
 		final PersistentDataContainer DATA_CONTAINER = getPlayerDataOrDefault(player, EoFPersistentDataKeys.ABILITY_SLOT_CONFIG_KEY, EMPTY_CONTAINER);
 
@@ -284,7 +275,7 @@ public class PlayerUtility {
 	 * @param ability The <code>ActiveAbility</code>.
 	 * @param slotId  The numeric ID of the slot this ability should use.
 	 */
-	public void setPlayerAbilitySlot(@NonNull Player player, @NonNull ActiveAbility ability, int slotId) {
+	public static void setPlayerAbilitySlot(@NonNull Player player, @NonNull ActiveAbility ability, int slotId) {
 		setPlayerAbilitySlot(player, ability.getId(), slotId);
 	}
 
@@ -296,7 +287,7 @@ public class PlayerUtility {
 	 * @return The numeric ID of the slot this ability uses.
 	 */
 	@Nullable
-	public Integer getPlayerAbilitySlot(@NonNull Player player, @NonNull NamespacedKey abilityId) {
+	public static Integer getPlayerAbilitySlot(@NonNull Player player, @NonNull NamespacedKey abilityId) {
 		final PersistentDataContainer EMPTY_CONTAINER = getEmptyContainer(player);
 		final PersistentDataContainer DATA_CONTAINER = getPlayerDataOrDefault(player, EoFPersistentDataKeys.ABILITY_SLOT_CONFIG_KEY, EMPTY_CONTAINER);
 
@@ -311,7 +302,7 @@ public class PlayerUtility {
 	 * @return The numeric ID of the slot this ability uses.
 	 */
 	@Nullable
-	public Integer getPlayerAbilitySlot(@NonNull Player player, @NonNull ActiveAbility ability) {
+	public static Integer getPlayerAbilitySlot(@NonNull Player player, @NonNull ActiveAbility ability) {
 		return getPlayerAbilitySlot(player, ability.getId());
 	}
 
@@ -322,7 +313,7 @@ public class PlayerUtility {
 	 * @param abilityId The <code>NamespacedKey</code> of the <code>ActiveAbility</code>.
 	 * @param disabled  <code>true</code> to enable, <code>false</code> to disable.
 	 */
-	public void setAbilityDisabled(@NonNull LivingEntity target, @NonNull NamespacedKey abilityId, boolean disabled) {
+	public static void setAbilityDisabled(@NonNull LivingEntity target, @NonNull NamespacedKey abilityId, boolean disabled) {
 		setItemItemInList(target, EoFPersistentDataKeys.DISABLED_ABILITIES_KEY, abilityId.asString(), disabled);
 	}
 
@@ -333,7 +324,7 @@ public class PlayerUtility {
 	 * @param ability  The <code>ActiveAbility</code>.
 	 * @param disabled <code>true</code> to enable, <code>false</code> to disable.
 	 */
-	public void setAbilityDisabled(@NonNull LivingEntity target, @NonNull ActiveAbility ability, boolean disabled) {
+	public static void setAbilityDisabled(@NonNull LivingEntity target, @NonNull ActiveAbility ability, boolean disabled) {
 		setAbilityDisabled(target, ability.getId(), disabled);
 	}
 
@@ -344,7 +335,7 @@ public class PlayerUtility {
 	 * @param abilityId The <code>NamespacedKey</code> of the <code>ActiveAbility</code>.
 	 * @return <code>true</code> to enable, <code>false</code> to disable.
 	 */
-	public boolean isAbilityDisabled(@NonNull LivingEntity target, @NonNull NamespacedKey abilityId) {
+	public static boolean isAbilityDisabled(@NonNull LivingEntity target, @NonNull NamespacedKey abilityId) {
 		return isItemItemInList(target, EoFPersistentDataKeys.DISABLED_ABILITIES_KEY, abilityId.asString());
 	}
 
@@ -355,7 +346,7 @@ public class PlayerUtility {
 	 * @param ability The <code>ActiveAbility</code>.
 	 * @return <code>true</code> to enable, <code>false</code> to disable.
 	 */
-	public boolean isAbilityDisabled(@NonNull LivingEntity target, @NonNull ActiveAbility ability) {
+	public static boolean isAbilityDisabled(@NonNull LivingEntity target, @NonNull ActiveAbility ability) {
 		return isAbilityDisabled(target, ability.getId());
 	}
 }

@@ -34,11 +34,10 @@ public class AttributesCommand extends PluginCommand {
 			return 0;
 		}
 
-		PlayerUtility playerUtility = PLUGIN.getPlayerUtility();
-		boolean currentlyEnabled = playerUtility.arePlayerPlayerAttributesEnabled(player);
+		boolean currentlyEnabled = PlayerUtility.arePlayerPlayerAttributesEnabled(player);
 		boolean newState = !currentlyEnabled;
 		try {
-			playerUtility.setPlayerAttributesEnabled(player, newState);
+			PlayerUtility.setPlayerAttributesEnabled(player, newState);
 		} catch (NoTribeException e) {
 			respondError(context, "You are not part of a tribe.");
 			return 0;

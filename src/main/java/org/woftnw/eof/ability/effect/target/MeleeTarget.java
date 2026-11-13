@@ -8,6 +8,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.jspecify.annotations.NonNull;
 import org.woftnw.eof.ElytrasOfFire;
+import org.woftnw.eof.PlayerUtility;
 
 import java.util.Collection;
 import java.util.List;
@@ -25,7 +26,7 @@ public class MeleeTarget implements Target {
 
 	@Override
 	public Collection<LivingEntity> getTargets(@NonNull Player user) {
-		final UUID ATTACK_TARGET_UUID = PLUGIN.getPlayerUtility().getPlayerAttackTarget(user);
+		final UUID ATTACK_TARGET_UUID = PlayerUtility.getPlayerAttackTarget(user);
 		if (ATTACK_TARGET_UUID == null) return NONE;
 
 		final Entity ENTITY = Bukkit.getEntity(ATTACK_TARGET_UUID);

@@ -62,10 +62,8 @@ public class DialogManager implements Listener {
 	 * @return The user settings Dialog for the player.
 	 */
 	public @NonNull Dialog getUserSettingsDialog(Player player) {
-		final PlayerUtility PLAYER_UTILITY = PLUGIN.getPlayerUtility();
-
-		final boolean ATTRIBUTES_ENABLED = PLAYER_UTILITY.arePlayerPlayerAttributesEnabled(player);
-		final boolean ABILITIES_ENABLED = PLAYER_UTILITY.arePlayerPlayerAbilitiesEnabled(player);
+		final boolean ATTRIBUTES_ENABLED = PlayerUtility.arePlayerPlayerAttributesEnabled(player);
+		final boolean ABILITIES_ENABLED = PlayerUtility.arePlayerPlayerAbilitiesEnabled(player);
 
 		return Dialog.create(builder -> builder.empty()
 				.base(
@@ -119,7 +117,7 @@ public class DialogManager implements Listener {
 		if (!DialogManager.isAbilitySlotMenu(VIEW)) return;
 
 		if (!(event.getWhoClicked() instanceof final Player PLAYER)) return;
-		final Tribe TRIBE = PLUGIN.getPlayerUtility().getPlayerTribe(PLAYER);
+		final Tribe TRIBE = PlayerUtility.getPlayerTribe(PLAYER);
 		if (TRIBE == null) return;
 		Inventory CLICKED_INVENTORY = event.getClickedInventory();
 
@@ -142,8 +140,7 @@ public class DialogManager implements Listener {
 
 		if (!isAbilitySlotMenu(VIEW)) return;
 
-		final PlayerUtility PLAYER_UTILITY = PLUGIN.getPlayerUtility();
-		final Tribe TRIBE = PLAYER_UTILITY.getPlayerTribe(PLAYER);
+		final Tribe TRIBE = PlayerUtility.getPlayerTribe(PLAYER);
 		if (TRIBE == null) {
 			// This shouldn't happen.
 			PLAYER.sendMessage(MessageUtility.buildErrorMessage("Unable to save slots because your tribe could not be identified."));
@@ -156,15 +153,15 @@ public class DialogManager implements Listener {
 			if (ITEM == null) continue;
 			for (ActiveAbility ability : TRIBE.getActiveAbilities()) {
 				if (ability.getActivationItem().isSimilar(ITEM)) {
-					PLAYER_UTILITY.setPlayerAbilitySlot(PLAYER, ability, i);
+					PlayerUtility.setPlayerAbilitySlot(PLAYER, ability, i);
 				}
 			}
 		}
 
-		if (PLAYER_UTILITY.arePlayerPlayerAbilitiesEnabled(PLAYER)) {
-			PLAYER_UTILITY.disablePlayerAbilities(PLAYER);
+		if (PlayerUtility.arePlayerPlayerAbilitiesEnabled(PLAYER)) {
+			PlayerUtility.disablePlayerAbilities(PLAYER);
 			try {
-				PLAYER_UTILITY.setPlayerAbilitiesEnabled(PLAYER, true);
+				PlayerUtility.setPlayerAbilitiesEnabled(PLAYER, true);
 			} catch (NoTribeException e) {
 				// Do nothing; not re-enabling the abilities is acceptable behavior.
 			}
@@ -203,21 +200,19 @@ public class DialogManager implements Listener {
 	}
 
 	private void savePlayerSettings(@NonNull DialogResponseView view, Player player) {
-		PlayerUtility PLAYER_UTILITY = PLUGIN.getPlayerUtility();
-
 		final Boolean ENABLE_ATTRIBUTES = view.getBoolean("enable_attributes");
 		final Boolean ENABLE_ABILITIES = view.getBoolean("enable_abilities");
 
 		if (ENABLE_ABILITIES != null) {
 			try {
-				PLAYER_UTILITY.setPlayerAbilitiesEnabled(player, ENABLE_ABILITIES);
+				PlayerUtility.setPlayerAbilitiesEnabled(player, ENABLE_ABILITIES);
 			} catch (NoTribeException e) {
 				player.sendMessage(MessageUtility.buildErrorMessage("You must join a tribe first."));
 			}
 		}
 		if (ENABLE_ATTRIBUTES != null) {
 			try {
-				PLAYER_UTILITY.setPlayerAttributesEnabled(player, ENABLE_ATTRIBUTES);
+				PlayerUtility.setPlayerAttributesEnabled(player, ENABLE_ATTRIBUTES);
 			} catch (NoTribeException e) {
 				player.sendMessage(MessageUtility.buildErrorMessage("You are not in a tribe, so your attributes cannot be enabled."));
 			}
