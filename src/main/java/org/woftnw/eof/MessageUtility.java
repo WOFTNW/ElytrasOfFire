@@ -13,6 +13,7 @@ import static net.kyori.adventure.text.Component.text;
 public class MessageUtility {
 
 	public static final TextColor INFO_TEXT_COLOR = NamedTextColor.GRAY;
+	public static final TextColor ERROR_TEXT_COLOR = NamedTextColor.RED;
 
 	private static final Component PREFIX = text()
 			.content("[").color(NamedTextColor.GRAY)

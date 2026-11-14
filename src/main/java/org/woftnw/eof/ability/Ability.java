@@ -72,7 +72,7 @@ public class Ability {
 		for (AbilityEffect effect : effects) {
 			effect.apply(player);
 		}
-		notifyActivation(player);
+		notifyActivation(player, AbilityFlag.getState(player));
 	}
 
 	/**
@@ -80,8 +80,12 @@ public class Ability {
 	 *
 	 * @param player The player to notify.
 	 */
-	protected void notifyActivation(@NotNull Player player) {
-		player.sendActionBar(Component.text("Activated ").color(MessageUtility.INFO_TEXT_COLOR).append(this.name));
+	protected void notifyActivation(@NotNull Player player, boolean WGFlag) {
+		if (WGFlag) {
+			player.sendActionBar(Component.text("Activated ").color(MessageUtility.INFO_TEXT_COLOR).append(this.name));
+		} else {
+			player.sendActionBar(Component.text("Abilities are disabled here ").color(MessageUtility.ERROR_TEXT_COLOR).append(this.name));
+		}
 	}
 
 	public NamespacedKey getId() {
