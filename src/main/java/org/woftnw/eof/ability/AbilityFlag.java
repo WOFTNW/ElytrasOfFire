@@ -37,8 +37,8 @@ public class AbilityFlag {
         RegionQuery query = container.createQuery();
 
         if (!query.testState(localPlayer.getLocation(), localPlayer, ABILITY_FLAG)) {
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 }
