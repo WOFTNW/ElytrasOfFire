@@ -84,7 +84,7 @@ public class Ability {
 		if (WGFlag) {
 			player.sendActionBar(Component.text("Activated ").color(MessageUtility.INFO_TEXT_COLOR).append(this.name));
 		} else {
-			player.sendActionBar(Component.text("Abilities are disabled here ").color(MessageUtility.ERROR_TEXT_COLOR).append(this.name));
+			player.sendActionBar(Component.text("Abilities are disabled here.").color(MessageUtility.ERROR_TEXT_COLOR));
 		}
 	}
 
