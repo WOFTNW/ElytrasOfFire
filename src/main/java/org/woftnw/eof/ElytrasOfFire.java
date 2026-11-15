@@ -2,30 +2,12 @@ package org.woftnw.eof;
 
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
-import io.papermc.paper.dialog.Dialog;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.jspecify.annotations.NonNull;
-import org.woftnw.eof.ability.Ability;
-import org.woftnw.eof.ability.Activation;
-import org.woftnw.eof.ability.ActiveAbility;
 import org.woftnw.eof.ability.effect.AbilityEffect;
-import org.woftnw.eof.attribute.Attribute;
-import org.woftnw.eof.attribute.PotionEffectAttribute;
 import org.woftnw.eof.command.RootCommand;
-import org.woftnw.eof.InitFlags;
-import com.sk89q.worldguard.WorldGuard;
-import com.sk89q.worldguard.protection.flags.Flag;
-import com.sk89q.worldguard.protection.flags.StateFlag;
-import com.sk89q.worldguard.protection.flags.registry.FlagConflictException;
-import com.sk89q.worldguard.protection.flags.registry.FlagRegistry;
-
 import java.util.HashMap;
 import java.util.Map;
 
