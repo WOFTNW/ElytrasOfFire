@@ -69,10 +69,14 @@ public class Ability {
 	 * @throws AbilityActivationException When an exception occurs that prevents the ability from being fully activated.
 	 */
 	public void activate(Player player) throws AbilityActivationException {
-		for (AbilityEffect effect : effects) {
-			effect.apply(player);
+		if(AbilityFlag.getState(player)) {
+			for (AbilityEffect effect : effects) {
+				effect.apply(player);
+			}
+			notifyActivation(player);
+		} else {
+			notifyFailure(player);
 		}
-		notifyActivation(player, AbilityFlag.getState(player));
 	}
 
 	/**
@@ -80,12 +84,17 @@ public class Ability {
 	 *
 	 * @param player The player to notify.
 	 */
-	protected void notifyActivation(@NotNull Player player, boolean WGFlag) {
-		if (WGFlag) {
-			player.sendActionBar(Component.text("Activated ").color(MessageUtility.INFO_TEXT_COLOR).append(this.name));
-		} else {
-			player.sendActionBar(Component.text("Abilities are disabled here.").color(MessageUtility.ERROR_TEXT_COLOR));
-		}
+	protected void notifyActivation(@NotNull Player player) {
+		player.sendActionBar(Component.text("Activated ").color(MessageUtility.INFO_TEXT_COLOR).append(this.name));
+	}
+
+	/**
+	 * Notify the player that the ability has failed.
+	 *
+	 * @param player The player to notify.
+	 */
+	protected void notifyFailure(@NotNull Player player) {
+		player.sendActionBar(Component.text("Abilities are disabled here.").color(MessageUtility.ERROR_TEXT_COLOR));
 	}
 
 	public NamespacedKey getId() {
