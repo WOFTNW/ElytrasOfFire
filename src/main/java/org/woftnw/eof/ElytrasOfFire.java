@@ -44,6 +44,10 @@ public class ElytrasOfFire extends JavaPlugin {
 		new	InitFlags().LoadFlags();
 	}
 
+	public static @NonNull ElytrasOfFire getPlugin() {
+		return ElytrasOfFire.getPlugin(ElytrasOfFire.class);
+	}
+
 	/**
 	 * Register an ability effect type. This will make it available to the feature loader.
 	 * For example:
