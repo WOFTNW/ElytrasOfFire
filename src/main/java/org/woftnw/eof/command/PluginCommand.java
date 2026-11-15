@@ -14,20 +14,6 @@ import org.woftnw.eof.MessageUtility;
 public abstract class PluginCommand {
 
 	/**
-	 * The plugin instance.
-	 */
-	protected final ElytrasOfFire PLUGIN;
-
-	/**
-	 * Set up this command.
-	 *
-	 * @param plugin The plugin instance.
-	 */
-	public PluginCommand(ElytrasOfFire plugin) {
-		this.PLUGIN = plugin;
-	}
-
-	/**
 	 * Respond to the sender with a message.
 	 *
 	 * @param context The command context.

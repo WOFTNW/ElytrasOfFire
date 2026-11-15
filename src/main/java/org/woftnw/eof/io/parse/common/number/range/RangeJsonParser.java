@@ -15,7 +15,7 @@ import org.woftnw.eof.io.parse.common.number.NumberJsonParser;
  */
 public abstract class RangeJsonParser implements JsonParser<int[]> {
 	@Override
-	public int[] parse(@NonNull JsonElement element, ElytrasOfFire plugin) throws EoFWrappedJsonParseException, UnsupportedOperationException {
+	public int[] parse(@NonNull JsonElement element) throws EoFWrappedJsonParseException, UnsupportedOperationException {
 		final JsonObject ROOT = element.getAsJsonObject();
 
 		String key = "min";
@@ -24,7 +24,7 @@ public abstract class RangeJsonParser implements JsonParser<int[]> {
 			throw new EoFWrappedJsonParseException(key, new EoFRequiredKeyNullJsonParseException());
 		int min;
 		try {
-			min = getMinParser().parse(MIN_ELEMENT, plugin);
+			min = getMinParser().parse(MIN_ELEMENT);
 		} catch (EoFNumberJsonParseException | UnsupportedOperationException e) {
 			throw new EoFWrappedJsonParseException(key, e);
 		}
@@ -35,7 +35,7 @@ public abstract class RangeJsonParser implements JsonParser<int[]> {
 			throw new EoFWrappedJsonParseException(key, new EoFRequiredKeyNullJsonParseException());
 		int max;
 		try {
-			max = getMaxParser().parse(MIN_ELEMENT, plugin);
+			max = getMaxParser().parse(MIN_ELEMENT);
 		} catch (EoFNumberJsonParseException | UnsupportedOperationException e) {
 			throw new EoFWrappedJsonParseException(key, e);
 		}

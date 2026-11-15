@@ -58,13 +58,12 @@ public class StringToStringJsonParser extends StringJsonParser<String> {
 	 * Parse a JSON string.
 	 *
 	 * @param element The element to parse and validate.
-	 * @param plugin  The Elytras of Fire plugin instance.
 	 * @return The resulting string.
 	 * @throws EoFStringLengthJsonParseException  Thrown if the string is empty.
 	 * @throws EoFStringPatternJsonParseException Thrown if the string is not natural-case.
 	 */
 	@Override
-	public String parse(@NonNull JsonElement element, ElytrasOfFire plugin) throws EoFJsonParseException {
+	public String parse(@NonNull JsonElement element) throws EoFJsonParseException {
 		final String STRING = element.getAsString();
 
 		if (STRING.length() < MIN_LENGTH || STRING.length() > MAX_LENGTH)

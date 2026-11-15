@@ -5,6 +5,7 @@ import org.bukkit.scheduler.BukkitTask;
 import org.jspecify.annotations.NonNull;
 import org.woftnw.eof.attribute.Attribute;
 import org.woftnw.eof.exception.NoTribeException;
+import org.woftnw.eof.exception.TribeNotFoundException;
 
 import java.util.*;
 
@@ -15,20 +16,15 @@ public class AttributeManager {
 	private final static long TICK_DELAY = 20;
 	private final static long TICK_PERIOD = 20;
 
-	private final ElytrasOfFire PLUGIN;
-
 	private final Map<Tribe, List<Attribute>> attributes = new HashMap<>();
 	private final BukkitTask task;
 
 	/**
 	 * Create an attribute scheduler.
-	 *
-	 * @param plugin The plugin instance.
 	 */
-	public AttributeManager(@NonNull ElytrasOfFire plugin) {
-		PLUGIN = plugin;
-
-		task = plugin.getServer().getScheduler().runTaskTimer(plugin, this::tick, TICK_DELAY, TICK_PERIOD);
+	public AttributeManager() {
+		final ElytrasOfFire PLUGIN = ElytrasOfFire.getPlugin();
+		task = PLUGIN.getServer().getScheduler().runTaskTimer(PLUGIN, this::tick, TICK_DELAY, TICK_PERIOD);
 	}
 
 	/**
@@ -51,42 +47,36 @@ public class AttributeManager {
 	}
 
 	private void tick() {
-		PlayerUtility playerUtility = PLUGIN.getPlayerUtility();
-
 		for (Tribe tribe : attributes.keySet()) {
-			ArrayList<Player> players = new ArrayList<>(List.copyOf(PLUGIN.getServer().getOnlinePlayers()));
-			players.removeIf(player -> playerUtility.getPlayerTribe(player) != tribe);
+			ArrayList<Player> players = new ArrayList<>(List.copyOf(ElytrasOfFire.getPlugin().getServer().getOnlinePlayers()));
+			players.removeIf(player -> PlayerUtility.getPlayerTribe(player) != tribe);
 
 			for (Attribute attribute : attributes.getOrDefault(tribe, new ArrayList<>())) {
 				for (Player player : players) {
-					if (playerUtility.arePlayerPlayerAttributesEnabled(player)) attribute.tick(player);
+					if (PlayerUtility.arePlayerPlayerAttributesEnabled(player)) attribute.tick(player);
 				}
 			}
 		}
 	}
 
-	public void apply(@NonNull Player player) throws NoTribeException {
-		PlayerUtility playerUtility = PLUGIN.getPlayerUtility();
-
-		final Tribe TRIBE = playerUtility.getPlayerTribe(player);
+	public void apply(@NonNull Player player) throws NoTribeException, TribeNotFoundException {
+		final Tribe TRIBE = PlayerUtility.getPlayerTribe(player);
 		if (TRIBE == null) {
 			throw new NoTribeException();
 		}
-		final List<Attribute> TRIBE_ATTRIBUTES = attributes.get(TRIBE);
+		final List<Attribute> TRIBE_ATTRIBUTES = attributes.getOrDefault(TRIBE, new ArrayList<>());
 		for (int i = 0; i < TRIBE_ATTRIBUTES.size(); i++) {
 			Attribute ATTRIBUTE = TRIBE_ATTRIBUTES.get(i);
 			try {
 				ATTRIBUTE.apply(player);
 			} catch (IllegalArgumentException e) {
-				PLUGIN.getLogger().warning(String.format("Tried to apply attribute %s of tribe %s, but the target already has it.", i, TRIBE.getPDCValue()));
+				ElytrasOfFire.getPlugin().getLogger().warning(String.format("Tried to apply attribute %s of tribe %s, but the target already has it.", i, TRIBE.getPDCValue()));
 			}
 		}
 	}
 
 	public void unapply(@NonNull Player player) {
-		PlayerUtility playerUtility = PLUGIN.getPlayerUtility();
-
-		final List<Attribute> TRIBE_ATTRIBUTES = attributes.get(playerUtility.getPlayerTribe(player));
+		final List<Attribute> TRIBE_ATTRIBUTES = attributes.getOrDefault(PlayerUtility.getPlayerTribe(player), new ArrayList<>());
 		for (final Attribute ATTRIBUTE : TRIBE_ATTRIBUTES) {
 			ATTRIBUTE.unapply(player);
 		}

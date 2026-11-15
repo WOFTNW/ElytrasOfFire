@@ -27,8 +27,8 @@ public class NamespaceJsonParser extends StringJsonParser<NamespacedKey> {
 	}
 
 	@Override
-	public NamespacedKey parse(@NonNull JsonElement element, ElytrasOfFire plugin) throws EoFJsonParseException {
-		final String STRING = new StringToStringJsonParser(MIN_LENGTH, MAX_LENGTH, ANY_OF_PATTERNS, ALL_OF_PATTERNS).parse(element, plugin);
+	public NamespacedKey parse(@NonNull JsonElement element) throws EoFJsonParseException {
+		final String STRING = new StringToStringJsonParser(MIN_LENGTH, MAX_LENGTH, ANY_OF_PATTERNS, ALL_OF_PATTERNS).parse(element);
 
 		final String[] SPLIT = STRING.split(":");
 		if (SPLIT.length < 2)

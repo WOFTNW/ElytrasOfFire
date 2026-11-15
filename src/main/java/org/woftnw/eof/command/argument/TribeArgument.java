@@ -20,15 +20,9 @@ import java.util.concurrent.CompletableFuture;
 public class TribeArgument implements CustomArgumentType.Converted<Tribe, String> {
 	private static final DynamicCommandExceptionType ERROR_INVALID_TRIBE = new DynamicCommandExceptionType(tribe -> new LiteralMessage(tribe + " is not a valid tribe!"));
 
-	private final ElytrasOfFire PLUGIN;
-
-	public TribeArgument(ElytrasOfFire plugin) {
-		PLUGIN = plugin;
-	}
-
 	@Override
 	public @NonNull Tribe convert(final @NonNull String nativeType) throws CommandSyntaxException {
-		final List<Tribe> TRIBES = PLUGIN.getTribeManager().getTribes();
+		final List<Tribe> TRIBES = ElytrasOfFire.getPlugin().getTribeManager().getTribes();
 		for (Tribe tribe : TRIBES) {
 			if (tribe.getTribeName().toUpperCase(Locale.ROOT).equals(nativeType.toUpperCase(Locale.ROOT))) {
 				return tribe;
@@ -39,7 +33,7 @@ public class TribeArgument implements CustomArgumentType.Converted<Tribe, String
 
 	@Override
 	public <S> @NonNull CompletableFuture<Suggestions> listSuggestions(final @NonNull CommandContext<S> context, final @NonNull SuggestionsBuilder builder) {
-		final List<Tribe> TRIBES = PLUGIN.getTribeManager().getTribes();
+		final List<Tribe> TRIBES = ElytrasOfFire.getPlugin().getTribeManager().getTribes();
 		for (final Tribe tribe : TRIBES) {
 			final String name = tribe.getTribeName();
 

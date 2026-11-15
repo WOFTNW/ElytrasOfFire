@@ -7,17 +7,13 @@ import org.woftnw.eof.ElytrasOfFire;
 
 public class RootCommand extends PluginCommand {
 
-	public RootCommand(ElytrasOfFire plugin) {
-		super(plugin);
-	}
-
 	@Override
 	public LiteralArgumentBuilder<CommandSourceStack> getCommandData() {
 		LiteralArgumentBuilder<CommandSourceStack> root = Commands.literal("eof");
-		root.then(new TribeCommand(PLUGIN).getCommandData());
-		root.then(new AttributesCommand(PLUGIN).getCommandData());
-		root.then(new AbilitiesCommand(PLUGIN).getCommandData());
-		root.then(new SettingsCommand(PLUGIN).getCommandData());
+		root.then(new TribeCommand().getCommandData());
+		root.then(new AttributesCommand().getCommandData());
+		root.then(new AbilitiesCommand().getCommandData());
+		root.then(new SettingsCommand().getCommandData());
 		return root;
 	}
 }

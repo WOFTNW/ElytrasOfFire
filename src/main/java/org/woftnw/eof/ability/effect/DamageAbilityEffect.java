@@ -3,7 +3,6 @@ package org.woftnw.eof.ability.effect;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.woftnw.eof.ElytrasOfFire;
 import org.woftnw.eof.ability.effect.target.Target;
 
 import java.util.Collection;
@@ -20,8 +19,8 @@ public class DamageAbilityEffect extends AbilityEffect {
 	 * @param target The target of the effect.
 	 * @param damage The damage of the effect.
 	 */
-	public DamageAbilityEffect(ElytrasOfFire plugin, Target target, float damage) {
-		super(plugin, target);
+	public DamageAbilityEffect(Target target, float damage) {
+		super(target);
 		DAMAGE = damage;
 	}
 

@@ -3,7 +3,6 @@ package org.woftnw.eof.ability.effect;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.woftnw.eof.ElytrasOfFire;
 import org.woftnw.eof.ability.effect.target.Target;
 
 import java.util.Collection;
@@ -17,8 +16,8 @@ public class IgniteAbilityEffect extends AbilityEffect {
 	 * @param target    The target of the effect.
 	 * @param fireTicks The number of ticks to set the target on fire for.
 	 */
-	public IgniteAbilityEffect(ElytrasOfFire plugin, Target target, int fireTicks) {
-		super(plugin, target);
+	public IgniteAbilityEffect(Target target, int fireTicks) {
+		super(target);
 		FIRE_TICKS = fireTicks;
 	}
 

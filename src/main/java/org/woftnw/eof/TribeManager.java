@@ -12,13 +12,11 @@ public class TribeManager {
 	private final ArrayList<Tribe> TRIBES;
 	private final AttributeManager ATTRIBUTE_MANAGER;
 	private final AbilityManager ABILITY_MANAGER;
-	private final ElytrasOfFire PLUGIN;
 
-	public TribeManager(ElytrasOfFire plugin) {
+	public TribeManager() {
 		TRIBES = new ArrayList<>();
-		ATTRIBUTE_MANAGER = new AttributeManager(plugin);
-		ABILITY_MANAGER = new AbilityManager(plugin);
-		PLUGIN = plugin;
+		ATTRIBUTE_MANAGER = new AttributeManager();
+		ABILITY_MANAGER = new AbilityManager();
 	}
 
 	public void disable() {
@@ -41,7 +39,7 @@ public class TribeManager {
 		final int ATTRIBUTE_COUNT = tribe.getAttributes().length;
 		final int ABILITY_COUNT = tribe.getAbilities().length;
 
-		PLUGIN.getLogger().info(String.format(
+		ElytrasOfFire.getPlugin().getLogger().info(String.format(
 				"Registered tribe %s with %s attribute%s and %s abilit%s",
 				tribe.getPDCValue(),
 				ATTRIBUTE_COUNT,

@@ -12,8 +12,8 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.jspecify.annotations.NonNull;
-import org.woftnw.eof.ElytrasOfFire;
 import org.woftnw.eof.MessageUtility;
+import org.woftnw.eof.PlayerUtility;
 import org.woftnw.eof.Tribe;
 import org.woftnw.eof.command.argument.TribeArgument;
 
@@ -23,10 +23,6 @@ import static net.kyori.adventure.text.Component.text;
 
 public class TribeCommand extends PluginCommand {
 
-	public TribeCommand(ElytrasOfFire plugin) {
-		super(plugin);
-	}
-
 	@Override
 	public LiteralArgumentBuilder<CommandSourceStack> getCommandData() {
 		LiteralArgumentBuilder<CommandSourceStack> tribeCommand = Commands.literal("tribe");
@@ -34,7 +30,7 @@ public class TribeCommand extends PluginCommand {
 		LiteralArgumentBuilder<CommandSourceStack> joinSubcommand = Commands.literal("join");
 		joinSubcommand.requires(source -> source.getSender().hasPermission("eof.tribe.set"));
 		joinSubcommand.then(
-				Commands.argument("tribe", new TribeArgument(PLUGIN))
+				Commands.argument("tribe", new TribeArgument())
 						.executes(this::executeJoin)
 						.then(
 								Commands.argument("targets", ArgumentTypes.players())
@@ -57,7 +53,7 @@ public class TribeCommand extends PluginCommand {
 			return 0;
 		}
 
-		PLUGIN.getPlayerUtility().setPlayerTribe(player, TRIBE);
+		PlayerUtility.setPlayerTribe(player, TRIBE);
 
 		final Component MESSAGE = text("You have joined tribe ").color(MessageUtility.INFO_TEXT_COLOR)
 				.append(text(TRIBE.getTribeName()).color(TRIBE.getTextColor()));
@@ -72,7 +68,7 @@ public class TribeCommand extends PluginCommand {
 		final List<Player> TARGETS = RESOLVER.resolve(context.getSource());
 
 		for (final Player PLAYER : TARGETS) {
-			PLUGIN.getPlayerUtility().setPlayerTribe(PLAYER, TRIBE);
+			PlayerUtility.setPlayerTribe(PLAYER, TRIBE);
 		}
 
 		final int TARGET_COUNT = TARGETS.size();
