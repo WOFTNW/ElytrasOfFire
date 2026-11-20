@@ -31,7 +31,10 @@
                 },
                 {
                     "effect_type": "elytrasoffire:data",
-                    "apply_data": "eof:frostbite",
+                    "data": {
+                        "action": "apply",
+                        "data": "eof:frostbite"
+                    },
                     "duration": "infinite"
                 }
             ]

@@ -15,7 +15,10 @@
                 { "effect_type": "elytrasoffire:data", "remove_data": "eof:frostbite" },
                 {
                     "effect_type": "elytrasoffire:data",
-                    "remove_data": "eof:frostbite",
+                    "data": {
+                        "action": "remove",
+                        "data": "elytrasoffire:frostbite"
+                    },
                     "target": "self"
                 }
             ]
