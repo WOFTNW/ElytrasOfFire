@@ -51,19 +51,9 @@
                             "effect_type": { "pattern": "elytrasoffire:data" }
                         }
                     },
-                    "then": {
-                        "anyOf": [
-                            { "required": ["apply_data"] },
-                            { "required": ["remove_data"] }
-                        ]
-                    },
+                    "then": { "required": ["data"] },
                     "else": {
-                        "not": {
-                            "anyOf": [
-                                { "required": ["apply_data"] },
-                                { "required": ["remove_data"] }
-                            ]
-                        }
+                        "not": { "required": ["data"] }
                     }
                 }
             ],
