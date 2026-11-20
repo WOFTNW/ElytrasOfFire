@@ -110,13 +110,19 @@
                     "type": "number",
                     "exclusiveMinimum": 0
                 },
-                "apply_data": {
-                    "description": "The custom data to apply to the target(s). Must be a namespaced string.",
-                    "$ref": "./_common/_strings.json#/$defs/namespace"
-                },
-                "remove_data": {
-                    "description": "The custom data to remove from the target(s). Must be a namespaced string.",
-                    "$ref": "./_common/_strings.json#/$defs/namespace"
+                "data": {
+                    "description": "The custom data to use on the target(s).",
+                    "properties": {
+                        "action": {
+                            "description": "The action to perform with the custom data.",
+                            "type": "string",
+                            "enum": ["apply", "remove"]
+                        },
+                        "data": {
+                            "description": "The custom data to apply or remove on the target(s). Must be a namespaced string.",
+                            "$ref": "./_common/_strings.json#/$defs/namespace"
+                        }
+                    }
                 }
             }
         }
